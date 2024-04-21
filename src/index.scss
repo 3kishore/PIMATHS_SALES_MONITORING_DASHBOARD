@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.primary {
+  @apply cursor-pointer h-[42px] flex items-center text-left leading-tight gap-[8px] rounded py-[10px] px-[20px] text-base font-medium text-white bg-blue-4;
+  div{
+      @apply flex gap-[8px] items-center;
+  }
+  &.stroke{
+      @apply h-[32px] px-[12px];
+      &.iconRight {
+          @apply pr-[8px];
+      }
+      &.iconLeft {
+          @apply pl-[8px];
+      }
+  }
+  &:not(.stroke){
+      &.iconRight {
+          @apply pr-[14px]
+      }
+      &.iconLeft {
+          @apply pl-[14px]
+      }
+  }
+  &.danger{
+      @apply bg-red text-white;
+      &:disabled {
+          @apply bg-neutral-6;
+  
+          &:hover{
+              @apply  bg-neutral-6;
+          }
+              }
+      &:hover{
+          @apply bg-red-dark;
+      }
+  }
+  &:disabled {
+      @apply bg-neutral-6;
+
+      &:hover{
+          @apply  bg-neutral-6;
+      }
+          }
+  &:hover{
+      @apply bg-blue-2;
+  }
+}
+
+.secondary {
+  @apply cursor-pointer h-[42px] flex items-center text-left leading-tight gap-[8px] py-[10px] px-[20px] rounded text-base font-medium text-blue-4 bg-neutral-9;
+  div{
+      @apply flex gap-[8px] items-center;
+  }
+  &.stroke{
+      @apply h-[32px] px-[12px];
+      &.iconRight {
+          @apply pr-[8px];
+      }
+      &.iconLeft {
+          @apply pl-[8px];
+      }
+  }
+  &:not(.stroke){
+      &.iconRight {
+          @apply pr-[14px]
+      }
+      &.iconLeft {
+          @apply pl-[14px]
+      }
+  }
+  &.danger{
+      @apply  text-red;
+  }
+  &:disabled {
+      @apply text-gray-0 bg-neutral-11;
+
+      &:hover{
+          @apply bg-neutral-11;
+      }
+  }
+  &:hover{
+      @apply  bg-neutral-7;
+  }
+}
+
+.tertiary {
+  @apply cursor-pointer flex items-center text-center leading-tight tracking-normal h-[42px] gap-[8px] rounded py-[14px] px-[0px] text-base font-medium text-blue-4;
+  div{
+      @apply flex gap-[8px] items-center;
+  }
+  &.stroke{
+      @apply h-[32px];
+  }
+  &.danger{
+      @apply  text-red;
+      &:hover{
+          @apply underline decoration-red;
+      }
+  }
+  &:disabled {
+      @apply text-gray-0;
+
+      &:hover{
+          @apply text-gray-0 no-underline;
+       } 
+  }
+  &:hover{
+     @apply underline decoration-blue-4
+  }
+}
+
+.text-input {
+    @apply border-solid border-[1px] py-[12px] px-[8px] flex flex-row text-base gap-[8px] rounded-[4px]
+        w-full h-full placeholder:text-sm placeholder:leading-[1.14] placeholder:text-neutral-6 border-neutral-7 focus:border-primary;
+    &:focus-visible {
+        @apply border-[#2054FF] outline-0 #{"!important"};
+    }
+}
