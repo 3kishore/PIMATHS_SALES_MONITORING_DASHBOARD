@@ -1,16 +1,124 @@
+import React from 'react';
+import { BrowserRouter, NavLink, Route, Routes  } from 'react-router-dom';
 import './App.css';
-import Header from './components/organism/header';
+import HomePageComponent from './components/pages/home-page-component/home-page-component';
 import LoginPage from './components/pages/login-page/login-page';
+import MySalesReportComponent from './components/pages/my-sales-report-component/my-sales-report-component';
+import MyTeamPerformenceComponent from './components/pages/my-team-performence-component/my-team-performence-component';
+import PayoutModelComponent from './components/pages/payout-model-component/payout-model-component';
+import SaleryCalculatorComponent from './components/pages/salary-calculator-component/salary-calculator-component';
+import MyTdsComponent from './components/pages/tds-component/tds-component';
+import TrainingViedoComponent from './components/pages/training-viedo-component/training-viedo-component';
+import { APP } from './services/utilities/APP.constant';
 
 function App() {
+  const menuList = [
+    {
+      menu: 'My Sales Report',
+      path: '/home/my-sales-report',
+      iconName: 'monitoring'
+    },
+    {
+      menu: 'My Team Performence',
+      path: '/home/my-team-performence',
+      iconName: 'groups'
+    },
+    {
+      menu: 'Salary Calculator',
+      path: '/home/salary-caculator',
+      iconName: 'calculate'
+    },
+    {
+      menu: 'Payout Model',
+      path: '/home/payout-model',
+      iconName: 'payments'
+    },
+    {
+      menu: 'TDS',
+      path: '/home/tds',
+      iconName: 'markdown_copy'
+    },
+    {
+      menu: 'Traning Viedo',
+      path: '/home/traning-viedo',
+      iconName: 'model_training'
+    }
+  ]
+
+  const [sideMenuOn, setSideMenuOn] = React.useState(false);
+
+  const sideMenuStyle = {
+    position: "absolute",
+    left: sideMenuOn ? "0px" : "-100%",
+    top: "60px",
+    transition: ".5s",
+    backgroundColor: '#ffffff',
+  }
+
+  const toggleSideMenu = e => {
+    setSideMenuOn(!sideMenuOn);
+  }
   return (
-    <div>
-      <Header />
-      <LoginPage />
+    <div className='relative'>
+      <BrowserRouter>
+        {/* <Header /> */}
+        {/* Header Beigns */}
+        <div className="p-4 text-white text-xl flex justify-between items-center bg-green-dark">
+          <div className="flex gap-2 items-center">
+          {/* <button onClick={toggleSideMenu} className="menu-toggler">Toggle SideBar</button> */}
+            <span class="menu-toggler-icon cursor-pointer material-symbols-outlined" onClick={toggleSideMenu}>
+              menu
+            </span>
+            <div>{APP.MATH_TUTEE_SALLES}</div>
+          </div>
+        </div>
+        {/* Header Ends */}
+        <div className='flex'>
+          {/* Satic Menu for >640px Screen Starts */}
+          <div className='side-nav pt-6 ml-4 flex flex-col gap-6 w-60 border-r border-r-black'>
+            {menuList.map((x, i) => <div>
+              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path} key={i + '-Home'}>
+                <div className='flex items-center'>
+                  <span class="material-symbols-outlined text-blue-4">
+                    {x.iconName}
+                  </span>
+                </div>
+                {x.menu}
+              </NavLink>
+            </div>)}
+          </div>
+          {/* Satic Menu for >640px Screen Ends */}
+
+          {/* Toggle Menu Starts */}
+          <div onClick={toggleSideMenu} className='toggle-side-nav pt-6 ml-4 flex flex-col gap-6 w-60 border-r border-r-black' style={sideMenuStyle}>
+            {menuList.map((x, i) => <div>
+              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path} key={i + '-Home'}>
+                <div className='flex items-center'>
+                  <span class="material-symbols-outlined text-blue-4">
+                    {x.iconName}
+                  </span>
+                </div>
+                {x.menu}
+              </NavLink>
+            </div>)}
+          </div>
+          {/* Toggle Menu Ends */}
+          <Routes>
+            <Route exact path="/login" element={<LoginPage />} />
+            <Route path="/home" element={<HomePageComponent />}>
+              <Route path="/home/my-sales-report" element={<MySalesReportComponent />} />
+              <Route path="/home/my-team-performence" element={<MyTeamPerformenceComponent />} />
+              <Route path="/home/salary-caculator" element={<SaleryCalculatorComponent />} />
+              <Route path="/home/payout-model" element={<PayoutModelComponent />} />
+              <Route path="/home/tds" element={<MyTdsComponent />} />
+              <Route path="/home/traning-viedo" element={<TrainingViedoComponent />} />
+            </Route>
+            <Route path="*" element={<div>No page found</div>} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
-
-
 
 export default App;
