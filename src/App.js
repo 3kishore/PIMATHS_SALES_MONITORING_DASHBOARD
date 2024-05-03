@@ -5,6 +5,7 @@ import HomePageComponent from './components/pages/home-page-component/home-page-
 import LoginPage from './components/pages/login-page/login-page';
 import MySalesReportComponent from './components/pages/my-sales-report-component/my-sales-report-component';
 import MyTeamPerformenceComponent from './components/pages/my-team-performence-component/my-team-performence-component';
+import PayoutDetailsComponent from './components/pages/payout-model-component/payout-detail-component';
 import PayoutModelComponent from './components/pages/payout-model-component/payout-model-component';
 import SaleryCalculatorComponent from './components/pages/salary-calculator-component/salary-calculator-component';
 import MyTdsComponent from './components/pages/tds-component/tds-component';
@@ -110,6 +111,7 @@ function App() {
               <Route path="/home/my-team-performence" element={<MyTeamPerformenceComponent />} />
               <Route path="/home/salary-caculator" element={<SaleryCalculatorComponent />} />
               <Route path="/home/payout-model" element={<PayoutModelComponent />} />
+              <Route path="/home/payout-model/:detail" element={<PayoutDetailsComponent />} />
               <Route path="/home/tds" element={<MyTdsComponent />} />
               <Route path="/home/traning-viedo" element={<TrainingViedoComponent />} />
             </Route>
