@@ -133,3 +133,27 @@ code {
         @apply border-[#2054FF] outline-0 #{"!important"};
     }
 }
+
+.side-nav {
+  height: calc(100vh - 60px);
+}
+.toggle-side-nav {
+  height: calc(100vh - 60px);
+}
+
+.menu-toggler-icon {
+  visibility: hidden;
+  width: 0;
+}
+
+@media (max-width: 640px) {
+  .side-nav {
+    visibility: hidden;
+    width: 0 !important;
+  }
+  .menu-toggler-icon {
+    visibility: visible;
+    width: 24px;
+  }
+}
+
