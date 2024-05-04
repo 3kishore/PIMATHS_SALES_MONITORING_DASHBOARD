@@ -42,7 +42,7 @@ function MySalesReportComponent() {
             <h2 className="text-xl font-semibold mb-4">Sales Report</h2>
             <ul>
               {reportData.map((item, index) => (
-                <li key={index} className="flex justify-between">
+                <li className="flex justify-between">
                   <span>{item.product}</span>
                   <span>{item.sales} units</span>
                 </li>

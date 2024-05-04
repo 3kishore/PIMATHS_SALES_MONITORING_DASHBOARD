@@ -134,7 +134,15 @@ code {
     }
 }
 
-.side-nav {
+.select-input {
+    @apply border-solid border-[1px] py-[12px] px-[8px] flex flex-row text-base gap-[8px] rounded-[4px]
+        w-full h-full placeholder:text-sm placeholder:leading-[1.14] placeholder:text-neutral-6 border-neutral-7 focus:border-primary;
+    &:focus-visible {
+        @apply border-[#2054FF] outline-0 #{"!important"};
+    }
+}
+
+.layout-height {
   height: calc(100vh - 60px);
 }
 .toggle-side-nav {

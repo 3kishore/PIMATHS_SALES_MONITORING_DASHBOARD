@@ -38,17 +38,17 @@ function MyTeamPerformenceComponent() {
   return (
     <div>
       {team.map((level_1, idx_1) => (
-        <div key={idx_1}>
+        <div>
           <div onClick={() => toggleUser(idx_1)}>{level_1.name}</div>
           <div>{level_1.points}</div>
           {level_1.toggle &&
             level_1.myTeam.map((level_2, idx_2) => (
-              <div key={idx_2}>
+              <div>
                 <div onClick={() => toggleInnerUser(idx_1, idx_2)}>{level_2.name}</div>
                 <div>{level_2.points}</div>
                 {level_2.toggle &&
                 level_2.myTeam.map((level_3, idx_3) => (
-                  <div key={idx_3}>
+                  <div>
                     <div>{level_3.name}</div>
                     <div>{level_3.points}</div>
                   </div>

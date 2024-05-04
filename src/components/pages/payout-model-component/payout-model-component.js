@@ -12,7 +12,7 @@ function PayoutModelComponent() {
   return (
     <div className="flex flex-col gap-[24px]">
       {PAYOUT_MODEL.map((value) => (
-        <div key={value.salesType}>
+        <div>
           <div className="text-2xl font-medium mb-3">{value.salesType}</div>
           <div className="flex flex-wrap gap-4">
             {value.salaryTypeList.map((salary) => (
@@ -20,7 +20,6 @@ function PayoutModelComponent() {
                 className="p-4 rounded-lg min-w-[250px] hover:scale-105 cursor-pointer"
                 onClick={() => goToDetails(salary.id)}
                 style={{ boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)' }}
-                key={salary.category}
               >
                 <div className="text-xl font-medium mb-3">{salary.category}</div>
                 <div className="flex flex-col gap-2">

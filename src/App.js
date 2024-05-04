@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, NavLink, Route, Routes  } from 'react-router-dom';
 import './App.css';
+import AddMemberComponent from './components/pages/add-member/add-member-component';
 import HomePageComponent from './components/pages/home-page-component/home-page-component';
 import LoginPage from './components/pages/login-page/login-page';
 import MySalesReportComponent from './components/pages/my-sales-report-component/my-sales-report-component';
@@ -43,6 +44,11 @@ function App() {
       menu: 'Traning Viedo',
       path: '/home/traning-viedo',
       iconName: 'model_training'
+    },
+    {
+      menu: 'Add Member',
+      path: '/home/add-member',
+      iconName: 'group_add'
     }
   ]
 
@@ -67,20 +73,20 @@ function App() {
         <div className="p-4 text-white text-xl flex justify-between items-center bg-green-dark">
           <div className="flex gap-2 items-center">
           {/* <button onClick={toggleSideMenu} className="menu-toggler">Toggle SideBar</button> */}
-            <span class="menu-toggler-icon cursor-pointer material-symbols-outlined" onClick={toggleSideMenu}>
+            <span className="menu-toggler-icon cursor-pointer material-symbols-outlined" onClick={toggleSideMenu}>
               menu
             </span>
             <div>{APP.MATH_TUTEE_SALLES}</div>
           </div>
         </div>
         {/* Header Ends */}
-        <div className='flex'>
+        <div className='flex layout-height'>
           {/* Satic Menu for >640px Screen Starts */}
-          <div className='side-nav pt-6 ml-4 flex flex-col gap-6 w-60 border-r border-r-black'>
+          <div className='side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black'  id="side-nav">
             {menuList.map((x, i) => <div>
-              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path} key={i + '-Home'}>
+              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path}>
                 <div className='flex items-center'>
-                  <span class="material-symbols-outlined text-blue-4">
+                  <span className="material-symbols-outlined text-blue-4">
                     {x.iconName}
                   </span>
                 </div>
@@ -91,11 +97,11 @@ function App() {
           {/* Satic Menu for >640px Screen Ends */}
 
           {/* Toggle Menu Starts */}
-          <div onClick={toggleSideMenu} className='toggle-side-nav pt-6 ml-4 flex flex-col gap-6 w-60 border-r border-r-black' style={sideMenuStyle}>
+          <div onClick={toggleSideMenu} className='toggle-side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black' style={sideMenuStyle} id="side-nav">
             {menuList.map((x, i) => <div>
-              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path} key={i + '-Home'}>
+              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3  flex gap-1 items-center' to={x.path}>
                 <div className='flex items-center'>
-                  <span class="material-symbols-outlined text-blue-4">
+                  <span className="material-symbols-outlined text-blue-4">
                     {x.iconName}
                   </span>
                 </div>
@@ -108,6 +114,7 @@ function App() {
             <Route exact path="/login" element={<LoginPage />} />
             <Route path="/home" element={<HomePageComponent />}>
               <Route path="/home/my-sales-report" element={<MySalesReportComponent />} />
+              <Route path="/home/add-member" element={<AddMemberComponent />} />
               <Route path="/home/my-team-performence" element={<MyTeamPerformenceComponent />} />
               <Route path="/home/salary-caculator" element={<SaleryCalculatorComponent />} />
               <Route path="/home/payout-model" element={<PayoutModelComponent />} />
