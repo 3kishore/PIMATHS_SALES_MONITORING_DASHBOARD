@@ -2,15 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { useNavigate } from "react-router-dom";
-import { VIEW_ONLY_SINGLE_LEVEL } from "../../../services/utilities/APP.constant";
 
 function MyTeamPerformenceComponent() {
 
   const [report, setReport] = useState([]);
 
   const [chartData, setChartData] = useState([["person", "points"]]);
+
   const [isLoading, setIsLoading] = useState(true);
-  
 
   function getMyTeamReport() {
     setIsLoading(true);
@@ -18,12 +17,12 @@ function MyTeamPerformenceComponent() {
       .then(res => {
         const fakeReportData = {
           salesList: [
-            { empCode: 'cm-e-sh-1', name: 'John', salesArea: 'Chennai', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Mike', salesArea: 'Madurai', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Luna', salesArea: 'Trichi', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Tena', salesArea: 'Coimbatore', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Joe', salesArea: 'Tuty', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Andres', salesArea: 'Dindukal', mobileNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Marri', salesArea: 'Chennai', mobileNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Soori', salesArea: 'Madurai', mobileNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Lary', salesArea: 'Trichi', mobileNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Harry', salesArea: 'Coimbatore', mobileNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Carry', salesArea: 'Tuty', mobileNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Mery', salesArea: 'Dindukal', mobileNo: '9087654321', points: 800 },
           ]
         };
         let chart = [
@@ -36,6 +35,12 @@ function MyTeamPerformenceComponent() {
       });
   }
 
+  const navigate = useNavigate();
+
+  function goToDetails() {
+    navigate(`/home/my-team-performence`);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       getMyTeamReport();
@@ -44,6 +49,7 @@ function MyTeamPerformenceComponent() {
 
   return (
     <div>
+      <div className="w-fit text-sm text-blue-4 cursor-pointer p-2" onClick={() => goToDetails()}>Back</div>
       {
         !isLoading ? <div>
           <MyTeamReportChart chartData={chartData} />
@@ -71,21 +77,6 @@ function MyTeamReportChart({chartData}) {
 
 
 function MyTeamReportTable({salesManList}) {
-
-  const [showNavigation, setNavigation] = useState(false);
-
-  const navigate = useNavigate();
-
-  const goToDetails = (id) => {
-    // Navigate to the '/other-page' route
-    if(!VIEW_ONLY_SINGLE_LEVEL.includes('channel-head-h')) {
-      navigate(`/home/my-team-performence/${id}`);
-    }
-  };
-
-  useEffect(() => {
-    setNavigation(true);
-  }, []);
 
   return (
     <div className="w-full grid-ui">
@@ -145,20 +136,12 @@ function MyTeamReportTable({salesManList}) {
               salesManList.map((salesManDetail, index) => (
                 <tr className="bg-neutral-9 subHeader" key={'sales-mans-report-' + index}>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
-                    <div className={
-                      showNavigation ? 'h-[40px] min-w-[200px] flex flex-row px-[12px] text-blue-4 py-[9px] cursor-pointer':
-                      'h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1'}
-                      onClick={() => goToDetails(salesManDetail.name)}
-                    >
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1">
                       <span className="text-base-4 leading-[1.71] text-left">{salesManDetail.empCode}</span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
-                    <div className={
-                      showNavigation ? 'h-[40px] min-w-[200px] flex flex-row px-[12px] text-blue-4 py-[9px] cursor-pointer':
-                      'h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1'}
-                      onClick={() => goToDetails(salesManDetail.name)}
-                    >
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1">
                       <span className="text-base-4 leading-[1.71] text-left">{salesManDetail.name}</span>
                     </div>
                   </td>

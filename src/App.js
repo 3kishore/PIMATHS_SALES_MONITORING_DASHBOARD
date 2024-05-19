@@ -2,15 +2,19 @@ import React from 'react';
 import { BrowserRouter, NavLink, Route, Routes  } from 'react-router-dom';
 import './App.css';
 import AddMemberComponent from './components/pages/add-member/add-member-component';
+import ApproveOrRejectLicenseComponent from './components/pages/approve-or-reject-license/approve-or-reject-license.component';
 import HomePageComponent from './components/pages/home-page-component/home-page-component';
 import LoginPage from './components/pages/login-page/login-page';
 import MySalesReportComponent from './components/pages/my-sales-report-component/my-sales-report-component';
+import MySalesManDetail from './components/pages/my-team-performence-component/my-sales-man-detail';
 import MyTeamPerformenceComponent from './components/pages/my-team-performence-component/my-team-performence-component';
 import PayoutDetailsComponent from './components/pages/payout-model-component/payout-detail-component';
 import PayoutModelComponent from './components/pages/payout-model-component/payout-model-component';
 import SaleryCalculatorComponent from './components/pages/salary-calculator-component/salary-calculator-component';
 import MyTdsComponent from './components/pages/tds-component/tds-component';
 import TrainingViedoComponent from './components/pages/training-viedo-component/training-viedo-component';
+import UploadEmployeeTdsComponent from './components/pages/upload-employee-tds/upload-employee-tds.component';
+import UploadTrainingViedoComponent from './components/pages/upload-training-viedo/upload-training-viedo.component';
 import { APP } from './services/utilities/APP.constant';
 
 function App() {
@@ -49,6 +53,24 @@ function App() {
       menu: 'Add Member',
       path: '/home/add-member',
       iconName: 'group_add'
+    },
+
+    
+
+    {
+      menu: 'Upload Training Viedo',
+      path: '/home/upload-training-viedo',
+      iconName: 'publish'
+    },
+    {
+      menu: 'Approve or Reject Request',
+      path: '/home/approve-or-reject-request',
+      iconName: 'license'
+    },
+    {
+      menu: 'Upload Employee TDS',
+      path: '/home/upload-employee-tds',
+      iconName: 'upload_file'
     }
   ]
 
@@ -60,6 +82,7 @@ function App() {
     top: "60px",
     transition: ".5s",
     backgroundColor: '#ffffff',
+    zIndex: 9
   }
 
   const toggleSideMenu = e => {
@@ -116,11 +139,17 @@ function App() {
               <Route path="/home/my-sales-report" element={<MySalesReportComponent />} />
               <Route path="/home/add-member" element={<AddMemberComponent />} />
               <Route path="/home/my-team-performence" element={<MyTeamPerformenceComponent />} />
+              <Route path="/home/my-team-performence/:salesman" element={<MySalesManDetail />} />
               <Route path="/home/salary-caculator" element={<SaleryCalculatorComponent />} />
               <Route path="/home/payout-model" element={<PayoutModelComponent />} />
               <Route path="/home/payout-model/:detail" element={<PayoutDetailsComponent />} />
               <Route path="/home/tds" element={<MyTdsComponent />} />
               <Route path="/home/traning-viedo" element={<TrainingViedoComponent />} />
+
+
+              <Route path="/home/upload-training-viedo" element={<UploadTrainingViedoComponent />} />
+              <Route path="/home/approve-or-reject-request" element={<ApproveOrRejectLicenseComponent />} />
+              <Route path="/home/upload-employee-tds" element={<UploadEmployeeTdsComponent />} />
             </Route>
             <Route path="*" element={<div>No page found</div>} />
           </Routes>

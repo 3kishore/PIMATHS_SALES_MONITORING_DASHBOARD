@@ -19,22 +19,6 @@ const { handleSubmit, pristine, submitting } = props;
  return (
   <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px]">
     <h2 className="text-2xl font-medium">{ADD_MEMBER.ADD_MEMBER}</h2>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.APPLIED_FOR}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.JOB_ROLE}
-        className="select-input"
-        component="select"
-        placeholder={ADD_MEMBER.ENTER_HERE}
-      >
-        <option disabled value="">Select here</option>
-        {JOB_ROLE_ARR.map((val) => (
-          <option key={val.value} value={val.value}>
-            {val.label}
-          </option>
-        ))}
-      </Field>
-    </div>
     <div className="flex flex-col gap-2">
       <label className="text-black text-base font-medium">{ADD_MEMBER.REFERAL_PERSON}</label>
       <Field
@@ -58,6 +42,22 @@ const { handleSubmit, pristine, submitting } = props;
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
       />
+    </div>
+    <div className="flex flex-col gap-2 mt-3">
+      <label className="text-black text-base font-medium">{ADD_MEMBER.APPLIED_FOR}</label>
+      <Field
+        name={ADD_MEMBER_FORM_CONTROL_NAME.JOB_ROLE}
+        className="select-input"
+        component="select"
+        placeholder={ADD_MEMBER.ENTER_HERE}
+      >
+        <option disabled value="">Select here</option>
+        {JOB_ROLE_ARR.map((val) => (
+          <option key={val.value} value={val.value}>
+            {val.label}
+          </option>
+        ))}
+      </Field>
     </div>
     <label className="text-black text-base font-medium">{ADD_MEMBER.PERSONAL_INFORMATION}</label>
     <div className="flex flex-col gap-2">

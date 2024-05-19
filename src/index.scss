@@ -153,6 +153,32 @@ code {
   visibility: hidden;
   width: 0;
 }
+.grid-ui {
+    tr:nth-child(odd) td {
+      @apply bg-white #{"!important"};
+    }
+    tr:nth-child(even):not(.subHeader) td {
+      @apply bg-neutral-11 #{"!important"};
+    }
+    .activeFilter {
+      @apply bg-neutral-7 #{"!important"};
+    }
+    &.selectable {
+      tr>th:nth-child(2) {
+        @apply sticky left-[25px] bg-white;
+      }
+      tr>td:nth-child(2) {
+        @apply sticky left-[25px];
+      }
+      .subHeader {
+        td {
+          @apply bg-neutral-9;
+        }
+      }
+    }
+  }
+  
+  
 
 @media (max-width: 640px) {
   .side-nav {
