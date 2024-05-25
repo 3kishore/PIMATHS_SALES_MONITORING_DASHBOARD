@@ -25,4 +25,9 @@ export class ApiServiceHelper {
     return axiosHttp.post('/users', payload);
     // return axiosHttp.post('/upload-training-viedo', payload);
   }
+
+  addUser(payload) {
+    // return axiosHttp.post('/users', payload);
+    return axiosHttp.post('/request-to-add-member', payload);
+  }
 }

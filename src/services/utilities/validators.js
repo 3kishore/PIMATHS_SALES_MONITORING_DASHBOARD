@@ -6,7 +6,9 @@ const validators = {
       return value && value.length < min ?
         message ? message : `Must be ${min} characters or less`
         : undefined
-    }
+    },
+  regex: (pattern, message) =>
+    value => (value && !pattern.test(value) ? message : undefined)
 }
   
   export default validators;

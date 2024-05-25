@@ -11,7 +11,10 @@ export const LOGIN_PAGE = {
   FORM_ERROR_MESSAGE: {
     USER_NAME_REQUIRED: 'Username is required.',
     USER_NAME_SHOULD_CONTAIN_THREE_CHAR: 'Username should contain atleast 3 character.',
-    PASSWORD_REQUIRED: 'Password is required.'
+    PASSWORD_REQUIRED: 'Password is required.',
+
+
+    
   },
   ENTER_CREDENTIALS_HERE: 'Enter Credentials Here...!',
   ENTER_YOUR_EMAIL_ADDRESS_OR_PH: 'Enter your registered Email or Phone No.',

@@ -18,4 +18,17 @@ export class EnvironmentHelperService {
   getEmpCode() {
     return this.getSessionObject()?.empCode || null;
   }
+
+  getName() {
+    return this.getSessionObject()?.name || null;
+  }
+
+  getRole() {
+    return this.getSessionObject()?.role || null;
+  }
+
+  isAdmin() {
+    const role = this.getRole();
+    return role && role === 'admin' ? true : false;
+  }
 }

@@ -38,6 +38,12 @@ code {
           @apply pl-[14px]
       }
   }
+  &.success {
+    @apply bg-[#039487];
+    &:hover {
+      background-color: lighten($color: #039487, $amount: 10)
+    }
+  }
   &.danger{
       @apply bg-red text-white;
       &:disabled {
@@ -178,7 +184,25 @@ code {
     }
   }
   
-  
+.highlight-box {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), /* Slightly larger, softer shadow */
+              0 2px 4px rgba(0, 0, 0, 0.1);  /* Smaller, sharper shadow */
+  border-radius: 8px; /* Optional: rounds the corners */
+  padding: 16px; /* Optional: adds padding inside the box */
+  background-color: #fff; /* Optional: sets a background color */
+  transition: box-shadow 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.highlight-box:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), /* Slightly larger, softer shadow on hover */
+              0 4px 8px rgba(0, 0, 0, 0.2);  /* Smaller, sharper shadow on hover */
+}
+
+.toggle-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 1;
+}
 
 @media (max-width: 640px) {
   .side-nav {

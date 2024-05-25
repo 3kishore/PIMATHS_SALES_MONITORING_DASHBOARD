@@ -1,6 +1,7 @@
 export const ADD_MEMBER = {
   ADD_MEMBER: 'ADD MEMBER',
   APPLIED_FOR: 'Applied For',
+  APPLIED_FOR_AREA: 'Applied For Area',
   REFERAL_PERSON: 'Referal Person',
   REFERAL_CODE: 'Referal Code',
   PERSONAL_INFORMATION: 'Personal Information',
@@ -19,6 +20,7 @@ export const ADD_MEMBER = {
   PIN_CODE: 'Pincode',
   BOTH_ADDRESS: 'Both Address',
   CURRENT_ADDRESS: 'Current Address',
+  CURRENT_ADDRESS_PIN_CODE: 'Current Address Pin Code',
   AADHAR_AND_PAN_INFO: 'AADHAR and pan info',
   NAME_AS_PER_AADHAR: 'Name as per AADHAR',
   AADHAR_NUMBER: 'AADHAR Number',
@@ -80,6 +82,7 @@ export const ADD_MEMBER_FORM_CONTROL_NAME = {
   REFEREL_CODE: "referelCode",
   PERSONAL_INFORMATION: "personalInformation",
   NAME: "name",
+  AREA: 'area',
   DOB: "dob",
   GENDER: "gender",
   AGE: "age",
@@ -146,3 +149,16 @@ export const REFERED_BY_ARR = [
     label: 'Channel Head'
   }
 ]
+
+export const ADD_MEMBER_FORM_ERROR_MESSAGE = {
+  SELECT_VALUE: 'Select you valiue.',
+  THIS_FIELD_IS_REQUIRED: 'This field is required.',
+  THIS_FIELD_REQUIRES_ATLEAST_3_CHAR: 'This field requires at least three charectors.',
+  INVALID_MOBILE_NUMBER: 'Mobile number you have entered is invalid.',
+  INVALID_AGE: 'The age you have entered is invalid.',
+  INVALID_EMAIL_ID: 'The email id you have entered is invalid.',
+  INVALID_AADHAR: 'The Aadhar no you have entered is invalid',
+  INVALID_PAN: 'The pan no you have entered is invalid',
+  INAVALID_BANK_ACC_NO: 'The account no you have entered is invalid.',
+  INVALID_IFSC_CODE: 'The ifsc code you have entered is invalid.'
+}

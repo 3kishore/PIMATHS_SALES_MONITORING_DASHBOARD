@@ -13,7 +13,7 @@ const formValidators = {
 
 const LoginForm = props => {
   const navigate = useNavigate();
-  const { handleSubmit, pristine, submitting } = props;
+  const { handleSubmit, pristine, submitting, invalid } = props;
   const onSubmitWithNavigate = values => onSubmit(values, null, { navigate });
 
   const [invalidCred, setInvalidCred] = useState(false);
@@ -57,7 +57,7 @@ const LoginForm = props => {
         />
       </div>
       <div className="flex flex-wrap gap-2 mt-3 items-center">
-        <button className="secondary w-fit" onClick={handleSubmit(onSubmitWithNavigate)} disabled={pristine || submitting}>{LOGIN_PAGE.LOGIN}</button>
+        <button className="secondary w-fit" onClick={handleSubmit(onSubmitWithNavigate)} disabled={pristine || submitting || invalid}>{LOGIN_PAGE.LOGIN}</button>
         {
           invalidCred ? <div className='text-sm font-medium text-red-dark'>User name or password is incorrect</div> : <div></div>
         }
