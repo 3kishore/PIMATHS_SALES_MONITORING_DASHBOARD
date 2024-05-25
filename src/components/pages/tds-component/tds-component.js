@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
-import { BASE_64_FILE } from "../../../services/utilities/APP.constant";
+import { APP, BASE_64_FILE } from "../../../services/utilities/APP.constant";
 
 function MyTdsComponent() {
   const [myTdsList, setMyTdsList] = useState([]);
@@ -56,6 +56,7 @@ function MyTdsComponent() {
     <div>
       {!isLoading ? (
         <div>
+          <h2 className="text-2xl font-medium mb-2">{APP.DOWNLOAD_MY_TDS}</h2>
           <div className="w-full grid-ui">
             <div className="overflow-auto">
               <table className="w-full">
@@ -65,7 +66,7 @@ function MyTdsComponent() {
                       <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
                         <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
                           <div className="flex flex-row gap-[12px]">
-                            <span className="text-xs text-neutral-2 font-medium">Quarter</span>
+                            <span className="text-xs text-neutral-2 font-medium">Month</span>
                           </div>
                         </div>
                       </div>

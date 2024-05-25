@@ -1,11 +1,16 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
+import { ApiServiceHelper } from '../../../services/api/api.service';
+import { EnvironmentHelperService } from '../../../services/helper-service/environment-helper.service';
+import ErrorPageComponent from '../error-page/error-page.component';
 
 function MySalesReportComponent() {
   const [selectedDate, setSelectedDate] = useState('');
   const [pastReport, setPastReport] = useState({});
+  const [isErrorOccured, setIsErrorOccured] = useState(false);
   const [isPastReportLoading, setPastReportLoadingStatus] = useState(true);
+  const _apiHelper = new ApiServiceHelper();
+  const _environmentHelperService = new EnvironmentHelperService();
 
   const getPreviousDayDate = () => {
     const today = new Date();
@@ -20,25 +25,85 @@ function MySalesReportComponent() {
 
   function getMySalesReport() {
     setPastReportLoadingStatus(true);
-    axios.get(`https://jsonplaceholder.typicode.com/users`)
-      .then(res => {
-        const fakeReportData = {
-          points: 5000,
-          salesList: [
-            { name: 'Kishore', course: '12th', points: '800' },
-            { name: 'Marri', course: '11th', points: '700' },
-            { name: 'Annable', course: '10th', points: '600' },
-            { name: 'Luke', course: '9th', points: '500' }
-          ]
-        };
-        setPastReport(fakeReportData);
+    const getDate = selectedDate || getPreviousDayDate();
+    const dateArr = getDate.split('-');
+    const date = dateArr[2];
+    const monthArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthNo = parseInt(dateArr[1]);
+    const month = monthArr[monthNo - 1];
+    const year = dateArr[0];
+    const payload = {
+      empCode: _environmentHelperService.getSessionObject()?.empCode || '',
+      date: `${date}-${month}-${year}`
+    }
+    _apiHelper.getMyDayWiseSalesReport(payload).then(resp => {
+      resp = {
+        data: {
+          status: true,
+          message: 'Success',
+          content: {
+            points: 5000,
+            soldTo: [
+              {
+                orderNo: '10145r',
+                orderStatus: 'completed',
+                orederDate: '18-may-2021',
+                firstName: 'John',
+                lastName: 'joe',
+                address: 'dvfdv',
+                city: 'new york',
+                postalCode: '600039',
+                emailId: 'john@gamil.com',
+                phNo: '8190765432',
+                orderTotal: '300',
+                discountAmount: '200',
+                netAmount: '3243',
+                points: '700',
+                courseName: '12th',
+                empCode: 'emp-code-1'
+              },
+              {
+                orderNo: '10145r',
+                orderStatus: 'completed',
+                orederDate: '18-may-2021',
+                firstName: 'John',
+                lastName: 'joe',
+                address: 'dvfdv',
+                city: 'new york',
+                postalCode: '600039',
+                emailId: 'john@gamil.com',
+                phNo: '8190765432',
+                orderTotal: '300',
+                discountAmount: '200',
+                netAmount: '3243',
+                points: '700',
+                courseName: '12th',
+                empCode: 'emp-code-1'
+              }
+            ]
+          }
+        }
+      }
+      if(resp?.data?.status) {
+        setPastReport(resp.data.content);
         setPastReportLoadingStatus(false);
-      });
+        setIsErrorOccured(false);
+      } else {
+        setPastReportLoadingStatus(false);
+        setIsErrorOccured(true);
+      }
+    }).catch(err => {
+      setPastReportLoadingStatus(false);
+      setIsErrorOccured(true);
+    })
   }
 
   useEffect(() => {
     setSelectedDate(getPreviousDayDate());
-    getMySalesReport();
+    setTimeout(() => {
+      getMySalesReport();
+    }, 500)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -61,9 +126,10 @@ function MySalesReportComponent() {
           <div className="bg-white shadow-md rounded-lg p-4">
             <h2 className="text-xl font-semibold mb-4">Sales Report</h2>
             {isPastReportLoading ? <div>Loading</div> : (
+              isErrorOccured ? <ErrorPageComponent /> :
               <div>
                 <div>Points Earned: {pastReport.points}</div>
-                <MySalesReport salesList={pastReport.salesList} />
+                <MySalesReport salesList={pastReport.soldTo} />
               </div>
             )}
           </div>
@@ -76,6 +142,10 @@ function MySalesReportComponent() {
 function SalesReportChart() {
   const [isLoading, setLoadingStatus] = useState(true);
   const [chartData, setChartDate] = useState([]);
+  const [isErrorOccured, setIsErrorOccured] = useState(false);
+
+  const _apiHelper = new ApiServiceHelper();
+  const _environmentHelperService = new EnvironmentHelperService();
 
   const options = {
     title: "My last 7 days performance",
@@ -84,25 +154,65 @@ function SalesReportChart() {
   };
 
   useEffect(() => {
-    axios.get(`https://jsonplaceholder.typicode.com/users`)
-      .then(res => {
-        setChartDate([
+    const payload = {
+      empCode: _environmentHelperService.getSessionObject()?.empCode || ''
+    }
+    _apiHelper.getMySalesSummary(payload).then(resp => {
+      resp = {
+        data: {
+          status: true,
+          message: 'Success',
+          content: [
+            {
+              date: '2024-04-26', point: 1000
+            },
+            {
+              date: '2024-04-27', point: 2000
+            },
+            {
+              date: '2024-04-28', point: 2300
+            },
+            {
+              date: '2024-04-29', point: 800
+            },
+            {
+              date: '2024-04-30', point: 900
+            },
+            {
+              date: '2024-04-31', point: 9000
+            },
+            {
+              date: '2024-05-01', point: 10000
+            },
+            {
+              date: '2024-05-02', point: 15000
+            }
+          ]
+        }
+      }
+      if(resp?.data?.status) {
+        let chartData = [
           ["Date", "Sales"],
-          ["2024-04-26", 1000],
-          ["2024-04-27", 100],
-          ["2024-04-28", 500],
-          ["2024-04-29", 300],
-          ["2024-04-30", 800],
-          ["2024-05-01", 700],
-          ["2024-05-02", 200],
-        ]);
+          ...resp.data.content.map(val => [val.date, val.point])
+        ]
+        setChartDate(chartData);
         setLoadingStatus(false);
-      });
+        setIsErrorOccured(false);
+      } else {
+        setLoadingStatus(false);
+        setIsErrorOccured(true);
+      }
+    }).catch(err => {
+      setLoadingStatus(false);
+      setIsErrorOccured(true);
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div>
       {isLoading ? <div>Loading...</div> : (
+        isErrorOccured ? <ErrorPageComponent />  :
         <div>
           <Chart
             chartType="LineChart"
@@ -155,6 +265,15 @@ function MySalesReport({ salesList }) {
                 <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
                   <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
                     <div className="flex flex-row gap-[12px]">
+                      <span className="text-xs text-neutral-2 font-medium">Order Status</span>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="first:sticky first:left-[0px] first:bg-white">
+                <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                  <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                    <div className="flex flex-row gap-[12px]">
                       <span className="text-xs text-neutral-2 font-medium">Points</span>
                     </div>
                   </div>
@@ -172,12 +291,17 @@ function MySalesReport({ salesList }) {
                 </td>
                 <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                   <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.name}</span>
+                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.firstName}</span>
                   </div>
                 </td>
                 <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                   <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.course}</span>
+                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.courseName}</span>
+                  </div>
+                </td>
+                <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                  <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.orderStatus}</span>
                   </div>
                 </td>
                 <td className="first:bg-neutral-9 first:sticky first:left-[0px]">

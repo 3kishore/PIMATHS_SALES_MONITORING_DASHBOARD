@@ -46,9 +46,10 @@ function MyTeamPerformenceComponent() {
     <div>
       {
         !isLoading ? <div>
+           <div className="h-80 bg-neutral-7 w-full flex justify-center items-center">Loading...</div>
           <MyTeamReportChart chartData={chartData} />
           <MyTeamReportTable salesManList={report} />
-        </div> : <div className="h-80 bg-neutral-7 flex justify-center items-center">Loading...</div>
+        </div> : <div className="h-80 bg-neutral-7 w-full flex justify-center items-center">Loading...</div>
       }
     </div>
   );

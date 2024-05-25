@@ -32,7 +32,8 @@ function MyTeamPerformenceComponent() {
         setChartData(chart);
         setReport(fakeReportData.salesList);
         setIsLoading(false);
-      });
+      }
+    );
   }
 
   const navigate = useNavigate();

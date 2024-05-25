@@ -84,6 +84,8 @@ function App() {
     backgroundColor: '#ffffff',
     zIndex: 9
   }
+  
+  const userLoggedIn = localStorage.getItem('sessionObj') ? true : false;
 
   const toggleSideMenu = e => {
     setSideMenuOn(!sideMenuOn);
@@ -94,44 +96,52 @@ function App() {
         {/* <Header /> */}
         {/* Header Beigns */}
         <div className="p-4 text-white text-xl flex justify-between items-center bg-green-dark">
-          <div className="flex gap-2 items-center">
-          {/* <button onClick={toggleSideMenu} className="menu-toggler">Toggle SideBar</button> */}
-            <span className="menu-toggler-icon cursor-pointer material-symbols-outlined" onClick={toggleSideMenu}>
-              menu
-            </span>
-            <div>{APP.MATH_TUTEE_SALLES}</div>
-          </div>
+          {
+            userLoggedIn ? <div className="flex gap-2 items-center">
+            {/* <button onClick={toggleSideMenu} className="menu-toggler">Toggle SideBar</button> */}
+              <span className="menu-toggler-icon cursor-pointer material-symbols-outlined" onClick={toggleSideMenu}>
+                menu
+              </span>
+              <div>{APP.MATH_TUTEE_SALLES}</div>
+            </div> : <div>{APP.MATH_TUTEE_SALLES}</div>
+          }
         </div>
         {/* Header Ends */}
         <div className='flex layout-height'>
-          {/* Satic Menu for >640px Screen Starts */}
-          <div className='side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black'  id="side-nav">
-            {menuList.map((x, i) => <div>
-              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path}>
-                <div className='flex items-center'>
-                  <span className="material-symbols-outlined text-blue-4">
-                    {x.iconName}
-                  </span>
-                </div>
-                {x.menu}
-              </NavLink>
-            </div>)}
-          </div>
-          {/* Satic Menu for >640px Screen Ends */}
+          {
+            userLoggedIn ?
+            <div className='side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black'  id="side-nav">
+              {menuList.map((x, i) => <div>
+                <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path}>
+                  <div className='flex items-center'>
+                    <span className="material-symbols-outlined text-blue-4">
+                      {x.iconName}
+                    </span>
+                  </div>
+                  {x.menu}
+                </NavLink>
+              </div>)}
+            </div>
+            : <div></div>
+          }
 
+          {
+            userLoggedIn ?
+            <div onClick={toggleSideMenu} className='toggle-side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black' style={sideMenuStyle} id="side-nav">
+              {menuList.map((x, i) => <div>
+                <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3  flex gap-1 items-center' to={x.path}>
+                  <div className='flex items-center'>
+                    <span className="material-symbols-outlined text-blue-4">
+                      {x.iconName}
+                    </span>
+                  </div>
+                  {x.menu}
+                </NavLink>
+              </div>)}
+            </div> : <div></div>
+          }
           {/* Toggle Menu Starts */}
-          <div onClick={toggleSideMenu} className='toggle-side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black' style={sideMenuStyle} id="side-nav">
-            {menuList.map((x, i) => <div>
-              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3  flex gap-1 items-center' to={x.path}>
-                <div className='flex items-center'>
-                  <span className="material-symbols-outlined text-blue-4">
-                    {x.iconName}
-                  </span>
-                </div>
-                {x.menu}
-              </NavLink>
-            </div>)}
-          </div>
+          
           {/* Toggle Menu Ends */}
           <Routes>
             <Route exact path="/login" element={<LoginPage />} />

@@ -4,6 +4,7 @@ export const APP = {
   TRAINING_VIEDO_TITLE: 'Click and watch your training viedo',
   TDS_TITLE: 'TDS(Tax Deducted at Source) - Report',
   ADD_TRAINING_VIEDO: 'Add Training Viedo',
+  DOWNLOAD_MY_TDS: 'Download My TDS.',
   MESSAGE: {
     TRAINING_VIEDO_UPLOAD_INFO: 'Once you upload a video link here, the existing one will be deleted and the new training video will be available for users.'
   }
