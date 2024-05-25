@@ -1,39 +1,54 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { ApiServiceHelper } from "../../../services/api/api.service";
+import ErrorPageComponent from "../error-page/error-page.component";
 
 function MyTeamPerformenceComponent() {
-
+  const { salesman } = useParams();
   const [report, setReport] = useState([]);
-
   const [chartData, setChartData] = useState([["person", "points"]]);
-
   const [isLoading, setIsLoading] = useState(true);
+  const [isErrorOccured, setIsErrorOccured] = useState(false);
+  const _apiHelper = new ApiServiceHelper();  
 
   function getMyTeamReport() {
     setIsLoading(true);
-    axios.get(`https://jsonplaceholder.typicode.com/users`)
-      .then(res => {
-        const fakeReportData = {
-          salesList: [
-            { empCode: 'cm-e-sh-1', name: 'Marri', salesArea: 'Chennai', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Soori', salesArea: 'Madurai', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Lary', salesArea: 'Trichi', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Harry', salesArea: 'Coimbatore', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Carry', salesArea: 'Tuty', mobileNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Mery', salesArea: 'Dindukal', mobileNo: '9087654321', points: 800 },
+    console.log(salesman);
+    const payload = {empCode: salesman}
+    _apiHelper.getMyDirectTeam(payload).then(resp => {
+      resp = {
+        data: {
+          status: true,
+          message: 'Success',
+          content: [
+            { empCode: 'cm-e-sh-1', name: 'John', region: 'Chennai', phNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Mike', region: 'Madurai', phNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Luna', region: 'Trichi', phNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Tena', region: 'Coimbatore', phNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Joe', region: 'Tuty', phNo: '9087654321', points: 800 },
+            { empCode: 'cm-e-sh-1', name: 'Andres', region: 'Dindukal', phNo: '9087654321', points: 800 }
           ]
-        };
-        let chart = [
-          ["person", "points"]
-        ]
-        fakeReportData.salesList.forEach((sales) => chart.push([sales.name, sales.points]));
-        setChartData(chart);
-        setReport(fakeReportData.salesList);
-        setIsLoading(false);
+        }      
       }
-    );
+      if(resp?.data?.status) {
+        let chart = [
+          ["person", "points"],
+          ...resp?.data?.content?.map((sales) => [sales.name, sales.points]) || []
+        ]
+        setChartData(chart);
+        setReport(resp?.data?.content || []);
+        setIsLoading(false);
+        setIsErrorOccured(false);
+      } else {
+        setIsLoading(false);
+        setIsErrorOccured(true);
+      }
+    }).catch(err => {
+      setIsLoading(false);
+      setIsErrorOccured(true);
+      console.log(err);
+    })
   }
 
   const navigate = useNavigate();
@@ -46,16 +61,22 @@ function MyTeamPerformenceComponent() {
     setTimeout(() => {
       getMyTeamReport();
     }, 1000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="w-fit text-sm text-blue-4 cursor-pointer p-2" onClick={() => goToDetails()}>Back</div>
       {
-        !isLoading ? <div>
-          <MyTeamReportChart chartData={chartData} />
-          <MyTeamReportTable salesManList={report} />
-        </div> : <div className="h-80 bg-neutral-7 flex justify-center items-center">Loading...</div>
+        !isLoading ?
+        (
+          isErrorOccured ? <div className="mt-6"><ErrorPageComponent /> </div>:
+          <div>
+            <MyTeamReportChart chartData={chartData} />
+            <MyTeamReportTable salesManList={report} />
+          </div>
+        ) :
+        <div className="h-80 bg-neutral-7 w-full flex justify-center items-center">Loading...</div>
       }
     </div>
   );
@@ -134,6 +155,7 @@ function MyTeamReportTable({salesManList}) {
           </thead>
           <tbody>
             {
+              salesManList?.length ? 
               salesManList.map((salesManDetail, index) => (
                 <tr className="bg-neutral-9 subHeader" key={'sales-mans-report-' + index}>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
@@ -148,12 +170,12 @@ function MyTeamReportTable({salesManList}) {
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                     <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.salesArea}</span>
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.region}</span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                     <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.mobileNo}</span>
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.phNo}</span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
@@ -162,7 +184,14 @@ function MyTeamReportTable({salesManList}) {
                     </div>
                   </td>
                 </tr>
-              ))
+              )) : 
+              <tr className="bg-neutral-9 subHeader">
+                <td className="first:bg-neutral-9 first:sticky first:left-[0px]" colSpan={5}>
+                  <div className="flex justify-center flex-row px-[12px] py-[24px]">
+                    <span className="text-2xl font-bold leading-[1.71] text-neutral-1 text-left">No Data Found.</span>
+                  </div>
+                </td>
+              </tr>
             }
           </tbody>
         </table>

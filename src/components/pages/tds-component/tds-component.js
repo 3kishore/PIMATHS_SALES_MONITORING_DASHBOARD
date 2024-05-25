@@ -53,7 +53,7 @@ function MyTdsComponent() {
   }, [getMyTdsReport]);
 
   return (
-    <div>
+    <div className="w-full">
       {!isLoading ? (
         <div>
           <h2 className="text-2xl font-medium mb-2">{APP.DOWNLOAD_MY_TDS}</h2>

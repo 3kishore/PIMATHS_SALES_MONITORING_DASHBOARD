@@ -10,4 +10,12 @@ export class EnvironmentHelperService {
     }
     return null
   }
+
+  getToken() {
+    return this.getSessionObject()?.token || null;
+  }
+
+  getEmpCode() {
+    return this.getSessionObject()?.empCode || null;
+  }
 }

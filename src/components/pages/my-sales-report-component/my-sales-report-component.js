@@ -33,7 +33,7 @@ function MySalesReportComponent() {
     const month = monthArr[monthNo - 1];
     const year = dateArr[0];
     const payload = {
-      empCode: _environmentHelperService.getSessionObject()?.empCode || '',
+      empCode: _environmentHelperService.getEmpCode(),
       date: `${date}-${month}-${year}`
     }
     _apiHelper.getMyDayWiseSalesReport(payload).then(resp => {
@@ -42,7 +42,7 @@ function MySalesReportComponent() {
           status: true,
           message: 'Success',
           content: {
-            points: 5000,
+            points: 4800,
             soldTo: [
               {
                 orderNo: '10145r',
@@ -155,7 +155,7 @@ function SalesReportChart() {
 
   useEffect(() => {
     const payload = {
-      empCode: _environmentHelperService.getSessionObject()?.empCode || ''
+      empCode: _environmentHelperService.getEmpCode()
     }
     _apiHelper.getMySalesSummary(payload).then(resp => {
       resp = {
@@ -193,9 +193,9 @@ function SalesReportChart() {
       if(resp?.data?.status) {
         let chartData = [
           ["Date", "Sales"],
-          ...resp.data.content.map(val => [val.date, val.point])
+          ...resp?.data?.content?.map(val => [val.date, val.point])
         ]
-        setChartDate(chartData);
+        setChartDate(resp?.data?.content?.length ? chartData :  []);
         setLoadingStatus(false);
         setIsErrorOccured(false);
       } else {
@@ -214,13 +214,18 @@ function SalesReportChart() {
       {isLoading ? <div>Loading...</div> : (
         isErrorOccured ? <ErrorPageComponent />  :
         <div>
-          <Chart
-            chartType="LineChart"
-            width="100%"
-            height="400px"
-            data={chartData}
-            options={options}
-          />
+          {
+            chartData.length ?
+              <Chart
+                chartType="LineChart"
+                width="100%"
+                height="400px"
+                data={chartData}
+                options={options}
+              /> :
+              <div className='text-2xl font-bold mt-5'></div>
+          }
+          
         </div>
       )}
     </div>
@@ -282,35 +287,45 @@ function MySalesReport({ salesList }) {
             </tr>
           </thead>
           <tbody>
-            {salesList.map((salesData, index) => (
-              <tr className="bg-neutral-9 subHeader" key={'sales-detail-' + index}>
-                <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
-                  <div className="h-[40px] min-w-[50px] flex flex-row px-[12px] py-[9px]">
-                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{index + 1}</span>
-                  </div>
-                </td>
-                <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
-                  <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.firstName}</span>
-                  </div>
-                </td>
-                <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
-                  <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.courseName}</span>
-                  </div>
-                </td>
-                <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
-                  <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.orderStatus}</span>
-                  </div>
-                </td>
-                <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
-                  <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                    <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.points}</span>
+            {
+              salesList?.length ?
+              salesList.map((salesData, index) => (
+                <tr className="bg-neutral-9 subHeader" key={'sales-detail-' + index}>
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[50px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{index + 1}</span>
+                    </div>
+                  </td>
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.firstName}</span>
+                    </div>
+                  </td>
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.courseName}</span>
+                    </div>
+                  </td>
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.orderStatus}</span>
+                    </div>
+                  </td>
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.points}</span>
+                    </div>
+                  </td>
+                </tr>
+              )) :
+              <tr className="bg-neutral-9 subHeader">
+                <td className="first:bg-neutral-9 first:sticky first:left-[0px]" colSpan={5}>
+                  <div className="flex justify-center flex-row px-[12px] py-[24px]">
+                    <span className="text-2xl font-bold leading-[1.71] text-neutral-1 text-left">No Data Found.</span>
                   </div>
                 </td>
               </tr>
-            ))}
+            }
           </tbody>
         </table>
       </div>

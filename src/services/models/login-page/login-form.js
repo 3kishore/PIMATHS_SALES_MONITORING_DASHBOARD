@@ -30,7 +30,7 @@ const LoginForm = props => {
             }
           };
           localStorage.setItem('sessionObj', JSON.stringify(fakeJson.content));
-        window.location.reload();
+          window.location.reload();
         }
       ).catch(err => setInvalidCred(true));
   }

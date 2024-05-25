@@ -1,16 +1,18 @@
 import axios from "axios";
+import { EnvironmentHelperService } from "../../helper-service/environment-helper.service";
 
+const _environmentHelperService = new EnvironmentHelperService();
 const axiosHttp = axios.create({
   baseURL: `https://jsonplaceholder.typicode.com`,
 });
 
 axiosHttp.interceptors.request.use(
   (config) => {
-    const token =  "Your Token here"
+    const token =  _environmentHelperService.getToken();
     return {
       ...config,
       headers: {
-        ...(token !== null && { Authorization: `${token}` }),
+        Authorization: `${token}`,
         ...config.headers,
       },
     };
@@ -27,6 +29,8 @@ axiosHttp.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 401) {
+        localStorage.removeItem('sessionObj');
+        window.location.reload();
     }
     return Promise.reject(error);
   }

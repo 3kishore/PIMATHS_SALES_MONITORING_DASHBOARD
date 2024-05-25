@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
+import { ApiServiceHelper } from "../../../services/api/api.service";
 import { APP } from "../../../services/utilities/APP.constant";
 
 function UploadTrainingViedoComponent() {
@@ -7,6 +7,8 @@ function UploadTrainingViedoComponent() {
     const [isExsist, setIsExist] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [showSuccesPage, setShowSucessPage] = useState(false);
+    const [isErrorOccured, setIsErrorOccured] = useState(false);
+    const _apiHelper = new ApiServiceHelper();  
 
     const handleAddItem = () => {
         if (inputValue.trim()) {
@@ -28,13 +30,24 @@ function UploadTrainingViedoComponent() {
     };
 
     function uploadNewTrainingSessions() {
-      axios.post(`https://jsonplaceholder.typicode.com/users`, items)
-        .then(res => {
+      _apiHelper.uploadTrainingSessions(items).then(resp => {
+        resp = {
+          data: {
+            status: true
+          }
+        }
+        if(resp?.data?.status) {
           setShowSucessPage(true);
           setIsExist(false);
           setInputValue('');
           setItems([]);
-        });
+          setIsErrorOccured(false);
+        } else {
+          setIsErrorOccured(true);
+        }
+      }).catch(err => {
+        setIsErrorOccured(true);
+      })
     }
 
     function goBackToUploadPage() {
@@ -42,7 +55,7 @@ function UploadTrainingViedoComponent() {
     }
   
     return (
-      <div>
+      <div className="w-full m-6">
         {!showSuccesPage ? 
           <div>
             <h2 className="text-2xl font-medium mb-2">{APP.ADD_TRAINING_VIEDO}</h2>
@@ -63,6 +76,10 @@ function UploadTrainingViedoComponent() {
               </div>
             </div>
 
+            {
+              isErrorOccured ?
+                <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">Failed to upload.</div> : <div></div>
+            }
             <div className="w-full grid-ui mt-8">
               <div className="overflow-auto">
                 <table className="w-full">
