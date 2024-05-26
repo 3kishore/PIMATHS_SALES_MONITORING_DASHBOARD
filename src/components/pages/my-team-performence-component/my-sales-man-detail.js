@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ApiServiceHelper } from "../../../services/api/api.service";
-import { EnvironmentHelperService } from "../../../services/helper-service/environment-helper.service";
-import { VIEW_ONLY_SINGLE_LEVEL } from "../../../services/utilities/APP.constant";
 import ErrorPageComponent from "../error-page/error-page.component";
 
 function MyTeamPerformenceComponent() {
-
+  const { salesman } = useParams();
   const [report, setReport] = useState([]);
   const [chartData, setChartData] = useState([["person", "points"]]);
   const [isLoading, setIsLoading] = useState(true);
   const [isErrorOccured, setIsErrorOccured] = useState(false);
-  const _apiHelper = new ApiServiceHelper();
-  const _environmentHelperService = new EnvironmentHelperService();
-  
+  const _apiHelper = new ApiServiceHelper();  
 
   function getMyTeamReport() {
     setIsLoading(true);
-    const payload = {empCode: _environmentHelperService.getEmpCode()}
+    console.log(salesman);
+    const payload = {empCode: salesman}
     _apiHelper.getMyDirectTeam(payload).then(resp => {
       resp = {
         data: {
@@ -54,6 +51,12 @@ function MyTeamPerformenceComponent() {
     })
   }
 
+  const navigate = useNavigate();
+
+  function goToDetails() {
+    navigate(`/home/my-team-performence`);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       getMyTeamReport();
@@ -63,8 +66,9 @@ function MyTeamPerformenceComponent() {
 
   return (
     <div className="w-full">
+      <div className="w-fit text-sm text-blue-4 cursor-pointer p-2" onClick={() => goToDetails()}>Back</div>
       {
-        !isLoading ? 
+        !isLoading ?
         (
           isErrorOccured ? <div className="mt-6"><ErrorPageComponent /> </div>:
           <div>
@@ -95,21 +99,6 @@ function MyTeamReportChart({chartData}) {
 
 
 function MyTeamReportTable({salesManList}) {
-
-  const [showNavigation, setNavigation] = useState(false);
-
-  const navigate = useNavigate();
-
-  const goToDetails = (id) => {
-    // Navigate to the '/other-page' route
-    if(!VIEW_ONLY_SINGLE_LEVEL.includes('channel-head-h')) {
-      navigate(`/home/my-team-performence/${id}`);
-    }
-  };
-
-  useEffect(() => {
-    setNavigation(true);
-  }, []);
 
   return (
     <div className="w-full grid-ui">
@@ -166,24 +155,16 @@ function MyTeamReportTable({salesManList}) {
           </thead>
           <tbody>
             {
-              salesManList?.length ?
+              salesManList?.length ? 
               salesManList.map((salesManDetail, index) => (
                 <tr className="bg-neutral-9 subHeader" key={'sales-mans-report-' + index}>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
-                    <div className={
-                      showNavigation ? 'h-[40px] min-w-[200px] flex flex-row px-[12px] text-blue-4 py-[9px] cursor-pointer':
-                      'h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1'}
-                      onClick={() => goToDetails(salesManDetail.name)}
-                    >
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1">
                       <span className="text-base-4 leading-[1.71] text-left">{salesManDetail.empCode}</span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
-                    <div className={
-                      showNavigation ? 'h-[40px] min-w-[200px] flex flex-row px-[12px] text-blue-4 py-[9px] cursor-pointer':
-                      'h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1'}
-                      onClick={() => goToDetails(salesManDetail.name)}
-                    >
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1">
                       <span className="text-base-4 leading-[1.71] text-left">{salesManDetail.name}</span>
                     </div>
                   </td>

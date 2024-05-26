@@ -19,113 +19,245 @@ function PayoutDetailsComponent() {
 
     return (
       <div>
-        <table>
-          {
-            salaryDetail.monthlyIncentive.length ? 
-            <tbody>
-              <tr>
-                <td>{PAYOUT_LABEL.NET_SALARY_WITH_INCENTIVE}:</td>
-                <td>{salaryDetail.netSalaryWith}</td>
-              </tr>
-              <tr>
-                <td>{PAYOUT_LABEL.NET_SALARY_WITHOUT_INCENTIVE}:</td>
-                <td>{salaryDetail.netSalaryWithout}</td>
-              </tr>
-              <tr>
-                <td>{PAYOUT_LABEL.GROSS_SALARY}:</td>
-                <td>{salaryDetail.grossSalary}</td>
-              </tr>
-              <tr>
-                <td>{PAYOUT_LABEL.INCENTIVE_AMOUNT}:</td>
-                <td>{salaryDetail.incentiveAmount}</td>
-              </tr>
-              <tr>
-                <td>{PAYOUT_LABEL.MINIMUM_POINTS_TO_GET_SALARY}:</td>
-                <td>{salaryDetail.points}</td>
-              </tr>
-              <tr>
-                <td>{PAYOUT_LABEL.PRESENT_DAYS}:</td>
-                <td>{salaryDetail.presentDays}</td>
-              </tr>
-            </tbody> :
-            <tbody>
-              <tr>
-                <td>{PAYOUT_LABEL.MINIMUM_POINTS_TO_GET_SALARY}:</td>
-                <td>{salaryDetail.points}</td>
-              </tr>
-              <tr>
-                <td>{PAYOUT_LABEL.QUARTERLY_INCENTIVE} {PAYOUT_LABEL.AMOUNT}:</td>
-                <td>{salaryDetail.quarterlyIncentiveAm}</td>
-              </tr>
-              <tr>
-                <td>{PAYOUT_LABEL.SPECIAL_INCENTIVE}:</td>
-                <td>{salaryDetail.specialIncentive}</td>
-              </tr>
-              <tr>
-                <td>{PAYOUT_LABEL.YEARLY_BONUS}:</td>
-                <td>{salaryDetail.yearlyBouns}</td>
-              </tr>
-            </tbody>
-          }
-        </table>
+        <div className="w-full grid-ui">
+          <div className="overflow-auto">
+            <table className="w-full">
+              {
+                salaryDetail.monthlyIncentive.length ? 
+                <tbody>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.NET_SALARY_WITH_INCENTIVE}</span>
+                      </div>
+                    </td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.netSalaryWith}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.NET_SALARY_WITHOUT_INCENTIVE}</span>
+                      </div>
+                    </td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.netSalaryWithout}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.GROSS_SALARY}</span>
+                      </div>
+                    </td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.grossSalary}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.INCENTIVE_AMOUNT}</span>
+                      </div>
+                    </td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.incentiveAmount}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.MINIMUM_POINTS_TO_GET_SALARY}</span>
+                      </div>
+                    </td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.points}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.PRESENT_DAYS}</span>
+                      </div>
+                    </td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.presentDays}</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody> :
+                <tbody>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.MINIMUM_POINTS_TO_GET_SALARY}</span>
+                      </div>
+                    </td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.points}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.QUARTERLY_INCENTIVE}</span>
+                      </div>
+                     {PAYOUT_LABEL.AMOUNT}</td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.quarterlyIncentiveAm}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.SPECIAL_INCENTIVE}</span>
+                      </div>
+                    </td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.specialIncentive}</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="bg-neutral-9 subHeader">
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{PAYOUT_LABEL.YEARLY_BONUS}</span>
+                      </div>
+                    </td>
+                    <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                      <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                        <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salaryDetail.yearlyBouns}</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              }
+            </table>
+          </div>
+        </div>
         {
             salaryDetail.monthlyIncentive.length ? 
             <div>
-              <div>{PAYOUT_LABEL.MONTHLY_INCENTIVE_BREAKDOWN}: </div>
-              <table>
-                {
-                  salaryDetail.monthlyIncentive.map(val => (
-                    <tbody>
-                      <tr>
-                        <td>{val.points}</td>
-                        <td>{val.amount}</td>
-                      </tr>
-                    </tbody>
-                  ))
-                }
-              </table>
+              <div className="mt-3 font-medium text-[18px] text-[#000]">{PAYOUT_LABEL.MONTHLY_INCENTIVE_BREAKDOWN}: </div>
+              <div className="w-full grid-ui">
+                <div className="overflow-auto">
+                  <table className="w-full">
+                    {
+                      salaryDetail.monthlyIncentive.map(val => (
+                        <tbody>
+                          <tr className="bg-neutral-9 subHeader">
+                            <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                              <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                            <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{val.points}</span>
+                          </div>
+                        </td>
+                            <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                              <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                            <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{val.amount}</span>
+                          </div>
+                        </td>
+                          </tr>
+                        </tbody>
+                      ))
+                    }
+                  </table>
+                </div>
+              </div>
             </div> : <div></div>
         }
         
-        <div>{PAYOUT_LABEL.MONTHLY_SPECIAL_INCENTIVE}: </div>
-        <table>
-          {
-            salaryDetail.monthlySpecialIncentive.map(val => (
-              <tbody>
-                <tr>
-                  <td>{val.points}</td>
-                  <td>{val.amount}</td>
-                </tr>
-              </tbody>
-            ))
-          }
-        </table>
-        <div>{PAYOUT_LABEL.QUARTERLY_INCENTIVE}: </div>
-        <table>
-          {
-            salaryDetail.quarterlyIncentive.map(val => (
-              <tbody>
-                <tr>
-                  <td>{val.points}</td>
-                  <td>{val.amount}</td>
-                </tr>
-              </tbody>
-            ))
-          }
-        </table>
-        <div>{PAYOUT_LABEL.ANNUAL_BONUS}: </div>
-        <table>
-          {
-            salaryDetail.anualBouns.map(val => (
-              <tbody>
-                <tr>
-                  <td>{val.points}</td>
-                  <td>{val.amount}</td>
-                </tr>
-              </tbody>
-            ))
-          }
-        </table>
+        <div className="mt-3 font-medium text-[18px] text-[#000]">{PAYOUT_LABEL.MONTHLY_SPECIAL_INCENTIVE}: </div>
+        <div className="w-full grid-ui">
+          <div className="overflow-auto">
+            <table className="w-full">
+              {
+                salaryDetail.monthlySpecialIncentive.map(val => (
+                  <tbody>
+                    <tr className="bg-neutral-9 subHeader">
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                            <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{val.points}</span>
+                          </div>
+                        </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                            <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{val.amount}</span>
+                          </div>
+                        </td>
+                    </tr>
+                  </tbody>
+                ))
+              }
+            </table>
+          </div>
+        </div>
+        <div className="mt-3 font-medium text-[18px] text-[#000]">{PAYOUT_LABEL.QUARTERLY_INCENTIVE}: </div>
+        <div className="w-full grid-ui">
+          <div className="overflow-auto">
+            <table className="w-full">
+              {
+                salaryDetail.quarterlyIncentive.map(val => (
+                  <tbody>
+                    <tr className="bg-neutral-9 subHeader">
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                            <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{val.points}</span>
+                          </div>
+                        </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                            <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{val.amount}</span>
+                          </div>
+                        </td>
+                    </tr>
+                  </tbody>
+                ))
+              }
+            </table>
+          </div>
+        </div>
+        <div className="mt-3 font-medium text-[18px] text-[#000]">{PAYOUT_LABEL.ANNUAL_BONUS}: </div>
+        <div className="w-full grid-ui">
+          <div className="overflow-auto">
+            <table className="w-full">
+              {
+                salaryDetail.anualBouns.map(val => (
+                  <tbody>
+                    <tr className="bg-neutral-9 subHeader">
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                            <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{val.points}</span>
+                          </div>
+                        </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                            <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{val.amount}</span>
+                          </div>
+                        </td>
+                    </tr>
+                  </tbody>
+                ))
+              }
+            </table>
+          </div>
+        </div>
       </div>
     )
 }

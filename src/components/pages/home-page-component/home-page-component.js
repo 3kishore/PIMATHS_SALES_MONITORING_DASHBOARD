@@ -1,11 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 function HomePageComponent() {
-  return (
-    <div className="p-3">
-      <Outlet />
-    </div>
-  );
+  let location = useLocation();
+  
+  const loggedIn = localStorage.getItem('sessionObj') ? true : false;
+
+  if (!loggedIn) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+
+  return <Outlet />;
 }
 
 export default HomePageComponent;

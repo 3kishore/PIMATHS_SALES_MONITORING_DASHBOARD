@@ -1,15 +1,21 @@
 import React from 'react';
 import { BrowserRouter, NavLink, Route, Routes  } from 'react-router-dom';
 import './App.css';
+import AddMemberComponent from './components/pages/add-member/add-member-component';
+import ApproveOrRejectLicenseComponent from './components/pages/approve-or-reject-license/approve-or-reject-license.component';
+import CheckMyManagerPerformence from './components/pages/check-my-managers-performence/check-my-managers-performence.component';
 import HomePageComponent from './components/pages/home-page-component/home-page-component';
 import LoginPage from './components/pages/login-page/login-page';
 import MySalesReportComponent from './components/pages/my-sales-report-component/my-sales-report-component';
+import MySalesManDetail from './components/pages/my-team-performence-component/my-sales-man-detail';
 import MyTeamPerformenceComponent from './components/pages/my-team-performence-component/my-team-performence-component';
 import PayoutDetailsComponent from './components/pages/payout-model-component/payout-detail-component';
 import PayoutModelComponent from './components/pages/payout-model-component/payout-model-component';
 import SaleryCalculatorComponent from './components/pages/salary-calculator-component/salary-calculator-component';
 import MyTdsComponent from './components/pages/tds-component/tds-component';
 import TrainingViedoComponent from './components/pages/training-viedo-component/training-viedo-component';
+import UploadEmployeeTdsComponent from './components/pages/upload-employee-tds/upload-employee-tds.component';
+import UploadTrainingViedoComponent from './components/pages/upload-training-viedo/upload-training-viedo.component';
 import { APP } from './services/utilities/APP.constant';
 
 function App() {
@@ -17,6 +23,11 @@ function App() {
     {
       menu: 'My Sales Report',
       path: '/home/my-sales-report',
+      iconName: 'monitoring'
+    },
+    {
+      menu: 'See my managers',
+      path: '/home/check-my-managers-performence',
       iconName: 'monitoring'
     },
     {
@@ -43,6 +54,29 @@ function App() {
       menu: 'Traning Viedo',
       path: '/home/traning-viedo',
       iconName: 'model_training'
+    },
+    {
+      menu: 'Add Member',
+      path: '/home/add-member',
+      iconName: 'group_add'
+    },
+
+    
+
+    {
+      menu: 'Upload Training Viedo',
+      path: '/home/upload-training-viedo',
+      iconName: 'publish'
+    },
+    {
+      menu: 'Approve or Reject Request',
+      path: '/home/approve-or-reject-request',
+      iconName: 'license'
+    },
+    {
+      menu: 'Upload Employee TDS',
+      path: '/home/upload-employee-tds',
+      iconName: 'upload_file'
     }
   ]
 
@@ -54,66 +88,94 @@ function App() {
     top: "60px",
     transition: ".5s",
     backgroundColor: '#ffffff',
+    zIndex: 9
   }
+  
+  const userLoggedIn = localStorage.getItem('sessionObj') ? true : false;
 
   const toggleSideMenu = e => {
     setSideMenuOn(!sideMenuOn);
   }
+
+  function logOut() {
+    localStorage.removeItem('sessionObj');
+    window.location.reload();
+  }
+
   return (
     <div className='relative'>
       <BrowserRouter>
         {/* <Header /> */}
         {/* Header Beigns */}
         <div className="p-4 text-white text-xl flex justify-between items-center bg-green-dark">
-          <div className="flex gap-2 items-center">
-          {/* <button onClick={toggleSideMenu} className="menu-toggler">Toggle SideBar</button> */}
-            <span class="menu-toggler-icon cursor-pointer material-symbols-outlined" onClick={toggleSideMenu}>
-              menu
-            </span>
-            <div>{APP.MATH_TUTEE_SALLES}</div>
-          </div>
+          {
+            userLoggedIn ? <div className="flex gap-2 items-center w-full">
+            {/* <button onClick={toggleSideMenu} className="menu-toggler">Toggle SideBar</button> */}
+              <span className="menu-toggler-icon cursor-pointer material-symbols-outlined" onClick={toggleSideMenu}>
+                menu
+              </span>
+              <div className='flex justify-between w-[95%] items-center'>
+                <div>{APP.MATH_TUTEE_SALLES}</div>
+                <div><button className="secondary" onClick={logOut}>Log out</button></div>
+              </div>
+            </div> : <div>{APP.MATH_TUTEE_SALLES}</div>
+          }
         </div>
         {/* Header Ends */}
-        <div className='flex'>
-          {/* Satic Menu for >640px Screen Starts */}
-          <div className='side-nav pt-6 ml-4 flex flex-col gap-6 w-60 border-r border-r-black'>
-            {menuList.map((x, i) => <div>
-              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path} key={i + '-Home'}>
-                <div className='flex items-center'>
-                  <span class="material-symbols-outlined text-blue-4">
-                    {x.iconName}
-                  </span>
-                </div>
-                {x.menu}
-              </NavLink>
-            </div>)}
-          </div>
-          {/* Satic Menu for >640px Screen Ends */}
+        <div className='flex layout-height'>
+          {
+            userLoggedIn ?
+            <div className='side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black'  id="side-nav">
+              {menuList.map((x, i) => <div>
+                <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path}>
+                  <div className='flex items-center'>
+                    <span className="material-symbols-outlined text-blue-4">
+                      {x.iconName}
+                    </span>
+                  </div>
+                  {x.menu}
+                </NavLink>
+              </div>)}
+            </div>
+            : <div></div>
+          }
 
+          {
+            userLoggedIn ?
+            <div onClick={toggleSideMenu} className='toggle-side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black' style={sideMenuStyle} id="side-nav">
+              {menuList.map((x, i) => <div>
+                <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3  flex gap-1 items-center' to={x.path}>
+                  <div className='flex items-center'>
+                    <span className="material-symbols-outlined text-blue-4">
+                      {x.iconName}
+                    </span>
+                  </div>
+                  {x.menu}
+                </NavLink>
+              </div>)}
+            </div> : <div></div>
+          }
           {/* Toggle Menu Starts */}
-          <div onClick={toggleSideMenu} className='toggle-side-nav pt-6 ml-4 flex flex-col gap-6 w-60 border-r border-r-black' style={sideMenuStyle}>
-            {menuList.map((x, i) => <div>
-              <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path} key={i + '-Home'}>
-                <div className='flex items-center'>
-                  <span class="material-symbols-outlined text-blue-4">
-                    {x.iconName}
-                  </span>
-                </div>
-                {x.menu}
-              </NavLink>
-            </div>)}
-          </div>
+          
           {/* Toggle Menu Ends */}
           <Routes>
             <Route exact path="/login" element={<LoginPage />} />
             <Route path="/home" element={<HomePageComponent />}>
               <Route path="/home/my-sales-report" element={<MySalesReportComponent />} />
+              <Route path="/home/check-my-managers-performence" element={<CheckMyManagerPerformence />} />
+              <Route path="/home/add-member" element={<AddMemberComponent />} />
               <Route path="/home/my-team-performence" element={<MyTeamPerformenceComponent />} />
+              <Route path="/home/my-team-performence/:salesman" element={<MySalesManDetail />} />
               <Route path="/home/salary-caculator" element={<SaleryCalculatorComponent />} />
               <Route path="/home/payout-model" element={<PayoutModelComponent />} />
               <Route path="/home/payout-model/:detail" element={<PayoutDetailsComponent />} />
               <Route path="/home/tds" element={<MyTdsComponent />} />
               <Route path="/home/traning-viedo" element={<TrainingViedoComponent />} />
+
+
+              <Route path="/home/upload-training-viedo" element={<UploadTrainingViedoComponent />} />
+              <Route path="/home/approve-or-reject-request" element={<ApproveOrRejectLicenseComponent />} />
+              <Route path="/home/upload-employee-tds" element={<UploadEmployeeTdsComponent />} />
             </Route>
             <Route path="*" element={<div>No page found</div>} />
           </Routes>
