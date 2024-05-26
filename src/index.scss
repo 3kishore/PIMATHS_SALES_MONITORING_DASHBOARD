@@ -185,17 +185,17 @@ code {
   }
   
 .highlight-box {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), /* Slightly larger, softer shadow */
-              0 2px 4px rgba(0, 0, 0, 0.1);  /* Smaller, sharper shadow */
-  border-radius: 8px; /* Optional: rounds the corners */
-  padding: 16px; /* Optional: adds padding inside the box */
-  background-color: #fff; /* Optional: sets a background color */
-  transition: box-shadow 0.3s ease-in-out; /* Smooth transition for hover effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
+              0 2px 4px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 .highlight-box:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), /* Slightly larger, softer shadow on hover */
-              0 4px 8px rgba(0, 0, 0, 0.2);  /* Smaller, sharper shadow on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2),
+              0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .toggle-content {

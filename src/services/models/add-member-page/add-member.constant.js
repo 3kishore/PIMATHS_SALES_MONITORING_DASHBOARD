@@ -122,31 +122,63 @@ export const ADD_MEMBER_FORM_CONTROL_NAME = {
 
 export const JOB_ROLE_ARR = [
   {
-    value: 'sales-executive',
-    label: 'Sales Executive'
+    value: 'promoter',
+    label: 'Promoter'
+  },
+  {
+    value: 'sales-head',
+    label: 'Sales Head'
   },
   {
     value: 'direct-partner',
     label: 'Direct Partner'
   },
   {
+    value: 'pdm',
+    label: 'PDM'
+  },
+  {
     value: 'channel-partner',
     label: 'Channel Partner'
+  },
+  {
+    value: 'channel-head',
+    label: 'Channel Head'
+  },
+  {
+    value: 'regional-head',
+    label: 'Regional Head'
+  },
+  {
+    value: 'zonal-head',
+    label: 'Zonal Head'
   }
 ]
 
 export const REFERED_BY_ARR = [
   {
-    value: 'sales-manager',
-    label: 'Sales Executive'
+    value: 'sales-head',
+    label: 'Sales Head'
   },
   {
-    value: 'partner-development-officer',
-    label: 'partner-development-officer'
+    value: 'direct-partner',
+    label: 'Direct Partner'
+  },
+  {
+    value: 'pdm',
+    label: 'PDM'
   },
   {
     value: 'channel-head',
     label: 'Channel Head'
+  },
+  {
+    value: 'regional-head',
+    label: 'Regional Head'
+  },
+  {
+    value: 'zonal-head',
+    label: 'Zonal Head'
   }
 ]
 

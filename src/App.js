@@ -3,6 +3,7 @@ import { BrowserRouter, NavLink, Route, Routes  } from 'react-router-dom';
 import './App.css';
 import AddMemberComponent from './components/pages/add-member/add-member-component';
 import ApproveOrRejectLicenseComponent from './components/pages/approve-or-reject-license/approve-or-reject-license.component';
+import CheckMyManagerPerformence from './components/pages/check-my-managers-performence/check-my-managers-performence.component';
 import HomePageComponent from './components/pages/home-page-component/home-page-component';
 import LoginPage from './components/pages/login-page/login-page';
 import MySalesReportComponent from './components/pages/my-sales-report-component/my-sales-report-component';
@@ -22,6 +23,11 @@ function App() {
     {
       menu: 'My Sales Report',
       path: '/home/my-sales-report',
+      iconName: 'monitoring'
+    },
+    {
+      menu: 'See my managers',
+      path: '/home/check-my-managers-performence',
       iconName: 'monitoring'
     },
     {
@@ -90,6 +96,12 @@ function App() {
   const toggleSideMenu = e => {
     setSideMenuOn(!sideMenuOn);
   }
+
+  function logOut() {
+    localStorage.removeItem('sessionObj');
+    window.location.reload();
+  }
+
   return (
     <div className='relative'>
       <BrowserRouter>
@@ -97,12 +109,15 @@ function App() {
         {/* Header Beigns */}
         <div className="p-4 text-white text-xl flex justify-between items-center bg-green-dark">
           {
-            userLoggedIn ? <div className="flex gap-2 items-center">
+            userLoggedIn ? <div className="flex gap-2 items-center w-full">
             {/* <button onClick={toggleSideMenu} className="menu-toggler">Toggle SideBar</button> */}
               <span className="menu-toggler-icon cursor-pointer material-symbols-outlined" onClick={toggleSideMenu}>
                 menu
               </span>
-              <div>{APP.MATH_TUTEE_SALLES}</div>
+              <div className='flex justify-between w-[95%] items-center'>
+                <div>{APP.MATH_TUTEE_SALLES}</div>
+                <div><button className="secondary" onClick={logOut}>Log out</button></div>
+              </div>
             </div> : <div>{APP.MATH_TUTEE_SALLES}</div>
           }
         </div>
@@ -147,6 +162,7 @@ function App() {
             <Route exact path="/login" element={<LoginPage />} />
             <Route path="/home" element={<HomePageComponent />}>
               <Route path="/home/my-sales-report" element={<MySalesReportComponent />} />
+              <Route path="/home/check-my-managers-performence" element={<CheckMyManagerPerformence />} />
               <Route path="/home/add-member" element={<AddMemberComponent />} />
               <Route path="/home/my-team-performence" element={<MyTeamPerformenceComponent />} />
               <Route path="/home/my-team-performence/:salesman" element={<MySalesManDetail />} />

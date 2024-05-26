@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import InputComponent from '../../../components/atom/input-component';
+import { AuthServiceHelper } from '../../api/auth.service';
 import validators from '../../utilities/validators';
 import { LOGIN_PAGE } from './login-page.constant';
 
@@ -11,6 +11,8 @@ const formValidators = {
   password: validators.required(LOGIN_PAGE.FORM_ERROR_MESSAGE.PASSWORD_REQUIRED)
 }
 
+const _authHelperService = new AuthServiceHelper();
+
 const LoginForm = props => {
   const navigate = useNavigate();
   const { handleSubmit, pristine, submitting, invalid } = props;
@@ -18,21 +20,29 @@ const LoginForm = props => {
 
   const [invalidCred, setInvalidCred] = useState(false);
   const onSubmit = (values, dispatch, props) => {
-    axios.get(`https://jsonplaceholder.typicode.com/users`)
-        .then(res => {
-          const fakeJson = {
-            status: true,
-            message: 'Success',
-            content: {
-              name: 'kishore',
-              empCode: 'emp-code-101',
-              token: '90u89v-hgcv-kjb'
-            }
-          };
-          localStorage.setItem('sessionObj', JSON.stringify(fakeJson.content));
-          window.location.reload();
+    _authHelperService.loginService(values).then(resp => {
+      resp = {
+        data: {
+          status: true,
+          message: 'Success',
+          content: {
+            name: 'kishore',
+            empCode: 'emp-code-101',
+            role: 'sales-head', // new key
+            token: '90u89v-hgcv-kjb'
+          }
         }
-      ).catch(err => setInvalidCred(true));
+      }
+      if(resp?.data?.status) {
+        localStorage.setItem('sessionObj', btoa(JSON.stringify(resp.data.content)));
+        window.location.reload();
+        setInvalidCred(false)
+      } else {
+        setInvalidCred(true)
+      }
+    }).catch(err => {
+      setInvalidCred(true)
+    })
   }
   
   return (
@@ -41,9 +51,9 @@ const LoginForm = props => {
       <div className="flex flex-col gap-2 mt-3">
         <label className="text-black text-base font-medium">{LOGIN_PAGE.LABEL.USER_NAME}</label>
         <Field
-          name="name"
+          name="empCode"
           component={InputComponent}
-          placeholder={LOGIN_PAGE.PLACEHOLDER.ENTER_YOUR_USER_NAME}
+          placeholder={LOGIN_PAGE.PLACEHOLDER.ENTER_YOUR_EMP_CODE}
           validate={formValidators.name}
         />
       </div>

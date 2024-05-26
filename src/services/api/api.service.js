@@ -16,6 +16,11 @@ export class ApiServiceHelper {
     // return axiosHttp.post('/get-my-direct-team', payload);
   }
 
+  getMyManagersReport(payload) {
+    return axiosHttp.post('/users', payload);
+    // return axiosHttp.post('/get-my-managers-report', payload);
+  }
+
   getMyTrainingSession() {
     return axiosHttp.get('/users');
     // return axiosHttp.get('/get-training-viedo');
