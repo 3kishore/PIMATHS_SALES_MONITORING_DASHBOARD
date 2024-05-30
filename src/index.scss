@@ -17,135 +17,212 @@ code {
 }
 
 .primary {
-  @apply cursor-pointer h-[42px] flex items-center text-left leading-tight gap-[8px] rounded py-[10px] px-[20px] text-base font-medium text-white bg-blue-4;
+  cursor: pointer;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  line-height: 1.25;
+  gap: 8px;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #2054ff;
+  // @apply cursor-pointer h-[42px] flex items-center text-left leading-tight gap-[8px] rounded py-[10px] px-[20px] text-base font-medium text-white bg-blue-4;
   div{
-      @apply flex gap-[8px] items-center;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+      // @apply flex gap-[8px] items-center;
   }
-  &.stroke{
-      @apply h-[32px] px-[12px];
-      &.iconRight {
-          @apply pr-[8px];
-      }
-      &.iconLeft {
-          @apply pl-[8px];
-      }
+  &.iconRight {
+    padding-right: 14px;
+    // @apply pr-[14px]
   }
-  &:not(.stroke){
-      &.iconRight {
-          @apply pr-[14px]
-      }
-      &.iconLeft {
-          @apply pl-[14px]
-      }
+  &.iconLeft {
+    padding-left: 14px;
+      // @apply pl-[14px]
   }
   &.success {
-    @apply bg-[#039487];
+    background-color: #039487;
+    // @apply bg-[#039487];
     &:hover {
       background-color: lighten($color: #039487, $amount: 10)
     }
   }
   &.danger{
-      @apply bg-red text-white;
+    background-color: #df3a3a;
+    color: #fff;
+      // @apply bg-red text-white;
       &:disabled {
-          @apply bg-neutral-6;
+        background-color: #8f9bbc;
+          // @apply bg-neutral-6;
   
           &:hover{
-              @apply  bg-neutral-6;
+            background-color: #8f9bbc;
+              // @apply  bg-neutral-6;
           }
               }
       &:hover{
-          @apply bg-red-dark;
+        background-color: #a92323;
+          // @apply bg-red-dark;
       }
   }
   &:disabled {
-      @apply bg-neutral-6;
+    background-color: #8f9bbc;
+      // @apply bg-neutral-6;
 
       &:hover{
-          @apply  bg-neutral-6;
+        background-color: #8f9bbc;
+          // @apply  bg-neutral-6;
       }
           }
   &:hover{
-      @apply bg-blue-2;
+    background-color: #173fc4;
+      // @apply bg-blue-2;
   }
 }
 
 .secondary {
-  @apply cursor-pointer h-[42px] flex items-center text-left leading-tight gap-[8px] py-[10px] px-[20px] rounded text-base font-medium text-blue-4 bg-neutral-9;
+  cursor: pointer;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  line-height: 1.25;
+  gap: 8px;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2054ff;
+  background-color: #e8edfa;
+  // @apply cursor-pointer h-[42px] flex items-center text-left leading-tight gap-[8px] py-[10px] px-[20px] rounded text-base font-medium text-blue-4 bg-neutral-9;
   div{
-      @apply flex gap-[8px] items-center;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+      // @apply flex gap-[8px] items-center;
   }
-  &.stroke{
-      @apply h-[32px] px-[12px];
-      &.iconRight {
-          @apply pr-[8px];
-      }
-      &.iconLeft {
-          @apply pl-[8px];
-      }
+  &.iconRight {
+    padding-right: 14px;
+    // @apply pr-[14px]
   }
-  &:not(.stroke){
-      &.iconRight {
-          @apply pr-[14px]
-      }
-      &.iconLeft {
-          @apply pl-[14px]
-      }
-  }
-  &.danger{
-      @apply  text-red;
+  &.iconLeft {
+    padding-left: 14px;
+      // @apply pl-[14px]
   }
   &:disabled {
-      @apply text-gray-0 bg-neutral-11;
+    background-color: #f0f1f5;
+    color: #697496;
+      // @apply text-gray-0 bg-neutral-11;
 
       &:hover{
-          @apply bg-neutral-11;
+        background-color: #f0f1f5;
+          // @apply bg-neutral-11;
       }
   }
   &:hover{
-      @apply  bg-neutral-7;
+    background-color: #d8ddeb;
+      // @apply  bg-neutral-7;
   }
 }
 
 .tertiary {
-  @apply cursor-pointer flex items-center text-center leading-tight tracking-normal h-[42px] gap-[8px] rounded py-[14px] px-[0px] text-base font-medium text-blue-4;
+  cursor: pointer;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  line-height: 1.25;
+  gap: 8px;
+  border-radius: 4px;
+  padding: 10px 0px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2054ff;
+  // @apply cursor-pointer flex items-center text-center leading-tight tracking-normal h-[42px] gap-[8px] rounded py-[14px] px-[0px] text-base font-medium text-blue-4;
   div{
-      @apply flex gap-[8px] items-center;
-  }
-  &.stroke{
-      @apply h-[32px];
-  }
-  &.danger{
-      @apply  text-red;
-      &:hover{
-          @apply underline decoration-red;
-      }
+    display: flex;
+    gap: 8px;
+    align-items: center;
+      // @apply flex gap-[8px] items-center;
   }
   &:disabled {
-      @apply text-gray-0;
+    color: #697496;
+      // @apply text-gray-0;
 
       &:hover{
-          @apply text-gray-0 no-underline;
+        color: #697496;
+        text-decoration: none;
+          // @apply text-gray-0 no-underline;
        } 
   }
   &:hover{
-     @apply underline decoration-blue-4
+    text-decoration: underline;
+    text-decoration-color: #2054ff;
+    //  @apply underline decoration-blue-4
   }
 }
 
 .text-input {
-    @apply border-solid border-[1px] py-[12px] px-[8px] flex flex-row text-base gap-[8px] rounded-[4px]
-        w-full h-full placeholder:text-sm placeholder:leading-[1.14] placeholder:text-neutral-6 border-neutral-7 focus:border-primary;
-    &:focus-visible {
-        @apply border-[#2054FF] outline-0 #{"!important"};
-    }
+  border: solid 1px #d8ddeb;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  gap: 8px;
+  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  &::placeholder {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #8f9bbc;
+  }
+  &:focus {
+    border-color: #3363ff;
+  }
+  &:focus-visible {
+    border-color: #2054FF !important;
+    outline: none !important;
+  }
+    // @apply border-solid border-[1px] py-[12px] px-[8px] flex flex-row text-base gap-[8px] rounded-[4px]
+    //     w-full h-full placeholder:text-sm placeholder:leading-[1.14] placeholder:text-neutral-6 border-neutral-7 focus:border-primary;
+    // &:focus-visible {
+    //     @apply border-[#2054FF] outline-0 #{"!important"};
+    // }
 }
 
 .select-input {
-    @apply border-solid border-[1px] py-[12px] px-[8px] flex flex-row text-base gap-[8px] rounded-[4px]
-        w-full h-full placeholder:text-sm placeholder:leading-[1.14] placeholder:text-neutral-6 border-neutral-7 focus:border-primary;
-    &:focus-visible {
-        @apply border-[#2054FF] outline-0 #{"!important"};
-    }
+  border: solid 1px #d8ddeb;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  gap: 8px;
+  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  &::placeholder {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #8f9bbc;
+  }
+  &:focus {
+    border-color: #3363ff;
+  }
+  &:focus-visible {
+    border-color: #2054FF !important;
+    outline: none !important;
+  }
+    // @apply border-solid border-[1px] py-[12px] px-[8px] flex flex-row text-base gap-[8px] rounded-[4px]
+    //     w-full h-full placeholder:text-sm placeholder:leading-[1.14] placeholder:text-neutral-6 border-neutral-7 focus:border-primary;
+    // &:focus-visible {
+    //     @apply border-[#2054FF] outline-0 #{"!important"};
+    // }
 }
 
 .layout-height {
@@ -160,29 +237,32 @@ code {
   width: 0;
 }
 .grid-ui {
-    tr:nth-child(odd) td {
-      @apply bg-white #{"!important"};
+  tr:nth-child(odd) td {
+    background-color: #fff !important;
+  }
+  tr:nth-child(even):not(.subHeader) td {
+    background-color: #f0f1f5 !important;
+  }
+  .activeFilter {
+    background-color: #d8ddeb !important;
+  }
+  &.selectable {
+    tr>th:nth-child(2) {
+      background-color: #fff !important;
+      position: sticky;
+      left: 25px;
     }
-    tr:nth-child(even):not(.subHeader) td {
-      @apply bg-neutral-11 #{"!important"};
+    tr>td:nth-child(2) {
+      position: sticky;
+      left: 25px;
     }
-    .activeFilter {
-      @apply bg-neutral-7 #{"!important"};
-    }
-    &.selectable {
-      tr>th:nth-child(2) {
-        @apply sticky left-[25px] bg-white;
-      }
-      tr>td:nth-child(2) {
-        @apply sticky left-[25px];
-      }
-      .subHeader {
-        td {
-          @apply bg-neutral-9;
-        }
+    .subHeader {
+      td {
+        background-color: #e8edfa !important;
       }
     }
   }
+}
   
 .highlight-box {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
