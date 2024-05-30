@@ -1505,3 +1505,251 @@ export const MY_TEAM = [
     ]
   }
 ]
+
+
+export const NEW_PAYOUT_MODEL = [
+  {
+    type: 'promoter',
+    salary: '12000',
+    dedaction: '3000',
+    incentive: 'N/A',
+    total: '15000',
+    mothlyIncentive: [
+      {points: '1 to 150', amount: '2.5'},
+      {points: '151 to 300', amount: '5'},
+      {points: '301 to 450', amount: '7.5'},
+      {points: '451 to 550', amount: '10'},
+      {points: '551 to 650', amount: '12.5'},
+      {points: '651 to 700', amount: '15'},
+      {points: '701 to 799', amount: '20'},
+      {points: '800 & above', amount: '25'}
+    ],
+    mothlySpecialIncentive: [
+      {points: 'Below 400', amount: 'No incentive'},
+      {points: '400 to 500', amount: '0.46875'},
+      {points: '501 to 650', amount: '0.9375'},
+      {points: '651 to 799', amount: '1.875'},
+      {points: '800 & Above', amount: '3.75'}
+    ],
+    quarterlyIncentive: [
+      {points: 'Below 1200', amount: 'No incentive'},
+      {points: '1,200 to 1,500', amount: '0.5'},
+      {points: '1,501 to 2,000', amount: '1'},
+      {points: '2,001 to 2,499', amount: '2'},
+      {points: '2500 & Above', amount: '4'}
+    ],
+    annualBonus: {
+      points: 1,
+      amount: '1.5'
+    }
+  },
+  {
+    type: 'sales-head',
+    salary: '20000',
+    dedaction: '5000',
+    incentive: 'N/A',
+    total: '25000',
+    mothlyIncentive: [
+      {points: '1 to 3000', amount: '0.175'},
+      {points: '3001 to 6000', amount: '0.35'},
+      {points: '6001 to 9000', amount: '0.525'},
+      {points: '9001 to 11000', amount: '0.7'},
+      {points: '11001 to 13000', amount: '0.875'},
+      {points: '13001 to 14000', amount: '1.05'},
+      {points: '14001 to 15999', amount: '1.4'},
+      {points: '16000 & above', amount: '1.75'}
+    ],
+    mothlySpecialIncentive: [
+      {points: 'Below 10,000', amount: 'No incentive'},
+      {points: '10,000 to 15,000', amount: '0.234375'},
+      {points: '15,001 to 17,500', amount: '0.46875'},
+      {points: '17,501 to 19,999', amount: '0.9375'},
+      {points: '20,000 & Above', amount: '1.875'}
+    ],
+    quarterlyIncentive: [
+      {points: 'Below 30,000', amount: 'No incentive'},
+      {points: '30,000 to 45,000', amount: '0.03'},
+      {points: '45,001 to 52,500', amount: '0.06'},
+      {points: '52,501 to 62,499', amount: '0.12'},
+      {points: '62,500 & Above', amount: '0.24'}
+    ],
+    annualBonus: {
+      points: 1,
+      amount: '0.1125'
+    }
+  },
+  {
+    type: 'pdm',
+    salary: '20000',
+    dedaction: '5000',
+    incentive: 'N/A',
+    total: '25000',
+    mothlyIncentive: [
+      {points: '1 to 3000', amount: '0.175'},
+      {points: '3001 to 6000', amount: '0.35'},
+      {points: '6001 to 9000', amount: '0.525'},
+      {points: '9001 to 11000', amount: '0.7'},
+      {points: '11001 to 13000', amount: '0.875'},
+      {points: '13001 to 14000', amount: '1.05'},
+      {points: '14001 to 15999', amount: '1.4'},
+      {points: '16000 & above', amount: '1.75'}
+    ],
+    mothlySpecialIncentive: [
+      {points: 'Below 10,000', amount: 'No incentive'},
+      {points: '10,000 to 15,000', amount: '0.234375'},
+      {points: '15,001 to 17,500', amount: '0.46875'},
+      {points: '17,501 to 19,999', amount: '0.9375'},
+      {points: '20,000 & Above', amount: '1.875'}
+    ],
+    quarterlyIncentive: [
+      {points: 'Below 30,000', amount: 'No incentive'},
+      {points: '30,000 to 45,000', amount: '0.03'},
+      {points: '45,001 to 52,500', amount: '0.06'},
+      {points: '52,501 to 62,499', amount: '0.12'},
+      {points: '62,500 & Above', amount: '0.24'}
+    ],
+    annualBonus: {
+      points: 1,
+      amount: '0.1125'
+    }
+  },
+  {
+    type: 'regional-head',
+    salary: '32000',
+    dedaction: '8000',
+    incentive: 'N/A',
+    total: '40000',
+    mothlyIncentive: [
+      {points: '1 to 30,000', amount: '0.02'},
+      {points: '30,001 to 60,000', amount: '0.04'},
+      {points: '60,001 to 90,000', amount: '0.06'},
+      {points: '90,001 to 1,10,000', amount: '0.08'},
+      {points: '1,10,001 to 1,30,000', amount: '0.1'},
+      {points: '1,30,001 to 1,40,000', amount: '0.12'},
+      {points: '1,40,001 to 1,59,999', amount: '0.16'},
+      {points: '1,60,000 & above', amount: '0.2'}
+    ],
+    mothlySpecialIncentive: [
+      {points: 'Below 1,00,000', amount: 'No incentive'},
+      {points: '1 lac to 1.25 lac', amount: '0.1171875'},
+      {points: '1.25 lac to 1.5 lac', amount: '0.234375'},
+      {points: '1.5 lac to 1.99 lac', amount: '0.46875'},
+      {points: '2 lac & Above', amount: '0.9375'}
+    ],
+    quarterlyIncentive: [
+      {points: 'Below 3 lac', amount: 'No incentive'},
+      {points: '3,00,000 to 4,50,000', amount: '0.004'},
+      {points: '4,50,001 to 5,20,000', amount: '0.008'},
+      {points: '5,20,001 to 6,24,999', amount: '0.016'},
+      {points: '6,25,000 & Above', amount: '0.032'}
+    ],
+    annualBonus: {
+      points: 1,
+      amount: '0.015'
+    }
+  },
+  {
+    type: 'zonal-head',
+    salary: '40000',
+    dedaction: '10000',
+    incentive: 'N/A',
+    total: '50000',
+    mothlyIncentive: [
+      {points: '1 to 1 .5 lac', amount: '0.005'},
+      {points: '1.5lacto 3lac', amount: '0.01'},
+      {points: '3 lac to 4.5 lac', amount: '0.015'},
+      {points: '4.5 lac 5.5 lac', amount: '0.02'},
+      {points: '5.5 lac to 6.5 lac', amount: '0.025'},
+      {points: '6.5 lac 7 lac', amount: '0.03'},
+      {points: '7 lac to 7.99 lac', amount: '0.04'},
+      {points: '8 lac & above', amount: '0.05'}
+    ],
+    mothlySpecialIncentive: [
+      {points: 'Below 5 Lac', amount: 'No incentive'},
+      {points: '5 lac to 6 lac', amount: '0.05859375'},
+      {points: '6 lac to 8 lac', amount: '0.1171875'},
+      {points: '8 lac to 9.99 lac', amount: '0.234375'},
+      {points: '10 lac & Above', amount: '0.46875'}
+    ],
+    quarterlyIncentive: [
+      {points: 'Below 15 lac', amount: 'No incentive'},
+      {points: '15 lac to 22.5 lac', amount: '0.001'},
+      {points: '22.5 lac to 26 lac', amount: '0.002'},
+      {points: '26 lac to 31.25 lac', amount: '0.004'},
+      {points: '31.25 lac & Above', amount: '0.008'}
+    ],
+    annualBonus: {
+      points: 1,
+      amount: '0.00375'
+    }
+  },
+  {
+    type: 'direct-partner',
+    invcentivePercent: '15%',
+    mothlyIncentive: [],
+    mothlySpecialIncentive: [
+      {points: 'Below 100', amount: 'No incentive'},
+      {points: '100 to 150', amount: '1.184375'},
+      {points: '151 to 175', amount: '2.36875'},
+      {points: '176 to 199', amount: '4.7375'},
+      {points: '200 & Above', amount: '9.475'},
+    ],
+    quarterlyIncentive: [
+      {points: 'Below 300', amount: 'No incentive'},
+      {points: '300 to 400', amount: '0.625'},
+      {points: '401 to 500', amount: '1.25'},
+      {points: '501 to 624', amount: '2.5'},
+      {points: '625 & Above', amount: '5'}
+    ],
+    annualBonus: {
+      points: 1,
+      amount: '2.5'
+    }
+  },
+  {
+    type: 'channel-partner',
+    invcentivePercent: '12.5%',
+    mothlyIncentive: [],
+    mothlySpecialIncentive: [
+      {points: 'Below 100', amount: 'No incentive'},
+      {points: '100 to 150', amount: '0.759375'},
+      {points: '151 to 175', amount: '1.51875'},
+      {points: '176 to 199', amount: '3.0375'},
+      {points: '200 & Above', amount: '6.075'},
+    ],
+    quarterlyIncentive: [
+      {points: 'Below 300', amount: 'No incentive'},
+      {points: '300 to 400', amount: '0.3125'},
+      {points: '401 to 500', amount: '0.625'},
+      {points: '501 to 624', amount: '1.25'},
+      {points: '625 & Above', amount: '2.5'}
+    ],
+    annualBonus: {
+      points: 1,
+      amount: '1.25'
+    }
+  },
+  {
+    type: 'channel-head',
+    invcentivePercent: '5%',
+    mothlyIncentive: [],
+    mothlySpecialIncentive: [
+      {points: 'Below 5000', amount: 'No incentive'},
+      {points: '5,000 to 6,000', amount: '0.590625'},
+      {points: '6,000 to 7,500', amount: '1.18125'},
+      {points: '7,501 to 9,999', amount: '2.3625'},
+      {points: '10,000 & Above', amount: '4.725'},
+    ],
+    quarterlyIncentive: [
+      {points: 'Below 7,500', amount: 'No incentive'},
+      {points: '7,500 to 15,000', amount: '0.15625'},
+      {points: '15,001 to 22,500', amount: '0.3125'},
+      {points: '22,501 to 31,249', amount: '0.625'},
+      {points: '3,1250 & Above', amount: '1.25'}
+    ],
+    annualBonus: {
+      points: 1,
+      amount: '0.625'
+    }
+  }
+]

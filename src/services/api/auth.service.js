@@ -3,16 +3,16 @@ import axiosHttp from "../utilities/app-interceptor/app-interceptor.service";
 export class AuthServiceHelper {
   loginService(payload) {
     return axiosHttp.post('/users', payload);
-    // return axiosHttp.post('/authorize', payload);
+    // return axiosHttp.post('/auth/authorize', payload);
   }
 
   requestForgotPassword(payload) {
     return axiosHttp.post('/users', payload);
-    // return axiosHttp.post('/forgot-password', payload);
+    // return axiosHttp.post('/auth/forget-password', payload);
   }
 
   changePassword(payload) {
     return axiosHttp.post('/users', payload);
-    // return axiosHttp.post('/reset-password', payload);
+    // return axiosHttp.post('/auth/reset-password', payload);
   }
 }  

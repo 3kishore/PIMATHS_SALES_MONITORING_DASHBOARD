@@ -8,7 +8,7 @@ import { LOGIN_PAGE } from './login-page.constant';
 
 const formValidators = {
   // eslint-disable-next-line
-  name: [validators.required(LOGIN_PAGE.FORM_ERROR_MESSAGE.EMAIL_ID_REQUIRED), validators.regex('/^[^\s@]+@[^\s@]+\.[^\s@]+$/', LOGIN_PAGE.FORM_ERROR_MESSAGE.INVALID_EMAIL_ID)],
+  name: [validators.required(LOGIN_PAGE.FORM_ERROR_MESSAGE.EMAIL_ID_REQUIRED), validators.regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, LOGIN_PAGE.FORM_ERROR_MESSAGE.INVALID_EMAIL_ID)],
   // eslint-disable-next-line
   password: [validators.required(LOGIN_PAGE.FORM_ERROR_MESSAGE.PASSWORD_REQUIRED), validators.minLength(8, LOGIN_PAGE.FORM_ERROR_MESSAGE.PASSWORD_SHOULD_HAVE_8)]
 }
@@ -63,10 +63,18 @@ const ResestPassoword = props => {
                 validate={formValidators.password}
               />
             </div>
-            <div className="flex flex-wrap gap-2 mt-3 items-center">
-              <button className="secondary w-fit" onClick={handleSubmit(onSubmitWithNavigate)} disabled={pristine || submitting || invalid}>{LOGIN_PAGE.CHANGE_PASSWORD}</button>
+            <div className="flex flex-col flex-wrap gap-2 mt-3 items-center">
+              <div>
+                <button
+                  className="secondary w-fit"
+                  onClick={handleSubmit(onSubmitWithNavigate)}
+                  disabled={pristine || submitting || invalid}
+                >{LOGIN_PAGE.CHANGE_PASSWORD}</button>
+              </div>
               {
-                invalidCred ? <div className='text-sm font-medium text-red-dark'>Failed to reset</div> : <div></div>
+                invalidCred ? <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2 w-full">
+                  Failed to reset password
+                </div>: <div></div>
               }
             </div>
           </div> 

@@ -37,53 +37,6 @@ function MySalesReportComponent() {
       date: `${date}-${month}-${year}`
     }
     _apiHelper.getMyDayWiseSalesReport(payload).then(resp => {
-      resp = {
-        data: {
-          status: true,
-          message: 'Success',
-          content: {
-            points: 4800,
-            soldTo: [
-              {
-                orderNo: '10145r',
-                orderStatus: 'completed',
-                orederDate: '18-may-2021',
-                firstName: 'John',
-                lastName: 'joe',
-                address: 'dvfdv',
-                city: 'new york',
-                postalCode: '600039',
-                emailId: 'john@gamil.com',
-                phNo: '8190765432',
-                orderTotal: '300',
-                discountAmount: '200',
-                netAmount: '3243',
-                points: '700',
-                courseName: '12th',
-                empCode: 'emp-code-1'
-              },
-              {
-                orderNo: '10145r',
-                orderStatus: 'completed',
-                orederDate: '18-may-2021',
-                firstName: 'John',
-                lastName: 'joe',
-                address: 'dvfdv',
-                city: 'new york',
-                postalCode: '600039',
-                emailId: 'john@gamil.com',
-                phNo: '8190765432',
-                orderTotal: '300',
-                discountAmount: '200',
-                netAmount: '3243',
-                points: '700',
-                courseName: '12th',
-                empCode: 'emp-code-1'
-              }
-            ]
-          }
-        }
-      }
       if(resp?.data?.status) {
         setPastReport(resp.data.content);
         setPastReportLoadingStatus(false);
@@ -158,38 +111,6 @@ function SalesReportChart() {
       empCode: _environmentHelperService.getEmpCode()
     }
     _apiHelper.getMySalesSummary(payload).then(resp => {
-      resp = {
-        data: {
-          status: true,
-          message: 'Success',
-          content: [
-            {
-              date: '2024-04-26', point: 1000
-            },
-            {
-              date: '2024-04-27', point: 2000
-            },
-            {
-              date: '2024-04-28', point: 2300
-            },
-            {
-              date: '2024-04-29', point: 800
-            },
-            {
-              date: '2024-04-30', point: 900
-            },
-            {
-              date: '2024-04-31', point: 9000
-            },
-            {
-              date: '2024-05-01', point: 10000
-            },
-            {
-              date: '2024-05-02', point: 15000
-            }
-          ]
-        }
-      }
       if(resp?.data?.status) {
         let chartData = [
           ["Date", "Sales"],
