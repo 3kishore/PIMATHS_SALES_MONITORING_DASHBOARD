@@ -3,7 +3,7 @@ import { BrowserRouter, NavLink, Route, Routes  } from 'react-router-dom';
 import './App.css';
 import AddMemberComponent from './components/pages/add-member/add-member-component';
 import ApproveOrRejectLicenseComponent from './components/pages/approve-or-reject-license/approve-or-reject-license.component';
-import CheckMyManagerPerformence from './components/pages/check-my-managers-performence/check-my-managers-performence.component';
+// import CheckMyManagerPerformence from './components/pages/check-my-managers-performence/check-my-managers-performence.component';
 import HomePageComponent from './components/pages/home-page-component/home-page-component';
 import LoginPage from './components/pages/login-page/login-page';
 import MySalesReportComponent from './components/pages/my-sales-report-component/my-sales-report-component';
@@ -16,69 +16,15 @@ import MyTdsComponent from './components/pages/tds-component/tds-component';
 import TrainingViedoComponent from './components/pages/training-viedo-component/training-viedo-component';
 import UploadEmployeeTdsComponent from './components/pages/upload-employee-tds/upload-employee-tds.component';
 import UploadTrainingViedoComponent from './components/pages/upload-training-viedo/upload-training-viedo.component';
-import { APP } from './services/utilities/APP.constant';
+import { EnvironmentHelperService } from './services/helper-service/environment-helper.service';
+import { ADDMIN_SIDE_NAV, APP, MANAGERS_SIDE_NAV, SALES_MAN_SIDE_NAV, USER_JOB_TITLE } from './services/utilities/APP.constant';
 
 function App() {
-  const menuList = [
-    {
-      menu: 'My Sales Report',
-      path: '/home/my-sales-report',
-      iconName: 'monitoring'
-    },
-    {
-      menu: 'See my managers',
-      path: '/home/check-my-managers-performence',
-      iconName: 'monitoring'
-    },
-    {
-      menu: 'My Team Performence',
-      path: '/home/my-team-performence',
-      iconName: 'groups'
-    },
-    {
-      menu: 'Salary Calculator',
-      path: '/home/salary-caculator',
-      iconName: 'calculate'
-    },
-    {
-      menu: 'Payout Model',
-      path: '/home/payout-model',
-      iconName: 'payments'
-    },
-    {
-      menu: 'TDS',
-      path: '/home/tds',
-      iconName: 'markdown_copy'
-    },
-    {
-      menu: 'Traning Viedo',
-      path: '/home/traning-viedo',
-      iconName: 'model_training'
-    },
-    {
-      menu: 'Add Member',
-      path: '/home/add-member',
-      iconName: 'group_add'
-    },
+  const _environmentHelperService = new EnvironmentHelperService();
 
-    
-
-    {
-      menu: 'Upload Training Viedo',
-      path: '/home/upload-training-viedo',
-      iconName: 'publish'
-    },
-    {
-      menu: 'Approve or Reject Request',
-      path: '/home/approve-or-reject-request',
-      iconName: 'license'
-    },
-    {
-      menu: 'Upload Employee TDS',
-      path: '/home/upload-employee-tds',
-      iconName: 'upload_file'
-    }
-  ]
+  const menuList = _environmentHelperService.getRole() === USER_JOB_TITLE.admin ? ADDMIN_SIDE_NAV :
+    (_environmentHelperService.getRole() === USER_JOB_TITLE.PROMOTER || _environmentHelperService.getRole() === USER_JOB_TITLE.CHANNEL_PARTNER) ?
+    SALES_MAN_SIDE_NAV : MANAGERS_SIDE_NAV;
 
   const [sideMenuOn, setSideMenuOn] = React.useState(false);
 
@@ -162,7 +108,7 @@ function App() {
             <Route exact path="/login" element={<LoginPage />} />
             <Route path="/home" element={<HomePageComponent />}>
               <Route path="/home/my-sales-report" element={<MySalesReportComponent />} />
-              <Route path="/home/check-my-managers-performence" element={<CheckMyManagerPerformence />} />
+              {/* <Route path="/home/check-my-managers-performence" element={<CheckMyManagerPerformence />} /> */}
               <Route path="/home/add-member" element={<AddMemberComponent />} />
               <Route path="/home/my-team-performence" element={<MyTeamPerformenceComponent />} />
               <Route path="/home/my-team-performence/:salesman" element={<MySalesManDetail />} />

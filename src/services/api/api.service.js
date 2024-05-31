@@ -3,36 +3,36 @@ import axiosHttp from "../utilities/app-interceptor/app-interceptor.service";
 export class ApiServiceHelper {
   getMySalesSummary(payload) {
     return axiosHttp.post('/users', payload);
-    // return axiosHttp.post('/get-my-sales-summary', payload);
+    // return axiosHttp.post('/employee/get-my-sales-summary', payload);
   }
 
   getMyDayWiseSalesReport(payload) {
     return axiosHttp.post('/users', payload);
-    // return axiosHttp.post('/get-daywise-data', payload);
+    // return axiosHttp.post('/employee/get-order-by-date', payload);
   }
 
   getMyDirectTeam(payload) {
     return axiosHttp.post('/users', payload);
-    // return axiosHttp.post('/get-my-direct-team', payload);
+    // return axiosHttp.post('/employee/get-my-direct-team', payload);
   }
 
   getMyManagersReport(payload) {
     return axiosHttp.post('/users', payload);
-    // return axiosHttp.post('/get-my-managers-report', payload);
+    // return axiosHttp.get('/admin/get-admin-direct-employees', payload);
   }
 
   getMyTrainingSession() {
     return axiosHttp.get('/users');
-    // return axiosHttp.get('/get-training-viedo');
+    // return axiosHttp.get('/video/get-training-videos');
   }
 
   uploadTrainingSessions(payload) {
     return axiosHttp.post('/users', payload);
-    // return axiosHttp.post('/upload-training-viedo', payload);
+    // return axiosHttp.post('/video/upload-training-video', payload);
   }
 
   addUser(payload) {
-    // return axiosHttp.post('/users', payload);
-    return axiosHttp.post('/request-to-add-member', payload);
+    return axiosHttp.post('/users', payload);
+    // return axiosHttp.post('/admin/request-to-add-member', payload);
   }
 }

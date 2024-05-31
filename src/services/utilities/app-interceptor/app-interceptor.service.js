@@ -4,6 +4,7 @@ import { EnvironmentHelperService } from "../../helper-service/environment-helpe
 const _environmentHelperService = new EnvironmentHelperService();
 const axiosHttp = axios.create({
   baseURL: `https://jsonplaceholder.typicode.com`,
+  // baseURL: 'http://localhost:3000'
 });
 
 axiosHttp.interceptors.request.use(
@@ -24,13 +25,12 @@ axiosHttp.interceptors.request.use(
 
 axiosHttp.interceptors.response.use(
   (response) => {
-    console.log('interceptor', response);
     return response;
   },
   (error) => {
     if (error.response.status === 401) {
-        localStorage.removeItem('sessionObj');
-        window.location.reload();
+      localStorage.removeItem('sessionObj');
+      window.location.reload();
     }
     return Promise.reject(error);
   }

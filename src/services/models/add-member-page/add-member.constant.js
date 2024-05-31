@@ -179,6 +179,10 @@ export const REFERED_BY_ARR = [
   {
     value: 'zonal-head',
     label: 'Zonal Head'
+  },
+  {
+    value: 'direct-admin',
+    label: 'Direct Admin'
   }
 ]
 

@@ -69,7 +69,7 @@ const AddMemberForm = props => {
       const payload = {
         isAdmin: _environmentHelperService.isAdmin(), // new key
         appliedFor: values.jobRole,
-        location: values.area, //input need to added new key
+        location: values.area, //input need to added
         referalPersonName: _environmentHelperService.getName(), // new key
         referredBy: values.referedBy,
         referedPersonEmpCode: values.referelCode, //empId old key
