@@ -16,7 +16,7 @@ code {
     monospace;
 }
 
-.primary {
+/* .primary {
   cursor: pointer;
   height: 42px;
   display: flex;
@@ -30,24 +30,19 @@ code {
   font-weight: 500;
   color: #fff;
   background-color: #2054ff;
-  // @apply cursor-pointer h-[42px] flex items-center text-left leading-tight gap-[8px] rounded py-[10px] px-[20px] text-base font-medium text-white bg-blue-4;
   div{
     display: flex;
     gap: 8px;
     align-items: center;
-      // @apply flex gap-[8px] items-center;
   }
   &.iconRight {
     padding-right: 14px;
-    // @apply pr-[14px]
   }
   &.iconLeft {
     padding-left: 14px;
-      // @apply pl-[14px]
   }
   &.success {
     background-color: #039487;
-    // @apply bg-[#039487];
     &:hover {
       background-color: lighten($color: #039487, $amount: 10)
     }
@@ -55,33 +50,26 @@ code {
   &.danger{
     background-color: #df3a3a;
     color: #fff;
-      // @apply bg-red text-white;
       &:disabled {
         background-color: #8f9bbc;
-          // @apply bg-neutral-6;
   
           &:hover{
             background-color: #8f9bbc;
-              // @apply  bg-neutral-6;
           }
               }
       &:hover{
         background-color: #a92323;
-          // @apply bg-red-dark;
       }
   }
   &:disabled {
     background-color: #8f9bbc;
-      // @apply bg-neutral-6;
 
       &:hover{
         background-color: #8f9bbc;
-          // @apply  bg-neutral-6;
       }
           }
   &:hover{
     background-color: #173fc4;
-      // @apply bg-blue-2;
   }
 }
 
@@ -99,34 +87,27 @@ code {
   font-weight: 500;
   color: #2054ff;
   background-color: #e8edfa;
-  // @apply cursor-pointer h-[42px] flex items-center text-left leading-tight gap-[8px] py-[10px] px-[20px] rounded text-base font-medium text-blue-4 bg-neutral-9;
   div{
     display: flex;
     gap: 8px;
     align-items: center;
-      // @apply flex gap-[8px] items-center;
   }
   &.iconRight {
     padding-right: 14px;
-    // @apply pr-[14px]
   }
   &.iconLeft {
     padding-left: 14px;
-      // @apply pl-[14px]
   }
   &:disabled {
     background-color: #f0f1f5;
     color: #697496;
-      // @apply text-gray-0 bg-neutral-11;
 
       &:hover{
         background-color: #f0f1f5;
-          // @apply bg-neutral-11;
       }
   }
   &:hover{
     background-color: #d8ddeb;
-      // @apply  bg-neutral-7;
   }
 }
 
@@ -143,21 +124,17 @@ code {
   font-size: 16px;
   font-weight: 500;
   color: #2054ff;
-  // @apply cursor-pointer flex items-center text-center leading-tight tracking-normal h-[42px] gap-[8px] rounded py-[14px] px-[0px] text-base font-medium text-blue-4;
   div{
     display: flex;
     gap: 8px;
     align-items: center;
-      // @apply flex gap-[8px] items-center;
   }
   &:disabled {
     color: #697496;
-      // @apply text-gray-0;
 
       &:hover{
         color: #697496;
         text-decoration: none;
-          // @apply text-gray-0 no-underline;
        } 
   }
   &:hover{
@@ -189,11 +166,6 @@ code {
     border-color: #2054FF !important;
     outline: none !important;
   }
-    // @apply border-solid border-[1px] py-[12px] px-[8px] flex flex-row text-base gap-[8px] rounded-[4px]
-    //     w-full h-full placeholder:text-sm placeholder:leading-[1.14] placeholder:text-neutral-6 border-neutral-7 focus:border-primary;
-    // &:focus-visible {
-    //     @apply border-[#2054FF] outline-0 #{"!important"};
-    // }
 }
 
 .select-input {
@@ -218,11 +190,6 @@ code {
     border-color: #2054FF !important;
     outline: none !important;
   }
-    // @apply border-solid border-[1px] py-[12px] px-[8px] flex flex-row text-base gap-[8px] rounded-[4px]
-    //     w-full h-full placeholder:text-sm placeholder:leading-[1.14] placeholder:text-neutral-6 border-neutral-7 focus:border-primary;
-    // &:focus-visible {
-    //     @apply border-[#2054FF] outline-0 #{"!important"};
-    // }
 }
 
 .layout-height {
@@ -282,7 +249,7 @@ code {
   overflow: hidden;
   transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
   opacity: 1;
-}
+} */
 
 @media (max-width: 640px) {
   .side-nav {
