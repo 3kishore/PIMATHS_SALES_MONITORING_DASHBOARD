@@ -61,6 +61,8 @@ const ResestPassoword = props => {
                 component={InputComponent}
                 placeholder={LOGIN_PAGE.PLACEHOLDER.ENTER_YOUR_PASSWORD}
                 validate={formValidators.password}
+                type="password"
+                isBtnTypePass={true}
               />
             </div>
             <div className="flex flex-col flex-wrap gap-2 mt-3 items-center">

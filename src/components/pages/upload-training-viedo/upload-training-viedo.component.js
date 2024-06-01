@@ -31,11 +31,11 @@ function UploadTrainingViedoComponent() {
 
     function uploadNewTrainingSessions() {
       _apiHelper.uploadTrainingSessions(items).then(resp => {
-        resp = {
-          data: {
-            status: true
-          }
-        }
+        // resp = {
+        //   data: {
+        //     status: true
+        //   }
+        // }
         if(resp?.data?.status) {
           setShowSucessPage(true);
           setIsExist(false);
