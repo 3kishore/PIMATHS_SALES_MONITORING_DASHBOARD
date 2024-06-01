@@ -1,9 +1,8 @@
 import React from 'react';
-import { BrowserRouter, NavLink, Route, Routes  } from 'react-router-dom';
+import { BrowserRouter, Navigate, NavLink, Route, Routes  } from 'react-router-dom';
 import './App.css';
 import AddMemberComponent from './components/pages/add-member/add-member-component';
 import ApproveOrRejectLicenseComponent from './components/pages/approve-or-reject-license/approve-or-reject-license.component';
-// import CheckMyManagerPerformence from './components/pages/check-my-managers-performence/check-my-managers-performence.component';
 import HomePageComponent from './components/pages/home-page-component/home-page-component';
 import LoginPage from './components/pages/login-page/login-page';
 import MySalesReportComponent from './components/pages/my-sales-report-component/my-sales-report-component';
@@ -123,7 +122,7 @@ function App() {
               <Route path="/home/approve-or-reject-request" element={<ApproveOrRejectLicenseComponent />} />
               <Route path="/home/upload-employee-tds" element={<UploadEmployeeTdsComponent />} />
             </Route>
-            <Route path="*" element={<div>No page found</div>} />
+            <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
         </div>
       </BrowserRouter>

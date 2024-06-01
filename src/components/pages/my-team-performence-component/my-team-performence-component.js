@@ -20,20 +20,20 @@ function MyTeamPerformenceComponent() {
     setIsLoading(true);
     const payload = {empCode: _environmentHelperService.getEmpCode()}
     _apiHelper.getMyDirectTeam(payload).then(resp => {
-      resp = {
-        data: {
-          status: true,
-          message: 'Success',
-          content: [
-            { empCode: 'cm-e-sh-1', name: 'John', region: 'Chennai', phNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Mike', region: 'Madurai', phNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Luna', region: 'Trichi', phNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Tena', region: 'Coimbatore', phNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Joe', region: 'Tuty', phNo: '9087654321', points: 800 },
-            { empCode: 'cm-e-sh-1', name: 'Andres', region: 'Dindukal', phNo: '9087654321', points: 800 }
-          ]
-        }      
-      }
+      // resp = {
+      //   data: {
+      //     status: true,
+      //     message: 'Success',
+      //     content: [
+      //       { empCode: 'cm-e-sh-1', name: 'John', region: 'Chennai', phNo: '9087654321', points: 800 },
+      //       { empCode: 'cm-e-sh-1', name: 'Mike', region: 'Madurai', phNo: '9087654321', points: 800 },
+      //       { empCode: 'cm-e-sh-1', name: 'Luna', region: 'Trichi', phNo: '9087654321', points: 800 },
+      //       { empCode: 'cm-e-sh-1', name: 'Tena', region: 'Coimbatore', phNo: '9087654321', points: 800 },
+      //       { empCode: 'cm-e-sh-1', name: 'Joe', region: 'Tuty', phNo: '9087654321', points: 800 },
+      //       { empCode: 'cm-e-sh-1', name: 'Andres', region: 'Dindukal', phNo: '9087654321', points: 800 }
+      //     ]
+      //   }      
+      // }
       if(resp?.data?.status) {
         let chart = [
           ["person", "points"],

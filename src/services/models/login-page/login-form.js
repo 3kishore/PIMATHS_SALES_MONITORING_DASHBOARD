@@ -21,18 +21,18 @@ const LoginForm = props => {
   const [invalidCred, setInvalidCred] = useState(false);
   const onSubmit = (values, dispatch, props) => {
     _authHelperService.loginService(values).then(resp => {
-      resp = {
-        data: {
-          status: true,
-          message: 'Success',
-          content: {
-            name: 'kishore',
-            empCode: 'emp-code-101',
-            role: 'sales-head', // new key
-            token: '90u89v-hgcv-kjb'
-          }
-        }
-      }
+      // resp = {
+      //   data: {
+      //     status: true,
+      //     message: 'Success',
+      //     content: {
+      //       name: 'kishore',
+      //       empCode: 'emp-code-101',
+      //       role: 'regional-head', // new key
+      //       token: '90u89v-hgcv-kjb'
+      //     }
+      //   }
+      // }
       if(resp?.data?.status) {
         localStorage.setItem('sessionObj', btoa(JSON.stringify(resp.data.content)));
         window.location.reload();
@@ -64,12 +64,15 @@ const LoginForm = props => {
           component={InputComponent}
           placeholder={LOGIN_PAGE.PLACEHOLDER.ENTER_YOUR_PASSWORD}
           validate={formValidators.password}
+          type="password"
+          isBtnTypePass={true}
         />
       </div>
       <div className="flex flex-wrap gap-2 mt-3 items-center">
         <button className="secondary w-fit" onClick={handleSubmit(onSubmitWithNavigate)} disabled={pristine || submitting || invalid}>{LOGIN_PAGE.LOGIN}</button>
         {
-          invalidCred ? <div className='text-sm font-medium text-red-dark'>User name or password is incorrect</div> : <div></div>
+          invalidCred &&
+            <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">User name or password is incorrect.</div>
         }
       </div>
     </div> 

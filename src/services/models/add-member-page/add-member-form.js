@@ -11,6 +11,7 @@ import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE
 const AddMemberForm = props => {
   const _environmentHelperService = new EnvironmentHelperService();
   const _apiHelper = new ApiServiceHelper();
+  const [failedToRequest, setFailedToRequest] = useState(false);
 
   const [otherValidator, setOtherValidators] = useState({
     referalPersonError: true,
@@ -123,9 +124,14 @@ const AddMemberForm = props => {
           },
           applicantSign: applicantSign,
           referalSign: referalPersonSign
-        },
+        }
       }
-      _apiHelper.addUser(payload).then(resp => {}).catch(err => console.log(err));
+      if(_environmentHelperService.isAdmin()) {
+        payload.isApproved = true;
+        _apiHelper.approveUser(payload).then(resp => {}).catch(err => {setFailedToRequest(true)});
+      } else {
+        _apiHelper.addUser(payload).then(resp => {}).catch(err => {setFailedToRequest(true)});
+      }
     }
   }
 
@@ -282,7 +288,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.REFEREL_CODE}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.referelCode}
+        validate={formValidators.referelCode}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -292,7 +298,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         className="select-input"
         component="select"
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.jobRole}
+        validate={formValidators.jobRole}
       >
         <option disabled value="">Select here</option>
         {JOB_ROLE_ARR.map((val) => (
@@ -308,7 +314,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.AREA}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.area}
+        validate={formValidators.area}
       />
     </div>
     <label className="text-black text-base font-medium">{ADD_MEMBER.PERSONAL_INFORMATION}</label>
@@ -318,7 +324,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.NAME}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.name}
+        validate={formValidators.name}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -327,7 +333,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.DOB}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.dob}
+        validate={formValidators.dob}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -359,7 +365,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.AGE}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.age}
+        validate={formValidators.age}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -368,7 +374,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.MOBILE_NUMBER}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.mobileNumber}
+        validate={formValidators.mobileNumber}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -377,7 +383,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.EMAILID}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.emailId}
+        validate={formValidators.emailId}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -386,7 +392,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.qualification}
+        validate={formValidators.qualification}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -395,7 +401,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.occupation}
+        validate={formValidators.occupation}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -404,7 +410,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.PERMENENT_ADDRESS}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.permenentAddress}
+        validate={formValidators.permenentAddress}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -413,7 +419,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.DISTRICT}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.district}
+        validate={formValidators.district}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -422,7 +428,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.STATE}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.state}
+        validate={formValidators.state}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -431,7 +437,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.POST_OFFICE}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.postOffice}
+        validate={formValidators.postOffice}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -440,7 +446,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.PIN_CODE}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.pinCode}
+        validate={formValidators.pinCode}
       />
     </div>
     <label className="text-black text-base font-medium">{ADD_MEMBER.BOTH_ADDRESS}</label>
@@ -458,7 +464,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENT_ADDRESS}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.currentAddress}
+        validate={formValidators.currentAddress}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -467,7 +473,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_DISTRICT}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.currentAddress}
+        validate={formValidators.currentAddress}
       />
     </div><div className="flex flex-col gap-2 mt-3">
       <label className="text-black text-base font-medium">{ADD_MEMBER.STATE}</label>
@@ -475,7 +481,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_STATE}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.currentAddressState}
+        validate={formValidators.currentAddressState}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -484,7 +490,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_POSTOFFICE}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.currentAddressPostOffice}
+        validate={formValidators.currentAddressPostOffice}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -503,7 +509,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NAME}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.aadharName}
+        validate={formValidators.aadharName}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -512,7 +518,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NUMBER}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.aadharNumber}
+        validate={formValidators.aadharNumber}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -521,7 +527,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.PAN_NAME}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.panName}
+        validate={formValidators.panName}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -530,7 +536,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.PAN_NUMBER}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.panNumber}
+        validate={formValidators.panNumber}
       />
     </div>
     <label className="text-black text-base font-medium">{ADD_MEMBER.BANK_PASSBOOK_INFO}</label>
@@ -540,7 +546,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.BANK_NAME}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.bankName}
+        validate={formValidators.bankName}
       />
     </div><div className="flex flex-col gap-2 mt-3">
       <label className="text-black text-base font-medium">{ADD_MEMBER.BRANCH_NAME}</label>
@@ -548,7 +554,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.BRANCH_NAME}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.branchName}
+        validate={formValidators.branchName}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -557,7 +563,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.IFSC_CODE}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.ifscCode}
+        validate={formValidators.ifscCode}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -566,7 +572,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.accountType}
+        validate={formValidators.accountType}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -575,7 +581,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_NUMBER}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.accountNumber}
+        validate={formValidators.accountNumber}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -584,7 +590,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         name={ADD_MEMBER_FORM_CONTROL_NAME.NAME_AS_PER_BANK}
         component={InputComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        // validate={formValidators.nameAsPerBank}
+        validate={formValidators.nameAsPerBank}
       />
     </div>
     <div className="flex flex-col gap-2">
@@ -626,6 +632,10 @@ const { handleSubmit, pristine, submitting, invalid } = props;
     </div>
     <div className="flex flex-wrap gap-2 mt-3 items-center">
       <button className="secondary w-fit" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}>{ADD_MEMBER.ADD_MEMBER}</button>
+      {
+        failedToRequest &&
+          <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">Failed to upload.</div>
+      }
     </div>
   </div> 
  );

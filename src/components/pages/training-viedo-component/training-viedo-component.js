@@ -16,13 +16,13 @@ function TrainingViedoComponent() {
 
   function getMyTrainingSessions() {
     _apiHelper.getMyTrainingSession().then(resp => {
-      resp = {
-        data: {
-          status: true,
-          message: 'Success',
-          content: ['PhxfspwMdww', '7YpB7suzrto']
-        }
-      }
+      // resp = {
+      //   data: {
+      //     status: true,
+      //     message: 'Success',
+      //     content: ['PhxfspwMdww', '7YpB7suzrto']
+      //   }
+      // }
       if(resp?.data?.status) {
         setTrainingSessions(resp?.data?.content || []);
         setIsLoading(false);
