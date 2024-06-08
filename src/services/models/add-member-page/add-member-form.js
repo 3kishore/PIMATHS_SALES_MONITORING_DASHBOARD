@@ -549,7 +549,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
       <label className="text-black text-base font-medium">Upload application copy as pdf.</label>
       <input type="file" onChange={convertApplicantSignToBase64} />
     </div>
-    {(!invalid && (otherValidator.photoError || otherValidator.aadharCopyError || otherValidator.panCopyError || otherValidator.bankProofError || otherValidator.applicationDocumentCopy))
+    {/* {(!invalid && (otherValidator.photoError || otherValidator.aadharCopyError || otherValidator.panCopyError || otherValidator.bankProofError || otherValidator.applicationDocumentCopy))
       && <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">
         {!invalid && otherValidator.photoError && <div>Upload your photo</div>}
         {!invalid && otherValidator.aadharCopyError && <div>Upload your aadhar copy</div>}
@@ -557,13 +557,13 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         {!invalid && otherValidator.bankProofError && <div>Upload your bank proof</div>}
         {!invalid && otherValidator.applicationDocumentCopy && <div>Upload referal person sign</div>}
       </div>
-    }
+    } */}
     <div className="flex flex-wrap gap-2 mt-3 items-center">
       <button className="secondary w-fit" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}>{ADD_MEMBER.ADD_MEMBER}</button>
-      {
+      {/* {
         failedToRequest &&
           <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">Failed to upload.</div>
-      }
+      } */}
     </div>
   </div> 
  );
