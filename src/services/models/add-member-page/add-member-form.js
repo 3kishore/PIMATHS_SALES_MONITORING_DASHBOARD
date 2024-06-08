@@ -231,7 +231,7 @@ const AddMemberForm = props => {
   };
 
 //  const { handleSubmit, pristine, submitting } = props;
-const { handleSubmit, pristine, submitting, invalid } = props;
+const { handleSubmit, pristine, submitting } = props;
  return (
   <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
     <h2 className="text-2xl font-medium">{ADD_MEMBER.ADD_MEMBER}</h2>

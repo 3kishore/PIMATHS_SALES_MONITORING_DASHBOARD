@@ -8,7 +8,7 @@ import { REGEX, USER_JOB_TITLE } from "../../utilities/APP.constant";
 import validators from "../../utilities/validators";
 import { DEPARTMENT_LIST, LOCATION_LIST, PAYROLL_LIST, ZONAL_HEAD, ZONE_LIST } from "./add-member.constant";
 
-const PdmPromoterSalesHead = props => {
+const PdmPromoterSalesHeadForm = props => {
   const _environmentHelperService = new EnvironmentHelperService();
   const { handleSubmit, pristine } = props;
   const [failedToRequest, setFailedToRequest] = useState(false);
@@ -126,4 +126,4 @@ const PdmPromoterSalesHead = props => {
 
 export default reduxForm({
   form: 'zonal-head-form'
-})(PdmPromoterSalesHead);
+})(PdmPromoterSalesHeadForm);

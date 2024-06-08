@@ -6,7 +6,7 @@ import { REGEX, USER_JOB_TITLE } from "../../utilities/APP.constant";
 import validators from "../../utilities/validators";
 import { ZONAL_ADMIN, ZONE_LIST } from "./add-member.constant";
 
-const ZonalAdmin = props => {
+const ZonalAdminForm = props => {
   const { handleSubmit, pristine } = props;
   const [failedToRequest, setFailedToRequest] = useState(false);
   const [successfullyRequested, setSuccessfullyRequested] = useState(false);
@@ -86,4 +86,4 @@ const ZonalAdmin = props => {
 
 export default reduxForm({
   form: 'zonal-admin-form'
-})(ZonalAdmin);
+})(ZonalAdminForm);

@@ -8,7 +8,7 @@ import { REGEX, USER_JOB_TITLE } from "../../utilities/APP.constant";
 import validators from "../../utilities/validators";
 import { LOCATION_LIST, PAYROLL_LIST, ZONAL_HEAD, ZONE_LIST } from "./add-member.constant";
 
-const RegionalHead = props => {
+const RegionalHeadForm = props => {
   const { handleSubmit, pristine } = props;
   const [failedToRequest, setFailedToRequest] = useState(false);
   const [successfullyRequested, setSuccessfullyRequested] = useState(false);
@@ -115,4 +115,4 @@ const RegionalHead = props => {
 
 export default reduxForm({
   form: 'zonal-head-form'
-})(RegionalHead);
+})(RegionalHeadForm);

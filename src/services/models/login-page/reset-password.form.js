@@ -15,7 +15,7 @@ const formValidators = {
 
 const _authHelperService = new AuthServiceHelper();
 
-const ResestPassoword = props => {
+const ResetPasswordForm = props => {
   const navigate = useNavigate();
   const { handleSubmit, pristine, submitting, invalid } = props;
   const onSubmitWithNavigate = values => onSubmit(values, null, { navigate });
@@ -87,4 +87,4 @@ const ResestPassoword = props => {
 
 export default reduxForm({
   form: 'resetPassword',
-})(ResestPassoword);
+})(ResetPasswordForm);

@@ -1,13 +1,13 @@
 import AddMemberForm from "../../../services/models/add-member-page/add-member-form";
 import { Provider } from "react-redux";
 import addMember from "../../../services/models/add-member-page/add-member";
-import ZonalAdminForm from "../../../services/models/add-member-page/zonal-admin-form";
-import ZonalHeadForm from "../../../services/models/add-member-page/zonal-head-form";
-import RegionalHeadForm from "../../../services/models/add-member-page/regional-head-form";
-import PdmPromotorSalesHeadForm from "../../../services/models/add-member-page/pdm-promotor-sales-head-form";
 import { EnvironmentHelperService } from "../../../services/helper-service/environment-helper.service";
 import { USER_JOB_TITLE } from "../../../services/utilities/APP.constant";
 import { DEPARTMENT_LIST } from "../../../services/models/add-member-page/add-member.constant";
+import PdmPromotorSalesHeadForm from "../../../services/models/add-member-page/pdm-promotor-sales-head-form";
+import RegionalHeadForm from "../../../services/models/add-member-page/regional-head-form";
+import ZonalAdminForm from "../../../services/models/add-member-page/zonal-admin-form";
+import ZonalHeadForm from "../../../services/models/add-member-page/zonal-head-form";
 
 function AddMemberComponent() {
   const _environmentHelperService = new EnvironmentHelperService();
