@@ -1,28 +1,21 @@
-import { useState } from "react";
-import { Field, reduxForm } from "redux-form";
-import InputComponent from "../../../components/atom/input-component";
-import SelectComponent from "../../../components/atom/select-component";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import NewSelectComponent from "../../../components/atom/new-select-component";
+import NewTestInputComponent from "../../../components/atom/new-test-input";
 import { ApiServiceHelper } from "../../api/api.service";
 import { EnvironmentHelperService } from "../../helper-service/environment-helper.service";
 import { REGEX, USER_JOB_TITLE } from "../../utilities/APP.constant";
-import validators from "../../utilities/validators";
 import { DEPARTMENT_LIST, LOCATION_LIST, PAYROLL_LIST, ZONAL_HEAD, ZONE_LIST } from "./add-member.constant";
 
-const PdmPromoterSalesHeadForm = props => {
-  const _environmentHelperService = new EnvironmentHelperService();
-  const { handleSubmit, pristine } = props;
+const PdmPromoterSalesHeadForm = () => {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [failedToRequest, setFailedToRequest] = useState(false);
   const [successfullyRequested, setSuccessfullyRequested] = useState(false);
   const _apiHelper = new ApiServiceHelper();
+  const _environmentHelperService = new EnvironmentHelperService();
   const role = _environmentHelperService.getRole();
-  const regionList = LOCATION_LIST.find(x => x.value === _environmentHelperService.getSessionObject().region)?.subRegion || [];
-  const formValidators = {
-    firstName: [validators.required(ZONAL_HEAD.FORM_ERROR_MSG.FIRST_NAME_REQUIRED), validators.minLength(3, ZONAL_HEAD.FORM_ERROR_MSG.FIRST_NAME_3_CHART_MUST)],
-    lastName: validators.required(ZONAL_HEAD.FORM_ERROR_MSG.LAST_NAME_REQUIRED),
-    emailId: [validators.required(ZONAL_HEAD.FORM_ERROR_MSG.EMAIL_ID), validators.regex(REGEX.EMAIL_ID, ZONAL_HEAD.FORM_ERROR_MSG.INAVLID_EMAIL_ID)],
-    mobileNo: [validators.required(ZONAL_HEAD.FORM_ERROR_MSG.MOBILE_NO), validators.regex(REGEX.MOBILE_NO, ZONAL_HEAD.FORM_ERROR_MSG.INAVLID_MOBILE_NO)]
-  }
-  function submit(values) {
+
+  const onSubmit = async (values) => {
     const department = _environmentHelperService.getSessionObject().department;
     if(role === USER_JOB_TITLE.REGIONAL_HEAD && department === DEPARTMENT_LIST[0].value) {
       values.role = USER_JOB_TITLE.SALES_HEAD;
@@ -35,95 +28,121 @@ const PdmPromoterSalesHeadForm = props => {
     values.zone = ZONE_LIST[0].value;
     values.region = _environmentHelperService.getSessionObject().region;
     values.payRoll = PAYROLL_LIST[0].value;
-    values.department = _environmentHelperService.getSessionObject().department;;
-    console.log('value', values)
+    values.department = _environmentHelperService.getSessionObject().department;
+
+    console.log(values)
     _apiHelper.addUser(values).then(resp => {
       resp = {data: {status: true }}
       if(resp.data.status) {
         setSuccessfullyRequested(true);
+        setFailedToRequest(false);
+        reset();
       } else {
+        setSuccessfullyRequested(false);
         setFailedToRequest(true);
       }
-    }).catch(err => {setFailedToRequest(true)});
-  }
-
-  const handleChange = (event) => {
-    console.log('Change event:', event.target.value);
+    }).catch(err => {
+      setSuccessfullyRequested(false);
+      setFailedToRequest(true);
+    });
   };
-  
+
   return (
     <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
-      <h2 className="text-2xl font-medium">Add my team member.</h2>
-      <div className="flex flex-col gap-2">
-        <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.FIRST_NAME}</label>
-        <Field
-          name={ZONAL_HEAD.FORM_FIELDS.FIRST_NAME}
-          component={InputComponent}
-          placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.FIRST_NAME}
-          validate={formValidators.firstName} />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.LAST_NAME}</label>
-        <Field
-          name={ZONAL_HEAD.FORM_FIELDS.LAST_NAME}
-          component={InputComponent}
-          placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.LAST_NAME}
-          validate={formValidators.lastName} />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.EMAIL_ID}</label>
-        <Field
-          name={ZONAL_HEAD.FORM_FIELDS.EMAIL_ID}
-          component={InputComponent}
-          placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.EMAIL_ID}
-          validate={formValidators.emailId} />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MOBILE_NO}</label>
-        <Field
-          name={ZONAL_HEAD.FORM_FIELDS.MOBILE_NO}
-          component={InputComponent}
-          placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MOBILE_NO}
-          validate={formValidators.mobileNo} />
-      </div>
-      {role === USER_JOB_TITLE.REGIONAL_HEAD && <div className="flex flex-col gap-2">
-        <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
-        <Field 
-          name={ZONAL_HEAD.FORM_FIELDS.AREA}
-          component={SelectComponent}
-          onChange={handleChange}
-          placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
-          options={regionList}
-          disabled={true}
-        />
-      </div>}
+      <h2 className="text-2xl font-medium">Add your regional head</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.FIRST_NAME}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.FIRST_NAME}
+            {...register(ZONAL_HEAD.FORM_FIELDS.FIRST_NAME, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.FIRST_NAME_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ZONAL_HEAD.FORM_ERROR_MSG.FIRST_NAME_3_CHART_MUST
+              }
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.FIRST_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.FIRST_NAME].message}</span>}
+        </div>
 
-      <div className="flex flex-col gap-2">
-        <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MAPPING_ID}</label>
-        <Field
-          name={ZONAL_HEAD.FORM_FIELDS.MAPPING_ID}
-          component={InputComponent}
-          placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MAPPING_ID}
-          validate={formValidators.firstName} />
-      </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.LAST_NAME}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.LAST_NAME}
+            {...register(ZONAL_HEAD.FORM_FIELDS.LAST_NAME, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.LAST_NAME_REQUIRED,
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.LAST_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.LAST_NAME].message}</span>}
+        </div>
 
-      <button className="secondary w-fit" onClick={handleSubmit(submit)} disabled={pristine}>Add</button>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.EMAIL_ID}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.EMAIL_ID}
+            {...register(ZONAL_HEAD.FORM_FIELDS.EMAIL_ID, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.EMAIL_ID,
+              pattern: {
+                value: REGEX.EMAIL_ID,
+                message: ZONAL_HEAD.FORM_ERROR_MSG.INAVLID_EMAIL_ID
+              }
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.EMAIL_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.EMAIL_ID].message}</span>}
+        </div>
 
-      {
-        failedToRequest &&
-          <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">Failed to upload.</div>
-      }
-      {
-        successfullyRequested && 
-          <div className="text-base font-medium text-green-dark mt-4 rounded-[4px] bg-green-light p-2">Successfully Requested.</div>
-      }
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MOBILE_NO}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MOBILE_NO}
+            {...register(ZONAL_HEAD.FORM_FIELDS.MOBILE_NO, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.MOBILE_NO,
+              pattern: {
+                value: REGEX.MOBILE_NO,
+                message: ZONAL_HEAD.FORM_ERROR_MSG.INAVLID_MOBILE_NO
+              }
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.MOBILE_NO] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MOBILE_NO].message}</span>}
+        </div>
+
+        {role === USER_JOB_TITLE.REGIONAL_HEAD && (<div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
+          <NewSelectComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
+            options={LOCATION_LIST}
+            disabled={false}
+            {...register(ZONAL_HEAD.FORM_FIELDS.AREA)}
+          />
+        </div>)}
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MAPPING_ID}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MAPPING_ID}
+            {...register(ZONAL_HEAD.FORM_FIELDS.MAPPING_ID, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.MAPPING_ID_REQUIRED,
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID].message}</span>}
+        </div>
+
+        <button className="secondary w-fit" type="submit">Add</button>
+
+        {failedToRequest && (
+          <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">
+            Failed to upload.
+          </div>
+        )}
+        {successfullyRequested && (
+          <div className="text-base font-medium text-green-dark mt-4 rounded-[4px] bg-green-light p-2">
+            Successfully Requested.
+          </div>
+        )}
+      </form>
     </div>
-
-
-    
-  )
+  );
 }
 
-export default reduxForm({
-  form: 'zonal-head-form'
-})(PdmPromoterSalesHeadForm);
+export default PdmPromoterSalesHeadForm;
