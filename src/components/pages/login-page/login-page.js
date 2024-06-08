@@ -8,13 +8,13 @@ import { LOGIN_PAGE } from "../../../services/models/login-page/login-page.const
 
 function LoginPage() {
   let [showLogin, setShowLogin] = React.useState(true);
-  let [showResetPassword, setShowResetPassword] = React.useState(false);
+  // let [showResetPassword, setShowResetPassword] = React.useState(false);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   let param = '';
   const loginPageToggler = () => {
     setShowLogin(!showLogin);
-    setShowResetPassword(false);
+    // setShowResetPassword(false);
   }
 
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function LoginPage() {
         // eslint-disable-next-line
         param = key;
         setShowLogin(false);
-        setShowResetPassword(true);
+        // setShowResetPassword(true);
         console.log(param);
       })
     }

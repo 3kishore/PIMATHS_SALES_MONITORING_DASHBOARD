@@ -15,7 +15,6 @@ function MyTeamPerformenceComponent() {
   const _apiHelper = new ApiServiceHelper();
   const _environmentHelperService = new EnvironmentHelperService();
   
-
   function getMyTeamReport() {
     setIsLoading(true);
     const payload = {empCode: _environmentHelperService.getEmpCode()}

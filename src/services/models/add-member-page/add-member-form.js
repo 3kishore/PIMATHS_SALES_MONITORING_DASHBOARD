@@ -6,7 +6,7 @@ import { ApiServiceHelper } from '../../api/api.service';
 import { EnvironmentHelperService } from '../../helper-service/environment-helper.service';
 import { USER_JOB_TITLE } from '../../utilities/APP.constant';
 import validators from '../../utilities/validators';
-import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE, EDUCATION_STATUS, ZONAL_HEAD } from './add-member.constant';
+import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE, EDUCATION_STATUS, LOCATION_LIST, ZONAL_HEAD } from './add-member.constant';
 // import validators from '../../utilities/validators';
 
 const AddMemberForm = props => {
@@ -231,7 +231,7 @@ const AddMemberForm = props => {
   };
 
 //  const { handleSubmit, pristine, submitting } = props;
-const { handleSubmit, pristine, submitting } = props;
+const { handleSubmit, pristine, submitting, invalid } = props;
  return (
   <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
     <h2 className="text-2xl font-medium">{ADD_MEMBER.ADD_MEMBER}</h2>
@@ -271,7 +271,7 @@ const { handleSubmit, pristine, submitting } = props;
         validate={formValidators.emailId}
       />
     </div>
-    {/* {role === USER_JOB_TITLE.REGIONAL_HEAD && <div className="flex flex-col gap-2">
+    {role === USER_JOB_TITLE.REGIONAL_HEAD && <div className="flex flex-col gap-2">
       <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
       <Field 
         name={ZONAL_HEAD.FORM_FIELDS.AREA}
@@ -280,7 +280,7 @@ const { handleSubmit, pristine, submitting } = props;
         options={LOCATION_LIST[0].subRegion}
         disabled={true}
       />
-    </div>} */}
+    </div>}
     <div>Personal Details</div>
     <div className="flex flex-col gap-2 mt-3">
       <label className="text-black text-base font-medium">{ADD_MEMBER.DOB}</label>
@@ -389,7 +389,7 @@ const { handleSubmit, pristine, submitting } = props;
         onChange={onBothAddressSame}
       />
     </div>
-    {/* {
+    {
       !isBothAddressSame && 
       <div className='flex flex-col gap-2'>
         <div className="flex flex-col gap-2">
@@ -437,7 +437,7 @@ const { handleSubmit, pristine, submitting } = props;
           />
         </div>
       </div>
-    } */}
+    }  
     <label className="text-black text-base font-medium">{ADD_MEMBER.AADHAR_AND_PAN_INFO}</label>
     <div className="flex flex-col gap-2">
       <label className="text-black text-base font-medium">{ADD_MEMBER.NAME_AS_PER_AADHAR}</label>
@@ -549,7 +549,7 @@ const { handleSubmit, pristine, submitting } = props;
       <label className="text-black text-base font-medium">Upload application copy as pdf.</label>
       <input type="file" onChange={convertApplicantSignToBase64} />
     </div>
-    {/* {(!invalid && (otherValidator.photoError || otherValidator.aadharCopyError || otherValidator.panCopyError || otherValidator.bankProofError || otherValidator.applicationDocumentCopy))
+    {(!invalid && (otherValidator.photoError || otherValidator.aadharCopyError || otherValidator.panCopyError || otherValidator.bankProofError || otherValidator.applicationDocumentCopy))
       && <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">
         {!invalid && otherValidator.photoError && <div>Upload your photo</div>}
         {!invalid && otherValidator.aadharCopyError && <div>Upload your aadhar copy</div>}
@@ -557,13 +557,13 @@ const { handleSubmit, pristine, submitting } = props;
         {!invalid && otherValidator.bankProofError && <div>Upload your bank proof</div>}
         {!invalid && otherValidator.applicationDocumentCopy && <div>Upload referal person sign</div>}
       </div>
-    } */}
+    }
     <div className="flex flex-wrap gap-2 mt-3 items-center">
       <button className="secondary w-fit" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}>{ADD_MEMBER.ADD_MEMBER}</button>
-      {/* {
+      {
         failedToRequest &&
           <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">Failed to upload.</div>
-      } */}
+      }
     </div>
   </div> 
  );
