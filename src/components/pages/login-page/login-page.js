@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import ForgotPasswordForm from "../../../services/models/login-page/forgot-password-form";
 import { LOGIN_PAGE } from "../../../services/models/login-page/login-page.constant";
-import ResetPasswordForm from "../../../services/models/login-page/reset-password.form";
 
 function LoginPage() {
   let [showLogin, setShowLogin] = React.useState(true);
@@ -45,6 +44,16 @@ function LoginPage() {
           <div className="flex-grow">
             <LoginForm />
             <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.FORGOT_PASSWORD}</div>
+          </div> : <div>
+            <ForgotPasswordForm />
+            <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.GO_TO_LOGIN}</div>
+          </div>
+        }
+        {/* {
+          showLogin ?
+          <div className="flex-grow">
+            <LoginForm />
+            <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.FORGOT_PASSWORD}</div>
           </div>
           :
           showResetPassword ? <div>
@@ -55,7 +64,7 @@ function LoginPage() {
             <ForgotPasswordForm />
             <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.GO_TO_LOGIN}</div>
           </div>
-        }
+        } */}
       </div>
     </Provider>
   )
