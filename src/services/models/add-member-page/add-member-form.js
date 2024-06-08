@@ -271,7 +271,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         validate={formValidators.emailId}
       />
     </div>
-    {role === USER_JOB_TITLE.REGIONAL_HEAD && <div className="flex flex-col gap-2">
+    {/* {role === USER_JOB_TITLE.REGIONAL_HEAD && <div className="flex flex-col gap-2">
       <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
       <Field 
         name={ZONAL_HEAD.FORM_FIELDS.AREA}
@@ -280,7 +280,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         options={LOCATION_LIST[0].subRegion}
         disabled={true}
       />
-    </div>}
+    </div>} */}
     <div>Personal Details</div>
     <div className="flex flex-col gap-2 mt-3">
       <label className="text-black text-base font-medium">{ADD_MEMBER.DOB}</label>
@@ -389,7 +389,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         onChange={onBothAddressSame}
       />
     </div>
-    {
+    {/* {
       !isBothAddressSame && 
       <div className='flex flex-col gap-2'>
         <div className="flex flex-col gap-2">
@@ -437,7 +437,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
           />
         </div>
       </div>
-    }
+    } */}
     <label className="text-black text-base font-medium">{ADD_MEMBER.AADHAR_AND_PAN_INFO}</label>
     <div className="flex flex-col gap-2">
       <label className="text-black text-base font-medium">{ADD_MEMBER.NAME_AS_PER_AADHAR}</label>
