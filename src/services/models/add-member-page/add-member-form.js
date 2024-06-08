@@ -6,7 +6,7 @@ import { ApiServiceHelper } from '../../api/api.service';
 import { EnvironmentHelperService } from '../../helper-service/environment-helper.service';
 import { USER_JOB_TITLE } from '../../utilities/APP.constant';
 import validators from '../../utilities/validators';
-import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE, EDUCATION_STATUS, LOCATION_LIST, ZONAL_HEAD } from './add-member.constant';
+import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE, EDUCATION_STATUS, ZONAL_HEAD } from './add-member.constant';
 // import validators from '../../utilities/validators';
 
 const AddMemberForm = props => {
