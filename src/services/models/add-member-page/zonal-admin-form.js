@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import NewSelectComponent from "../../../components/atom/new-select-component";
 import NewTestInputComponent from "../../../components/atom/new-test-input";
 import { ApiServiceHelper } from "../../api/api.service";
 import { REGEX, USER_JOB_TITLE } from "../../utilities/APP.constant";
-import { ZONAL_ADMIN, ZONE_LIST } from "./add-member.constant";
+import { LOCATION_LIST, ZONAL_ADMIN, ZONAL_HEAD, ZONE_LIST } from "./add-member.constant";
 
 const ZonalAdminForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -93,6 +94,15 @@ const ZonalAdminForm = () => {
             })}
           />
           {errors[ZONAL_ADMIN.FORM_FIELDS.MOBILE_NO] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_ADMIN.FORM_FIELDS.MOBILE_NO].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
+          <NewSelectComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
+            options={LOCATION_LIST[0].subRegion}
+            disabled={true}
+            {...register(ZONAL_HEAD.FORM_FIELDS.AREA)}
+          />
         </div>
 
         <button className="secondary w-fit" type="submit">Add</button>
