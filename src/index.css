@@ -191,6 +191,11 @@ div.primary {
   height: calc(100vh - 60px);
 }
 
+.form-height {
+  height: calc(100vh - 60px);
+  overflow: auto;
+}
+
 .menu-toggler-icon {
   visibility: hidden;
   width: 0;

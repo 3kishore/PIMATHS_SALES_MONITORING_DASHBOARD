@@ -32,8 +32,8 @@ export class ApiServiceHelper {
   }
 
   addUser(payload) {
-    // return axiosHttp.post('/users', payload);
-    return axiosHttp.post('/admin/request-to-add-member', payload);
+    return axiosHttp.post('/users', payload);
+    // return axiosHttp.post('/admin/request-to-add-member', payload);
   }
 
   approveUser(payload) {

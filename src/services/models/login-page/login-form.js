@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import InputComponent from '../../../components/atom/input-component';
 import { AuthServiceHelper } from '../../api/auth.service';
+import { USER_JOB_TITLE } from '../../utilities/APP.constant';
 import validators from '../../utilities/validators';
+import { DEPARTMENT_LIST } from '../add-member-page/add-member.constant';
 import { LOGIN_PAGE } from './login-page.constant';
 
 const formValidators = {
@@ -21,18 +23,21 @@ const LoginForm = props => {
   const [invalidCred, setInvalidCred] = useState(false);
   const onSubmit = (values, dispatch, props) => {
     _authHelperService.loginService(values).then(resp => {
-      // resp = {
-      //   data: {
-      //     status: true,
-      //     message: 'Success',
-      //     content: {
-      //       name: 'kishore',
-      //       empCode: 'emp-code-101',
-      //       role: 'regional-head', // new key
-      //       token: '90u89v-hgcv-kjb'
-      //     }
-      //   }
-      // }
+      resp = {
+        data: {
+          status: true,
+          message: 'Success',
+          content: {
+            name: 'kishore',
+            empCode: 'emp-code-101',
+            role: USER_JOB_TITLE.REGIONAL_HEAD, // new key
+            department: DEPARTMENT_LIST[2].value,
+            area: 'ERODE',
+            region: 'COIMBATORE',
+            token: '90u89v-hgcv-kjb'
+          }
+        }
+      }
       if(resp?.data?.status) {
         localStorage.setItem('sessionObj', btoa(JSON.stringify(resp.data.content)));
         window.location.reload();

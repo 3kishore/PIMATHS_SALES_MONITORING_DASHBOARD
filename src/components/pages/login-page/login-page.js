@@ -1,22 +1,19 @@
 import React, { useEffect } from "react";
-import { LOGIN_PAGE } from "../../../services/models/login-page/login-page.constant";
 import  LoginForm from "../../../services/models/login-page/login-form";
-import ResestPassoword from "../../../services/models/login-page/reset-password.form";
 import loginStore from "../../../services/models/login-page/login-store";
 import { Provider } from "react-redux";
-import ForgotPasswordForm from "../../../services/models/login-page/forgot-password-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
-  let [showLogin, setShowLogin] = React.useState(true);
-  let [showResetPassword, setShowResetPassword] = React.useState(false);
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  let param = '';
-  const loginPageToggler = () => {
-    setShowLogin(!showLogin);
-    setShowResetPassword(false);
-  }
+  // let [showLogin, setShowLogin] = React.useState(true);
+  // let [showResetPassword, setShowResetPassword] = React.useState(false);
+  // const location = useLocation();
+  // const queryParams = new URLSearchParams(location.search);
+  // let param = '';
+  // const loginPageToggler = () => {
+  //   setShowLogin(!showLogin);
+  //   setShowResetPassword(false);
+  // }
 
   const navigate = useNavigate();
   
@@ -25,21 +22,25 @@ function LoginPage() {
   useEffect(() => {
     if (loggedIn) {
       navigate(`/home/my-sales-report`);
-    } else {
-      queryParams.forEach((_, key) => {
-        // eslint-disable-next-line
-        param = key;
-        setShowLogin(false);
-        setShowResetPassword(true);
-        console.log(param);
-      })
     }
+    // else {
+    //   queryParams.forEach((_, key) => {
+    //     // eslint-disable-next-line
+    //     param = key;
+    //     setShowLogin(false);
+    //     setShowResetPassword(true);
+    //     console.log(param);
+    //   })
+    // }
   }, [loggedIn, navigate]);
 
   return (
     <Provider store={loginStore}>
       <div className="flex flex-wrap gap-4">
-        {
+          <div className="flex-grow">
+            <LoginForm />
+          </div>
+        {/* {
           showLogin ?
           <div className="flex-grow">
             <LoginForm />
@@ -54,7 +55,7 @@ function LoginPage() {
             <ForgotPasswordForm />
             <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.GO_TO_LOGIN}</div>
           </div>
-        }
+        } */}
       </div>
     </Provider>
   )

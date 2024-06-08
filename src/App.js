@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, NavLink, Route, Routes  } from 'react-router-dom';
 import './App.css';
 import AddMemberComponent from './components/pages/add-member/add-member-component';
@@ -16,14 +16,12 @@ import TrainingViedoComponent from './components/pages/training-viedo-component/
 import UploadEmployeeTdsComponent from './components/pages/upload-employee-tds/upload-employee-tds.component';
 import UploadTrainingViedoComponent from './components/pages/upload-training-viedo/upload-training-viedo.component';
 import { EnvironmentHelperService } from './services/helper-service/environment-helper.service';
-import { ADDMIN_SIDE_NAV, APP, MANAGERS_SIDE_NAV, SALES_MAN_SIDE_NAV, USER_JOB_TITLE } from './services/utilities/APP.constant';
+import { ADMIN_SIDE_NAV, APP, MASTER_ADMIN_SIDE_NAV, PDM_SALES_AND_CHANNEL_HEAD_SIDE_NAV, PROMOTER_AND_PARTNER_SIDE_NAV, REGIONAL_ZONAL_HEAD_SIDE_NAV, USER_JOB_TITLE } from './services/utilities/APP.constant';
 
 function App() {
   const _environmentHelperService = new EnvironmentHelperService();
 
-  const menuList = _environmentHelperService.getRole() === USER_JOB_TITLE.admin ? ADDMIN_SIDE_NAV :
-    (_environmentHelperService.getRole() === USER_JOB_TITLE.PROMOTER || _environmentHelperService.getRole() === USER_JOB_TITLE.CHANNEL_PARTNER) ?
-    SALES_MAN_SIDE_NAV : MANAGERS_SIDE_NAV;
+  const [menuList, setMenuList] = useState([]);
 
   const [sideMenuOn, setSideMenuOn] = React.useState(false);
 
@@ -42,11 +40,32 @@ function App() {
     setSideMenuOn(!sideMenuOn);
   }
 
+  function assignMenuList() {
+    const promoterAndParner = [USER_JOB_TITLE.PROMOTER, USER_JOB_TITLE.DIRECT_PARTNER, USER_JOB_TITLE.CHANNEL_PARTNER];
+    const pdmAndHeads = [USER_JOB_TITLE.PDM, USER_JOB_TITLE.CHANNEL_HEAD, USER_JOB_TITLE.SALES_HEAD];
+    const regionalAndZonal = [USER_JOB_TITLE.REGIONAL_HEAD, USER_JOB_TITLE.ZONAL_HEAD];
+    if(_environmentHelperService.getRole() === USER_JOB_TITLE.admin) {
+      setMenuList(ADMIN_SIDE_NAV);
+    } else if(_environmentHelperService.getRole() === USER_JOB_TITLE.MASTER_ADMIN) {
+      setMenuList(MASTER_ADMIN_SIDE_NAV)
+    } else if(promoterAndParner.includes(_environmentHelperService.getRole())) {
+      setMenuList(PROMOTER_AND_PARTNER_SIDE_NAV)
+    } else if(pdmAndHeads.includes(_environmentHelperService.getRole())) {
+      setMenuList(PDM_SALES_AND_CHANNEL_HEAD_SIDE_NAV)
+    } else if(regionalAndZonal.includes(_environmentHelperService.getRole())) {
+      setMenuList(REGIONAL_ZONAL_HEAD_SIDE_NAV)
+    }
+  }
+
   function logOut() {
     localStorage.removeItem('sessionObj');
     window.location.reload();
   }
 
+  useEffect(() => {
+    assignMenuList();
+    // eslint-disable-next-line 
+  }, []);
   return (
     <div className='relative'>
       <BrowserRouter>
@@ -114,7 +133,7 @@ function App() {
               <Route path="/home/salary-caculator" element={<SaleryCalculatorComponent />} />
               <Route path="/home/payout-model" element={<PayoutModelComponent />} />
               <Route path="/home/payout-model/:detail" element={<PayoutDetailsComponent />} />
-              <Route path="/home/tds" element={<MyTdsComponent />} />
+              <Route path="/home/my-payout-report" element={<MyTdsComponent />} />
               <Route path="/home/traning-viedo" element={<TrainingViedoComponent />} />
 
 

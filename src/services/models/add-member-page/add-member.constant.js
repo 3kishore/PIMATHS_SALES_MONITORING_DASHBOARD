@@ -198,3 +198,478 @@ export const ADD_MEMBER_FORM_ERROR_MESSAGE = {
   INAVALID_BANK_ACC_NO: 'The account no you have entered is invalid.',
   INVALID_IFSC_CODE: 'The ifsc code you have entered is invalid.'
 }
+
+export const LOCATION_LIST = [
+  {
+    "label": "CHENNAI",
+    "value": "CHENNAI",
+    "subRegion": [
+      {"label": "CHENGALPATTU NORTH", "value": "CHENGALPATTU_NORTH"},
+      {"label": "CHENGALPATTU SOUTH", "value": "CHENGALPATTU_SOUTH"},
+      {"label": "CHENNAI CENTRAL", "value": "CHENNAI_CENTRAL"},
+      {"label": "CHENNAI NORTH", "value": "CHENNAI_NORTH"},
+      {"label": "CHENNAI SOUTH", "value": "CHENNAI_SOUTH"},
+      {"label": "KANCHIPURAM", "value": "KANCHIPURAM"},
+      {"label": "RANIPET", "value": "RANIPET"},
+      {"label": "THIRUVALLUR NORTH", "value": "THIRUVALLUR_NORTH"},
+      {"label": "THIRUVALLUR SOUTH", "value": "THIRUVALLUR_SOUTH"},
+      {"label": "VELLORE", "value": "VELLORE"}
+    ]
+  },
+  {
+    "label": "COIMBATORE",
+    "value": "COIMBATORE",
+    "subRegion": [
+      {"label": "COIMBATORE NORTH", "value": "COIMBATORE_NORTH"},
+      {"label": "COIMBATORE SOUTH", "value": "COIMBATORE_SOUTH"},
+      {"label": "DINDIGUL NORTH", "value": "DINDIGUL_NORTH"},
+      {"label": "ERODE NORTH", "value": "ERODE_NORTH"},
+      {"label": "ERODE SOUTH", "value": "ERODE_SOUTH"},
+      {"label": "KARUR", "value": "KARUR"},
+      {"label": "NAMAKAL", "value": "NAMAKAL"},
+      {"label": "NILGIRIS", "value": "NILGIRIS"},
+      {"label": "THIRPUR NORTH", "value": "THIRPUR_NORTH"},
+      {"label": "THIRPUR SOUTH", "value": "THIRPUR_SOUTH"}
+    ]
+  },
+  {
+    "label": "MADURAI",
+    "value": "MADURAI",
+    "subRegion": [
+      {"label": "KANIYAKUMARI", "value": "KANIYAKUMARI"},
+      {"label": "MADURAI NORTH", "value": "MADURAI_NORTH"},
+      {"label": "MADURAI SOUTH", "value": "MADURAI_SOUTH"},
+      {"label": "RAMANATHAPURAM", "value": "RAMANATHAPURAM"},
+      {"label": "SIVAGANGA", "value": "SIVAGANGA"},
+      {"label": "TENKASI", "value": "TENKASI"},
+      {"label": "THENI", "value": "THENI"},
+      {"label": "THIRUNLVELI", "value": "THIRUNLVELI"},
+      {"label": "THOOTHUKUDI", "value": "THOOTHUKUDI"},
+      {"label": "VIRUDHUNAGAR", "value": "VIRUDHUNAGAR"}
+    ]
+  },
+  {
+    "label": "SALEM",
+    "value": "SALEM",
+    "subRegion": [
+      {"label": "DHARMAPURI", "value": "DHARMAPURI"},
+      {"label": "KALLAKURICHI", "value": "KALLAKURICHI"},
+      {"label": "KRISHNAGIRI", "value": "KRISHNAGIRI"},
+      {"label": "PODUCHERRY", "value": "PODUCHERRY"},
+      {"label": "SALEM NORTH", "value": "SALEM_NORTH"},
+      {"label": "SALEM SOUTH", "value": "SALEM_SOUTH"},
+      {"label": "THIRUPATHUR", "value": "THIRUPATHUR"},
+      {"label": "THIRUVANAMALAI NORTH", "value": "THIRUVANAMALAI_NORTH"},
+      {"label": "THIRUVANAMALAI SOUTH", "value": "THIRUVANAMALAI_SOUTH"},
+      {"label": "VILLUPURAM", "value": "VILLUPURAM"}
+    ]
+  },
+  {
+    "label": "TIRUCHIRAPALLI",
+    "value": "TIRUCHIRAPALLI",
+    "subRegion": [
+      {"label": "ARIYALUR", "value": "ARIYALUR"},
+      {"label": "CUDDALORE", "value": "CUDDALORE"},
+      {"label": "MAYILATHURAI", "value": "MAYILATHURAI"},
+      {"label": "NAGAPPATINAM", "value": "NAGAPPATINAM"},
+      {"label": "PERAMBALUR", "value": "PERAMBALUR"},
+      {"label": "PUDUKOTTAI", "value": "PUDUKOTTAI"},
+      {"label": "THANJAVUR", "value": "THANJAVUR"},
+      {"label": "THIRUVAUR", "value": "THIRUVAUR"},
+      {"label": "TIRUCHIRAPPALLI NORTH", "value": "TIRUCHIRAPPALLI_NORTH"},
+      {"label": "TIRUCHIRAPPALLI SOUTH", "value": "TIRUCHIRAPPALLI_SOUTH"}
+    ]
+  }
+]
+
+export const DEPARTMENT_LIST = [
+  {
+    label: 'Direct Sales Team',
+    value: 'direct-sales-team'
+  },
+  {
+    label: 'Direct Partner Sales Team',
+    value: 'direct-partner-sales-team'
+  },
+  {
+    label: 'Channel Partner Sales Team',
+    value: 'channel-partner-sales-team'
+  }
+]
+
+export const ZONAL_ADMIN = {
+  FORM_TITLE: {
+    ADD_ZONAL_ADMIN: 'Add your zonal admin',
+  },
+  FORM_LABEL: {
+    FIRST_NAME: 'First Name',
+    LAST_NAME: 'Last Name',
+    EMAIL_ID: 'Email ID',
+    MOBILE_NO: 'Mobile No',
+    STATE: 'Select state for this zonal admin'
+  },
+  FORM_PLACEHOLDER: {
+    FIRST_NAME: 'Enter your first name.',
+    LAST_NAME: 'Enter your last name.',
+    EMAIL_ID: 'Enter your email id.',
+    MOBILE_NO: 'Enter your mobile no.',
+    STATE: 'Select state for this zonal admin.'
+  },
+  FORM_FIELDS: {
+    FIRST_NAME: 'firstName',
+    LAST_NAME: 'lastName',
+    EMAIL_ID: 'emailId',
+    MOBILE_NO: 'mobileNo',
+    STATE: 'state'
+  },
+  FORM_ERROR_MSG: {
+    FIRST_NAME_REQUIRED: 'First name is required.',
+    FIRST_NAME_3_CHART_MUST: 'First name should contain at least 3 characters',
+    LAST_NAME_REQUIRED: 'Last name is required.',
+    EMAIL_ID: 'Email ID is required.',
+    INAVLID_EMAIL_ID: 'Invalid Email ID.',
+    MOBILE_NO: 'Mobile NO is required.',
+    INAVLID_MOBILE_NO: 'Invalid Mobile No.',
+    STATE: 'State is required.'
+  }
+}
+
+export const ZONAL_HEAD = {
+  FORM_TITLE: {
+    ADD_ZONAL_ADMIN: 'Add your zonal Head',
+  },
+  FORM_LABEL: {
+    FIRST_NAME: 'First Name',
+    LAST_NAME: 'Last Name',
+    EMAIL_ID: 'Email ID',
+    MOBILE_NO: 'Mobile no',
+    ZONE: 'Select zone for this zonal admin',
+    DEPARTMENT: 'Department',
+    ROLE: 'Role',
+    REGION: 'Region',
+    AREA: 'Area',
+    PAYROLL: 'Payroll',
+    MAPPING_ID: 'Employee Code'
+  },
+  FORM_PLACEHOLDER: {
+    FIRST_NAME: 'Enter your first name.',
+    LAST_NAME: 'Enter your last name.',
+    EMAIL_ID: 'Enter your email id.',
+    MOBILE_NO: 'Enter your mobile no.',
+    ZONE: 'Select zone for this zonal head.',
+    REGION: 'Select region for this reagional head.',
+    DEPARTMENT: 'Select department.',
+    ROLE: 'Select role.',
+    AREA: 'Select Area.',
+    PAYROLL: 'Enter your payroll type.',
+    MAPPING_ID: 'Enter your employee code.'
+  },
+  FORM_FIELDS: {
+    FIRST_NAME: 'firstName',
+    LAST_NAME: 'lastName',
+    EMAIL_ID: 'emailId',
+    MOBILE_NO: 'mobileNo',
+    ZONE: 'zone',
+    REGION: 'region',
+    AREA: 'area',
+    DEPARTMENT: 'department',
+    ROLE: 'role',
+    PAYROLL: 'payRoll',
+    MAPPING_ID: 'mappingId'
+  },
+  FORM_ERROR_MSG: {
+    FIRST_NAME_REQUIRED: 'First name is required.',
+    FIRST_NAME_3_CHART_MUST: 'First name should contain at least 3 characters',
+    LAST_NAME_REQUIRED: 'Last name is required.',
+    EMAIL_ID: 'Email ID is required.',
+    INAVLID_EMAIL_ID: 'Invalid Email ID.',
+    MOBILE_NO: 'Mobile no is required.',
+    INAVLID_MOBILE_NO: 'Invalid Mobile No.',
+    ZONE: 'Zone is required.',
+    REGION: 'Region is required.',
+    AREA: 'Area is required.',
+    DEPARTMENT: 'Department is required.',
+    ROLE: 'Role is required.',
+    PAYROLL: 'Payroll is required. payRoll',
+    MAPPING_ID: 'Employee code is required. mappingId'
+  }
+}
+
+export const ZONE_LIST = [
+  {
+    value: 'Tamil-Nadu',
+    label: 'Tamil Nadu'
+  },
+  {
+    value: 'AP',
+    label: 'Andhra Pradesh'
+  },
+  {
+    value: 'KL',
+    label: 'Kerala'
+  },
+  {
+    value: 'TG',
+    label: 'Telungana'
+  }
+]
+
+export const PAYROLL_LIST = [
+  {
+    label: 'Direct Pimath Payroll',
+    value: 'direct'
+  },
+  {
+    label: 'Partner Payroll',
+    value: 'third-party'
+  }
+]
+// SSLC/HSC/UG/PG/OTHER
+export const EDUCATION_STATUS = [
+  {
+    label: 'SSLC',
+    value: 'SSLC'
+  },
+  {
+    label: 'HSC',
+    value: 'HSC'
+  },
+  {
+    label: 'UG',
+    value: 'UG'
+  },
+  {
+    label: 'PG',
+    value: 'PG'
+  },
+  {
+    label: 'OTHER',
+    value: 'OTHER'
+  }
+]
+// Direct Partner
+// Partner Development Head
+// Regional Head
+// Zonal Head
+
+
+// Channel Partner
+// Chennal Head
+// Regional Head
+// Zonal Head
+
+
+
+// Direct Sales Team
+// Direct Partner Sales Team
+// Channel Partner Sales Team
+
+// 'direct-sales-team'
+// 'direct-partner-sales-team',
+// 'channel-partner-sales-team'
+
+
+// zonalAdmin = {
+//   zone: 'TN',
+//   emailId: '',
+//   firstName: '',
+//   lastName: '',
+//   mobileNo: ''
+// }
+
+
+
+// zonalHead = {
+//   "zone": "Tamil-Nadu",
+//   "department": "direct-sales-team",
+//   "mappingId": "790",
+//   "mobileNo": "9087654321",
+//   "emailId": "f@dfgh.kj",
+//   "lastName": "dfvb",
+//   "firstName": "fvfv"
+//   role: '',
+//   payRoll: '',
+// }
+
+
+// regionalHead = {
+//   department: 'pathch default',
+//   role: '',
+//   firstName: '',
+//   lastName: '',
+//   region: '', //not found
+//   mobileNo: '',
+//   emailId: '',
+//   zone: '',
+//   payRoll: '',
+//   mappingId: '',
+// }
+
+// salesHead_Pdm_promoter = {
+//   role: '',
+//   region: '',
+//   firstName: '',
+//   lastName: '',
+//   mobileNo: '',
+//   emailId: '',
+//   area: '',
+//   payRoll: '',
+//   mappingId: '',
+// }
+// const hjj = {
+//   "zone": "tamil-nadu",
+//   "region": "chennai",
+//   "area": "vandaloor",
+//   "department": "direct-sales-team",
+//   "firstName": "cscdsc",
+//   "lastName": "cscs",
+//   "dob": "89y89",
+//   "gender": "male",
+//   "mobileNo": "9087654321",
+//   "emailId": "zesd@fdgf.uygv",
+//   "qualification": "cvfvdfv",
+//   "occupation": "sdcsdcdf",
+//   "currentAddress": {
+//       "address": "curent",
+//       "district": "curent",
+//       "state": "curent",
+//       "pincode": "curent",
+//       "postOffice": "curent"
+//   },
+//   "bothAddressAreSame": "Yes",
+//   "permenentAddress": {
+//       "address": "dfdscsdd",
+//       "district": "liijoiho",
+//       "state": "kii",
+//       "pincode": "ugufy",
+//       "postOffice": "fttdtdt"
+//   },
+//   "aadharDetail": {
+//       "aadharNo": "908765432112",
+//       "name": "908765432112",
+//       "preoof": ""
+//   },
+//   "panDetail": {
+//       "number": "ABCTY1234D",
+//       "name": "ddsvdfv",
+//       "preoof": ""
+//   },
+//   "bankDetail": {
+//       "bankName": "sdcdsc",
+//       "branchName": "ccsdcsdc",
+//       "ifscCode": "SBIN0005943",
+//       "accountType": "scvdfvdf",
+//       "nameAsPerBook": "vdfvdfv",
+//       "proof": ""
+//   },
+//   "uploadDocumentCopy": "",
+//   "photo": ""
+// }
+// const channelHead_channelPartner_directPartner = {
+//   zone: '', //default
+//   region: '', //default
+//   area: '',
+//   department: '',
+//   firstName: '',
+//   lastName: '',
+//   dob: '',
+//   gender: '',
+//   mobileNo: '',
+//   emailId: '',
+//   qualification: '', //list SSLC/HSC/UG/PG/OTHER
+//   occupation: '',
+//   permenentAddress: {
+//     address: '',
+//     district: '',
+//     state: '',
+//     pincode: '',
+//     postOffice: ''
+//   },
+//   bothAddressAreSame: '',
+//   currentAddress: {
+//     address: '',
+//     district: '',
+//     state: '',
+//     pincode: '',
+//     postOffice: ''
+//   },
+//   aadharDetail: {
+//     aadharNo: '',
+//     name: '',
+//     preoof: ''
+//   },
+//   panDetail: {
+//     number: '',
+//     name: '',
+//     preoof: ''
+//   },
+//   bankDetail: {
+//     bankName: '',
+//     branchName: '',
+//     ifscCode: '',
+//     accountType: '',
+//     accountNo: '',
+//     nameAsPerBook: '',
+//     proof: ''
+//   },
+//   uploadDocumentCopy: '',
+//   photo: ''
+// }
+
+
+// const form = {
+//   id: 'df',
+//   state: 'TN',
+//   emailId: '',
+//   firstName: '',
+//   lastName: '',
+//   mobileNo: '',
+//   department: '',
+//   role: '',
+//   payRoll: '',
+//   mappingId: '',
+//   region: '',
+//   zone: '',
+//   area: '',
+//   dob: '',
+//   gender: '',
+//   qualification: '', //list SSLC/HSC/UG/PG/OTHER
+//   occupation: '',
+//   permenentAddress: {
+//     address: '',
+//     district: '',
+//     state: ''
+//   },
+//   bothAddressAreSame: '',
+//   currentAddress: {
+//     address: '',
+//     district: '',
+//     state: '',
+//     pincode: '',
+//     postOffice: ''
+//   },
+//   aadharDetail: {
+//     address: '',
+//     district: '',
+//     state: '',
+//     pincode: '',
+//     postOffice: ''
+//   },
+//   panDetail: {
+//     number: '',
+//     name: '',
+//     proof: ''
+//   },
+//   bankDetail: {
+//     bankName: '',
+//     branchName: '',
+//     ifscCode: '',
+//     accountType: '',
+//     accountNo: '',
+//     nameAsPerBook: '',
+//     proof: ''
+//   },
+//   uploadDocumentCopy: '',
+//   photo: '',
+//   isApprove: true
+// }

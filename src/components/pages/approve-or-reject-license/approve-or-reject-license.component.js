@@ -271,7 +271,7 @@ function ApproveOrRejectLicenseComponent() {
     // eslint-disable-next-line 
   }, []);
   return (
-    <div>
+    <div className="w-full">
       {
         isPastReportLoading ? <div className="h-80 bg-neutral-7 w-full flex justify-center items-center">Loading...</div> :
         isErrorOccured ? <ErrorPageComponent />  :

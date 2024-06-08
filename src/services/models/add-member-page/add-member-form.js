@@ -1,45 +1,37 @@
 import React, { useState } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import InputComponent from '../../../components/atom/input-component';
+import SelectComponent from '../../../components/atom/select-component';
 import { ApiServiceHelper } from '../../api/api.service';
 import { EnvironmentHelperService } from '../../helper-service/environment-helper.service';
+import { USER_JOB_TITLE } from '../../utilities/APP.constant';
 import validators from '../../utilities/validators';
-import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE, JOB_ROLE_ARR, REFERED_BY_ARR } from './add-member.constant';
+import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE, EDUCATION_STATUS, LOCATION_LIST, ZONAL_HEAD } from './add-member.constant';
 // import validators from '../../utilities/validators';
-
 
 const AddMemberForm = props => {
   const _environmentHelperService = new EnvironmentHelperService();
   const _apiHelper = new ApiServiceHelper();
   const [failedToRequest, setFailedToRequest] = useState(false);
+  const role = _environmentHelperService.getRole();
+
+  const [photoCopy, setPhotoCopy] = useState('');
+  const [aadharCopy, setAadharCopy] = useState('');
+  const [panCopy, setPanCopy] = useState('');
+  const [bankProofCopy, setBankProofCopy] = useState('');
+  const [documentUpload, setDocumentUpload] = useState('');
 
   const [otherValidator, setOtherValidators] = useState({
-    referalPersonError: true,
-    appliedForError: true,
-    genderError: true,
-
     photoError: true,
     aadharCopyError: true,
     panCopyError: true,
     bankProofError: true,
-    applicantSignError: true,
-    reeferalPersonSign: true
+    applicationDocumentCopy: true,
   })
-  
+
+  const [isBothAddressSame, setBothAddressSame] = useState(false);
+
   const onSubmit = (values) => {
-    console.log(values);
-    if(values.gender) {
-      const newObj = Object.assign(otherValidator, {genderError: false})
-      setOtherValidators(newObj);
-    }
-    if(values.referedBy) {
-      const newObj = Object.assign(otherValidator, {referalPersonError: false})
-      setOtherValidators(newObj);
-    }
-    if(values.jobRole) {
-      const newObj = Object.assign(otherValidator, {appliedForError: false})
-      setOtherValidators(newObj);
-    }
     if(photoCopy) {
       const newObj = Object.assign(otherValidator, {photoError: false})
       setOtherValidators(newObj);
@@ -56,75 +48,70 @@ const AddMemberForm = props => {
       const newObj = Object.assign(otherValidator, {bankProofError: false})
       setOtherValidators(newObj);
     }
-    if(applicantSign) {
-      const newObj = Object.assign(otherValidator, {applicantSignError: false})
+    if(documentUpload) {
+      const newObj = Object.assign(otherValidator, {applicationDocumentCopy: false})
       setOtherValidators(newObj);
     }
-    if(referalPersonSign) {
-      const newObj = Object.assign(otherValidator, {reeferalPersonSign: false})
-      setOtherValidators(newObj);
-    }
-
     const validationSatisFied = Object.keys(otherValidator).find(key => otherValidator[key]);
     if(!validationSatisFied) {
+      if(role === USER_JOB_TITLE.PDM) {
+        values.role = USER_JOB_TITLE.DIRECT_PARTNER;
+        values.area = _environmentHelperService.getSessionObject().area
+      } else if(role === USER_JOB_TITLE.CHANNEL_HEAD) {
+        values.role = USER_JOB_TITLE.CHANNEL_PARTNER;
+        values.area = _environmentHelperService.getSessionObject().area
+      } else {
+        values.role = USER_JOB_TITLE.CHANNEL_HEAD;
+      }
       const payload = {
-        isAdmin: _environmentHelperService.isAdmin(), // new key
-        appliedFor: values.jobRole,
-        location: values.area, //input need to added
-        referalPersonName: _environmentHelperService.getName(), // new key
-        referredBy: values.referedBy,
-        referedPersonEmpCode: values.referelCode, //empId old key
-        personalInfo: {
-          name: values.name,
-          dob: values.dob,
-          gender: values.gender,
-          age: values.age,
-          mobileNo: values.mobileNumber,
-          emailId: values.emailId,
-          qualification: values.qualification,
-          occupation: values.occupation,
-          photo: photoCopy // new key
+        zone: 'tamil-nadu',
+        region: 'chennai',
+        area: 'vandaloor',
+        department: 'direct-sales-team',
+        firstName: values.firstName,
+        lastName: values.lastName,
+        dob: values.dob,
+        gender: values.gender,
+        mobileNo: values.mobileNo,
+        emailId: values.emailId,
+        qualification: values.qualification,
+        occupation: values.occupation,
+        currentAddress: {
+          address: values.currentAddress,
+          district: values.currentAddressDistrict,
+          state: values.currentAddressState,
+          pincode: values.currentAddressPinCode,
+          postOffice: values.currentAddressPostOffice
         },
-        address: {
-          current: {
-            currentAddress: values.currentAddress,  //missing value
-            district: values.currentAddressDistrict,
-            state: values.currentAddressState,
-            postOffice: values.currentAddressPostOffice,
-            pinCode: values.currentAddressPinCode,  //missing value
-          },
-          isBothSame: values.bothAddressSame ? 'Yes' : ' No',
-          permenent: {
-            permenentAddress: values.permenentAddress,
-            district: values.district,
-            state: values.state,
-            postOffice: values.postOffice,
-            pinCode: values.pinCode,
-          }
+        bothAddressAreSame: values.currentAddressPinCode ? 'Yes' : ' No',
+        permenentAddress: {
+          address: values.permenentAddress,
+          district: values.district,
+          state: values.state,
+          pincode: values.postOffice,
+          postOffice: values.pinCode
         },
-        identityInfo: {
-          aadharInfo: {
-            name: values.aadharName,
-            aadharNo: values.aadharNumber,
-            aadharCopy: aadharCopy
-          },
-          panInfo: {
-            name: values.panName,
-            panNo: values.panNumber,
-            panCopy: panCopy
-          },
-          bankInfo: {
-            name: values.nameAsPerBank,
-            bankName: values.bankName,
-            branchName: values.branchName,
-            ifscCode: values.ifscCode,
-            accountNo: values.accountNumber,
-            accountType: values.accountType,
-            bankProof: bankProofCopy // new key
-          },
-          applicantSign: applicantSign,
-          referalSign: referalPersonSign
-        }
+        aadharDetail: {
+          aadharNo: values.aadharNumber,
+          name: values.aadharNumber,
+          preoof: aadharCopy
+        },
+        panDetail: {
+          number: values.panNumber,
+          name: values.panName,
+          preoof: panCopy
+        },
+        bankDetail: {
+          bankName: values.bankName,
+          branchName: values.branchName,
+          ifscCode: values.ifscCode,
+          accountType: values.accountType,
+          accountNo: values.accountNo,
+          nameAsPerBook: values.nameAsPerBank,
+          proof: bankProofCopy
+        },
+        uploadDocumentCopy: documentUpload,
+        photo: photoCopy
       }
       if(_environmentHelperService.isAdmin()) {
         payload.isApproved = true;
@@ -133,6 +120,10 @@ const AddMemberForm = props => {
         _apiHelper.addUser(payload).then(resp => {}).catch(err => {setFailedToRequest(true)});
       }
     }
+  }
+
+  function onBothAddressSame(event) {
+    setBothAddressSame(event.target.checked);
   }
 
   const formValidators = {
@@ -168,13 +159,6 @@ const AddMemberForm = props => {
     accountNumber: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.regex(/^([0-9]{11})|([0-9]{2}-[0-9]{3}-[0-9]{6})$/, ADD_MEMBER_FORM_ERROR_MESSAGE.INAVALID_BANK_ACC_NO)],
     ifscCode: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.regex(/^[A-Za-z]{4}[a-zA-Z0-9]{7}$/, ADD_MEMBER_FORM_ERROR_MESSAGE.INVALID_IFSC_CODE)]
   }
-
-  const [photoCopy, setPhotoCopy] = useState('');
-  const [aadharCopy, setAadharCopy] = useState('');
-  const [panCopy, setPanCopy] = useState('');
-  const [bankProofCopy, setBankProofCopy] = useState('');
-  const [applicantSign, setApplicantSign] = useState('');
-  const [referalPersonSign, setReferalPersonSign] = useState('');
 
   const convertPhotoToBase64 = (event) => {
     const file = event.target.files[0];
@@ -238,22 +222,8 @@ const AddMemberForm = props => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result.split(',')[1];
-        setApplicantSign(base64String);
+        setDocumentUpload(base64String);
         const newObj = Object.assign(otherValidator, {applicantSignError: false})
-        setOtherValidators(newObj);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const convertReferalPersonSignToBase64 = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];
-        setReferalPersonSign(base64String);
-        const newObj = Object.assign(otherValidator, {reeferalPersonSign: false})
         setOtherValidators(newObj);
       };
       reader.readAsDataURL(file);
@@ -263,70 +233,55 @@ const AddMemberForm = props => {
 //  const { handleSubmit, pristine, submitting } = props;
 const { handleSubmit, pristine, submitting, invalid } = props;
  return (
-  <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px]">
+  <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
     <h2 className="text-2xl font-medium">{ADD_MEMBER.ADD_MEMBER}</h2>
     <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.REFERAL_PERSON}</label>
+      <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.FIRST_NAME}</label>
       <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.REFERED_BY}
-        className="select-input"
-        component="select"
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.referedBy}
-      >
-        <option disabled value="">Select here</option>
-        {REFERED_BY_ARR.map((val) => (
-          <option key={val.value} value={val.value}>
-            {val.label}
-          </option>
-        ))}
-      </Field>
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.REFERAL_CODE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.REFEREL_CODE}
+        name={ZONAL_HEAD.FORM_FIELDS.FIRST_NAME}
         component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.referelCode}
+        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.FIRST_NAME}
+        validate={formValidators.firstName}
       />
     </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.APPLIED_FOR}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.JOB_ROLE}
-        className="select-input"
-        component="select"
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.jobRole}
-      >
-        <option disabled value="">Select here</option>
-        {JOB_ROLE_ARR.map((val) => (
-          <option key={val.value} value={val.value}>
-            {val.label}
-          </option>
-        ))}
-      </Field>
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.APPLIED_FOR_AREA}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.AREA}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.area}
-      />
-    </div>
-    <label className="text-black text-base font-medium">{ADD_MEMBER.PERSONAL_INFORMATION}</label>
     <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.NAME}</label>
+      <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.LAST_NAME}</label>
       <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.NAME}
+        name={ZONAL_HEAD.FORM_FIELDS.LAST_NAME}
         component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.name}
+        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.LAST_NAME}
+        validate={formValidators.lastName}
       />
     </div>
+    <div className="flex flex-col gap-2">
+      <label className="text-black text-base font-medium">{ADD_MEMBER.MOBILE_NUMBER}</label>
+      <Field
+        name={ZONAL_HEAD.FORM_FIELDS.MOBILE_NO}
+        component={InputComponent}
+        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MOBILE_NO}
+        validate={formValidators.mobileNumber}
+      />
+    </div>
+    <div className="flex flex-col gap-2 mt-3">
+      <label className="text-black text-base font-medium">{ADD_MEMBER.EMAIL_ID}</label>
+      <Field
+        name={ZONAL_HEAD.FORM_FIELDS.EMAIL_ID}
+        component={InputComponent}
+        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.EMAIL_ID}
+        validate={formValidators.emailId}
+      />
+    </div>
+    {role === USER_JOB_TITLE.REGIONAL_HEAD && <div className="flex flex-col gap-2">
+      <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
+      <Field 
+        name={ZONAL_HEAD.FORM_FIELDS.AREA}
+        component={SelectComponent}
+        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
+        options={LOCATION_LIST[0].subRegion}
+        disabled={true}
+      />
+    </div>}
+    <div>Personal Details</div>
     <div className="flex flex-col gap-2 mt-3">
       <label className="text-black text-base font-medium">{ADD_MEMBER.DOB}</label>
       <Field
@@ -360,39 +315,13 @@ const { handleSubmit, pristine, submitting, invalid } = props;
       </div>
     </div>
     <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.AGE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.AGE}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.age}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.MOBILE_NUMBER}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.MOBILE_NUMBER}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.mobileNumber}
-      />
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.EMAIL_ID}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.EMAILID}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.emailId}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
       <label className="text-black text-base font-medium">{ADD_MEMBER.QUALIFICATION}</label>
-      <Field
+      <Field 
         name={ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION}
-        component={InputComponent}
+        component={SelectComponent}
         placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.qualification}
+        options={EDUCATION_STATUS}
+        disabled={true}
       />
     </div>
     <div className="flex flex-col gap-2 mt-3">
@@ -431,6 +360,7 @@ const { handleSubmit, pristine, submitting, invalid } = props;
         validate={formValidators.state}
       />
     </div>
+
     <div className="flex flex-col gap-2 mt-3">
       <label className="text-black text-base font-medium">{ADD_MEMBER.POST_OFFICE}</label>
       <Field
@@ -451,57 +381,63 @@ const { handleSubmit, pristine, submitting, invalid } = props;
     </div>
     <label className="text-black text-base font-medium">{ADD_MEMBER.BOTH_ADDRESS}</label>
     <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.TICK_CHECK_BOX_IF_BOTH_ADDRESS_SAME}</label>
+      <label className="text-black text-base font-medium">{ADD_MEMBER.TICK_CHECK_BOX_IF_BOTH_ADDRESS_SAME}{isBothAddressSame}</label>
       <Field
         name={ADD_MEMBER_FORM_CONTROL_NAME.BOTH_ADDRESS_SAME}
         component="input"
         type="checkbox"
+        onChange={onBothAddressSame}
       />
     </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.CURRENT_ADDRESS}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENT_ADDRESS}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.currentAddress}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.DISTRICT}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_DISTRICT}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.currentAddress}
-      />
-    </div><div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.STATE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_STATE}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.currentAddressState}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.POST_OFFICE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_POSTOFFICE}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.currentAddressPostOffice}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.CURRENT_ADDRESS_PIN_CODE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_PINCODE}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.currentAddressPinCode}
-      />
-    </div>
+    {
+      !isBothAddressSame && 
+      <div className='flex flex-col gap-2'>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.CURRENT_ADDRESS}</label>
+          <Field
+            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENT_ADDRESS}
+            component={InputComponent}
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            // validate={!isBothAddressSame ? formValidators.currentAddress : undefined}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.DISTRICT}</label>
+          <Field
+            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_DISTRICT}
+            component={InputComponent}
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            // validate={!isBothAddressSame ? formValidators.currentAddressDistrict : undefined}
+          />
+        </div><div className="flex flex-col gap-2 mt-3">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.STATE}</label>
+          <Field
+            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_STATE}
+            component={InputComponent}
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            // validate={!isBothAddressSame ? formValidators.currentAddressState : undefined}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.POST_OFFICE}</label>
+          <Field
+            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_POSTOFFICE}
+            component={InputComponent}
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            // validate={!isBothAddressSame ? formValidators.currentAddressPostOffice : undefined}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.CURRENT_ADDRESS_PIN_CODE}</label>
+          <Field
+            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_PINCODE}
+            component={InputComponent}
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            // validate={!isBothAddressSame ? formValidators.currentAddressPinCode : undefined}
+          />
+        </div>
+      </div>
+    }
     <label className="text-black text-base font-medium">{ADD_MEMBER.AADHAR_AND_PAN_INFO}</label>
     <div className="flex flex-col gap-2">
       <label className="text-black text-base font-medium">{ADD_MEMBER.NAME_AS_PER_AADHAR}</label>
@@ -610,26 +546,18 @@ const { handleSubmit, pristine, submitting, invalid } = props;
       <input type="file" onChange={convertBankProofToBase64} />
     </div>
     <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.APPLICANT_SIGN}</label>
+      <label className="text-black text-base font-medium">Upload application copy as pdf.</label>
       <input type="file" onChange={convertApplicantSignToBase64} />
-
     </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.REFERAL_PERSON_SIGN}</label>
-      <input type="file" onChange={convertReferalPersonSignToBase64} />
-    </div>
-
-    <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">
-      {!invalid && otherValidator.referalPersonError && <div>Select Referal Person</div>}
-      {!invalid && otherValidator.appliedForError && <div>Select Applied For</div>}
-      {!invalid && otherValidator.genderError && <div>Select Gender</div>}
-      {!invalid && otherValidator.photoError && <div>Upload your photo</div>}
-      {!invalid && otherValidator.aadharCopyError && <div>Upload your aadhar copy</div>}
-      {!invalid && otherValidator.panCopyError && <div>Upload your pan copy</div>}
-      {!invalid && otherValidator.bankProofError && <div>Upload your bank proof</div>}
-      {!invalid && otherValidator.applicantSignError && <div>Upload applicant Sign</div>}
-      {!invalid && otherValidator.bankProofError && <div>Upload referal person sign</div>}
-    </div>
+    {(!invalid && (otherValidator.photoError || otherValidator.aadharCopyError || otherValidator.panCopyError || otherValidator.bankProofError || otherValidator.applicationDocumentCopy))
+      && <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">
+        {!invalid && otherValidator.photoError && <div>Upload your photo</div>}
+        {!invalid && otherValidator.aadharCopyError && <div>Upload your aadhar copy</div>}
+        {!invalid && otherValidator.panCopyError && <div>Upload your pan copy</div>}
+        {!invalid && otherValidator.bankProofError && <div>Upload your bank proof</div>}
+        {!invalid && otherValidator.applicationDocumentCopy && <div>Upload referal person sign</div>}
+      </div>
+    }
     <div className="flex flex-wrap gap-2 mt-3 items-center">
       <button className="secondary w-fit" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}>{ADD_MEMBER.ADD_MEMBER}</button>
       {
