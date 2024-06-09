@@ -19,7 +19,7 @@ const ZonalAdminForm = () => {
     values.role = USER_JOB_TITLE.MASTER_ADMIN;
 
     console.log(values)
-    _apiHelper.addUser(values).then(resp => {
+    _apiHelper.addMasterAdmin(values).then(resp => {
       // resp = {data: {status: true }}
       if(resp.data.status) {
         setSuccessfullyRequested(true);

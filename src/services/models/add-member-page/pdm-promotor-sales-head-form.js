@@ -15,6 +15,8 @@ const PdmPromoterSalesHeadForm = () => {
   const _environmentHelperService = new EnvironmentHelperService();
   const role = _environmentHelperService.getRole();
 
+  const areaList = LOCATION_LIST.find(x => x.value === _environmentHelperService.getSessionObject().region)?.subRegion || [];
+
   const onSubmit = async (values) => {
     const department = _environmentHelperService.getSessionObject().department;
     if(role === USER_JOB_TITLE.REGIONAL_HEAD && department === DEPARTMENT_LIST[0].value) {
@@ -113,7 +115,8 @@ const PdmPromoterSalesHeadForm = () => {
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
           <NewSelectComponent
             placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
-            options={LOCATION_LIST}
+            value={areaList[0].value || ''}
+            options={areaList}
             disabled={false}
             {...register(ZONAL_HEAD.FORM_FIELDS.AREA)}
           />
@@ -124,10 +127,10 @@ const PdmPromoterSalesHeadForm = () => {
           <NewTestInputComponent
             placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MAPPING_ID}
             {...register(ZONAL_HEAD.FORM_FIELDS.MAPPING_ID, {
-              required: ZONAL_HEAD.FORM_ERROR_MSG.MAPPING_ID_REQUIRED,
+              // required: ZONAL_HEAD.FORM_ERROR_MSG.MAPPING_ID_REQUIRED,
             })}
           />
-          {errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID].message}</span>}
+          {/* {errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID].message}</span>} */}
         </div>
 
         <button className="secondary w-fit" type="submit">Add</button>
