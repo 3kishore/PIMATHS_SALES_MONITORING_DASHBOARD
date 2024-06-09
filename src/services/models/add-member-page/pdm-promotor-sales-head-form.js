@@ -51,7 +51,7 @@ const PdmPromoterSalesHeadForm = () => {
 
   return (
     <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
-      <h2 className="text-2xl font-medium">Add your regional head</h2>
+      <h2 className="text-2xl font-medium">Add your team member.</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.FIRST_NAME}</label>

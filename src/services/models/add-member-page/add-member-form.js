@@ -34,6 +34,7 @@ const AddMemberForm = () => {
     setBothAddressSame(event.target.checked);
   }
 
+  const areaList = LOCATION_LIST.find(x => x.value === _environmentHelperService.getSessionObject().region)?.subRegion || [];
 
   const onSubmit = async (values) => {
     if(photoCopy) {
@@ -203,7 +204,7 @@ const AddMemberForm = () => {
       reader.onloadend = () => {
         const base64String = reader.result.split(',')[1];
         setDocumentUpload(base64String);
-        const newObj = Object.assign(otherValidator, {applicantSignError: false})
+        const newObj = Object.assign(otherValidator, {applicationDocumentCopy: false})
         setOtherValidators(newObj);
       };
       reader.readAsDataURL(file);
@@ -227,7 +228,6 @@ const AddMemberForm = () => {
           />
           {errors[ZONAL_HEAD.FORM_FIELDS.FIRST_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.FIRST_NAME].message}</span>}
         </div>
-
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.LAST_NAME}</label>
           <NewTestInputComponent
@@ -238,7 +238,6 @@ const AddMemberForm = () => {
           />
           {errors[ZONAL_HEAD.FORM_FIELDS.LAST_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.LAST_NAME].message}</span>}
         </div>
-
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.EMAIL_ID}</label>
           <NewTestInputComponent
@@ -253,7 +252,6 @@ const AddMemberForm = () => {
           />
           {errors[ZONAL_HEAD.FORM_FIELDS.EMAIL_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.EMAIL_ID].message}</span>}
         </div>
-
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MOBILE_NO}</label>
           <NewTestInputComponent
@@ -268,16 +266,15 @@ const AddMemberForm = () => {
           />
           {errors[ZONAL_HEAD.FORM_FIELDS.MOBILE_NO] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MOBILE_NO].message}</span>}
         </div>
-
         {role === USER_JOB_TITLE.REGIONAL_HEAD && (<div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
           <NewSelectComponent
             placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
-            options={LOCATION_LIST}
+            
+            options={areaList}
             {...register(ZONAL_HEAD.FORM_FIELDS.AREA)}
           />
         </div>)}
-
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MAPPING_ID}</label>
           <NewTestInputComponent
@@ -288,7 +285,6 @@ const AddMemberForm = () => {
           />
           {errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID].message}</span>}
         </div>
-
         <div>Personal Details</div>
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.DOB}</label>
@@ -318,7 +314,6 @@ const AddMemberForm = () => {
           />
           {errors[ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION].message}</span>}
         </div>
-
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.OCCUPATION}</label>
           <NewTestInputComponent
@@ -540,7 +535,6 @@ const AddMemberForm = () => {
           />
           {errors[ADD_MEMBER_FORM_CONTROL_NAME.PAN_NUMBER] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.PAN_NUMBER].message}</span>}
         </div>
-
         <label className="text-black text-base font-medium">{ADD_MEMBER.BANK_PASSBOOK_INFO}</label>
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.BANK_NAME}</label>
@@ -584,8 +578,6 @@ const AddMemberForm = () => {
           />
           {errors[ADD_MEMBER_FORM_CONTROL_NAME.IFSC_CODE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.IFSC_CODE].message}</span>}
         </div>
-
-
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.ACCOUNT_TYPE}</label>
           <NewTestInputComponent

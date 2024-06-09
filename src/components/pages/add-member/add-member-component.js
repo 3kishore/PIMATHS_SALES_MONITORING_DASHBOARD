@@ -24,17 +24,17 @@ function AddMemberComponent() {
     } else if (role === USER_JOB_TITLE.ZONAL_HEAD) {
       return <RegionalHeadForm />;
     } else if(role === USER_JOB_TITLE.REGIONAL_HEAD && department === ds) {
-      return <PdmPromoterSalesHeadForm />;
+      return <AddMemberForm />;
     } else if(role === USER_JOB_TITLE.REGIONAL_HEAD && department === dp) {
-      return <PdmPromoterSalesHeadForm />;
+      return <AddMemberForm />;
     } else if(role === USER_JOB_TITLE.REGIONAL_HEAD && department === cp) {
-      return <AddMemberForm />;
-    } else if (role === USER_JOB_TITLE.SALES_HEAD) {
       return <PdmPromoterSalesHeadForm />;
-    } else if (role === USER_JOB_TITLE.PDM) {
-      return  <AddMemberForm />;
-    } else if (role === USER_JOB_TITLE.CHANNEL_HEAD ) {
+    } else if (role === USER_JOB_TITLE.SALES_HEAD) {
       return <AddMemberForm />;
+    } else if (role === USER_JOB_TITLE.PDM) {
+      return  <PdmPromoterSalesHeadForm />;
+    } else if (role === USER_JOB_TITLE.CHANNEL_HEAD ) {
+      return <PdmPromoterSalesHeadForm />;
     } else {
       return null; // Optionally render nothing or some default component
     }

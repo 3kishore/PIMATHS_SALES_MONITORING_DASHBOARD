@@ -3,7 +3,7 @@ import { Chart } from "react-google-charts";
 import { useNavigate } from "react-router-dom";
 import { ApiServiceHelper } from "../../../services/api/api.service";
 import { EnvironmentHelperService } from "../../../services/helper-service/environment-helper.service";
-import { VIEW_ONLY_SINGLE_LEVEL } from "../../../services/utilities/APP.constant";
+import { USER_JOB_TITLE, VIEW_ONLY_SINGLE_LEVEL } from "../../../services/utilities/APP.constant";
 import ErrorPageComponent from "../error-page/error-page.component";
 
 function MyTeamPerformenceComponent() {
@@ -96,6 +96,7 @@ function MyTeamReportChart({chartData}) {
 function MyTeamReportTable({salesManList}) {
 
   const [showNavigation, setNavigation] = useState(false);
+  const _environmentHelperService = new EnvironmentHelperService();
 
   const navigate = useNavigate();
 
@@ -107,7 +108,8 @@ function MyTeamReportTable({salesManList}) {
   };
 
   useEffect(() => {
-    setNavigation(true);
+    const role = [USER_JOB_TITLE.PDM, USER_JOB_TITLE.CHANNEL_HEAD, USER_JOB_TITLE.CHANNEL_PARTNER]
+    setNavigation(!role.includes(_environmentHelperService.getRole()));
   }, []);
 
   return (
@@ -172,7 +174,7 @@ function MyTeamReportTable({salesManList}) {
                     <div className={
                       showNavigation ? 'h-[40px] min-w-[200px] flex flex-row px-[12px] text-blue-4 py-[9px] cursor-pointer':
                       'h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1'}
-                      onClick={() => goToDetails(salesManDetail.name)}
+                      onClick={() => goToDetails(salesManDetail.empCode)}
                     >
                       <span className="text-base-4 leading-[1.71] text-left">{salesManDetail.empCode}</span>
                     </div>
@@ -181,19 +183,21 @@ function MyTeamReportTable({salesManList}) {
                     <div className={
                       showNavigation ? 'h-[40px] min-w-[200px] flex flex-row px-[12px] text-blue-4 py-[9px] cursor-pointer':
                       'h-[40px] min-w-[200px] flex flex-row px-[12px] text-neutral-1'}
-                      onClick={() => goToDetails(salesManDetail.name)}
+                      onClick={() => goToDetails(salesManDetail.empCode)}
                     >
                       <span className="text-base-4 leading-[1.71] text-left">{salesManDetail.name}</span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                     <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.region}</span>
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">
+                        {salesManDetail.area ? salesManDetail.area : salesManDetail.region ? salesManDetail.region : salesManDetail.zone }
+                      </span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                     <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.phNo}</span>
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.mobileNo}</span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
