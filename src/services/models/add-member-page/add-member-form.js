@@ -5,7 +5,7 @@ import { REGEX, USER_JOB_TITLE } from '../../utilities/APP.constant';
 import { useForm } from "react-hook-form";
 import NewSelectComponent from "../../../components/atom/new-select-component";
 import NewTestInputComponent from "../../../components/atom/new-test-input";
-import { ADD_MEMBER, LOCATION_LIST, PAYROLL_LIST, ZONAL_HEAD } from './add-member.constant';
+import { ADD_MEMBER, DEPARTMENT_LIST, LOCATION_LIST, PAYROLL_LIST, ZONAL_HEAD } from './add-member.constant';
 
 const AddMemberForm = () => {
   const { register, handleSubmit, invalid, formState: { errors }, reset } = useForm();
@@ -37,14 +37,16 @@ const AddMemberForm = () => {
   const areaList = LOCATION_LIST.find(x => x.value === _environmentHelperService.getSessionObject().region)?.subRegion || [];
 
   const onSubmit = async (values) => {
-    if(role === USER_JOB_TITLE.PDM) {
-      values.role = USER_JOB_TITLE.DIRECT_PARTNER;
-      values.area = _environmentHelperService.getSessionObject().area
-    } else if(role === USER_JOB_TITLE.CHANNEL_HEAD) {
-      values.role = USER_JOB_TITLE.CHANNEL_PARTNER;
-      values.area = _environmentHelperService.getSessionObject().area
+    const ds = DEPARTMENT_LIST[0].value;
+    const dp = DEPARTMENT_LIST[1].value;
+    const department = _environmentHelperService.getSessionObject().department;
+    if(role === USER_JOB_TITLE.REGIONAL_HEAD && ds === department) {
+      values.role = USER_JOB_TITLE.SALES_HEAD;
+    } else if(role === USER_JOB_TITLE.REGIONAL_HEAD && dp === department) {
+      values.role = USER_JOB_TITLE.PDM;
     } else {
-      values.role = USER_JOB_TITLE.CHANNEL_HEAD;
+      values.role = USER_JOB_TITLE.PROMOTER;
+      values.area = _environmentHelperService.getSessionObject().area;
     }
     values.referalId = _environmentHelperService.getSessionObject()?.empCode;
     values.referedBy = `${_environmentHelperService.getSessionObject()?.firstName} ${_environmentHelperService.getSessionObject()?.lastName}`;

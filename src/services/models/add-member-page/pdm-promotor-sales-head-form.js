@@ -19,12 +19,13 @@ const PdmPromoterSalesHeadForm = () => {
 
   const onSubmit = async (values) => {
     const department = _environmentHelperService.getSessionObject().department;
-    if(role === USER_JOB_TITLE.REGIONAL_HEAD && department === DEPARTMENT_LIST[0].value) {
-      values.role = USER_JOB_TITLE.SALES_HEAD;
-    } else if(role === USER_JOB_TITLE.REGIONAL_HEAD && department === DEPARTMENT_LIST[1].value) {
-      values.role = USER_JOB_TITLE.PDM;
+    if(role === USER_JOB_TITLE.REGIONAL_HEAD) {
+      values.role = USER_JOB_TITLE.CHANNEL_HEAD;
+    } else if(role === USER_JOB_TITLE.PDM) {
+      values.role = USER_JOB_TITLE.DIRECT_PARTNER;
+      values.area = _environmentHelperService.getSessionObject().area
     } else {
-      values.role = USER_JOB_TITLE.PROMOTER;
+      values.role = USER_JOB_TITLE.CHANNEL_PARTNER;
       values.area = _environmentHelperService.getSessionObject().area
     }
     values.referalId = _environmentHelperService.getSessionObject()?.empCode;

@@ -1,9 +1,9 @@
 export const APP = {
   MATH_TUTEE_SALLES: 'Math Tutee Sales',
   CLICK_BELOW_TO_DOWNLOAD_TDS: 'Click below to download your TDS.',
-  TRAINING_VIEDO_TITLE: 'Click and watch your training viedo',
+  TRAINING_VIEDO_TITLE: 'Click and watch your training video',
   TDS_TITLE: 'TDS(Tax Deducted at Source) - Report',
-  ADD_TRAINING_VIEDO: 'Add Training Viedo',
+  ADD_TRAINING_VIEDO: 'Add Training Video',
   DOWNLOAD_MY_TDS: 'Download My TDS.',
   MESSAGE: {
     TRAINING_VIEDO_UPLOAD_INFO: 'Once you upload a video link here, the existing one will be deleted and the new training video will be available for users.'
@@ -32,7 +32,7 @@ export const MANAGERS_SIDE_NAV = [
     iconName: 'markdown_copy'
   },
   {
-    menu: 'Traning Viedo',
+    menu: 'Traning Video',
     path: '/home/traning-viedo',
     iconName: 'model_training'
   },
@@ -60,7 +60,7 @@ export const SALES_MAN_SIDE_NAV = [
     iconName: 'markdown_copy'
   },
   {
-    menu: 'Traning Viedo',
+    menu: 'Traning Video',
     path: '/home/traning-viedo',
     iconName: 'model_training'
   }
@@ -109,7 +109,7 @@ export const ADMIN_SIDE_NAV = [
     iconName: 'group_add'
   },
   {
-    menu: 'Upload Training Viedo',
+    menu: 'Upload Training Video',
     path: '/home/upload-training-viedo',
     iconName: 'publish'
   },
@@ -165,7 +165,7 @@ export const PROMOTER_AND_PARTNER_SIDE_NAV = [
     iconName: 'markdown_copy'
   },
   {
-    menu: 'Traning Viedo',
+    menu: 'Traning Video',
     path: '/home/traning-viedo',
     iconName: 'model_training'
   },
@@ -198,7 +198,7 @@ export const PDM_SALES_AND_CHANNEL_HEAD_SIDE_NAV = [
     iconName: 'markdown_copy'
   },
   {
-    menu: 'Traning Viedo',
+    menu: 'Traning Video',
     path: '/home/traning-viedo',
     iconName: 'model_training'
   },
@@ -236,7 +236,7 @@ export const REGIONAL_ZONAL_HEAD_SIDE_NAV = [
     iconName: 'markdown_copy'
   },
   {
-    menu: 'Traning Viedo',
+    menu: 'Traning Video',
     path: '/home/traning-viedo',
     iconName: 'model_training'
   },
