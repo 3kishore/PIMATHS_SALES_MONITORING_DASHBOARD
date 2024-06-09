@@ -25,6 +25,8 @@ const PdmPromoterSalesHeadForm = () => {
       values.role = USER_JOB_TITLE.PROMOTER;
       values.area = _environmentHelperService.getSessionObject().area
     }
+    values.referalId = _environmentHelperService.getSessionObject()?.empCode;
+    values.referedBy = `${_environmentHelperService.getSessionObject()?.firstName} ${_environmentHelperService.getSessionObject()?.lastName}`;
     values.zone = ZONE_LIST[0].value;
     values.region = _environmentHelperService.getSessionObject().region;
     values.payRoll = PAYROLL_LIST[0].value;

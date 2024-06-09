@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import NewTestInputComponent from "../../../components/atom/new-test-input";
 import { ApiServiceHelper } from "../../api/api.service";
+import { EnvironmentHelperService } from "../../helper-service/environment-helper.service";
 import { REGEX, USER_JOB_TITLE } from "../../utilities/APP.constant";
 import { ZONAL_ADMIN, ZONE_LIST } from "./add-member.constant";
 
@@ -10,8 +11,10 @@ const ZonalAdminForm = () => {
   const [failedToRequest, setFailedToRequest] = useState(false);
   const [successfullyRequested, setSuccessfullyRequested] = useState(false);
   const _apiHelper = new ApiServiceHelper();
-
+  const _environmentHelperService = new EnvironmentHelperService();
   const onSubmit = async (values) => {
+    values.referalId = _environmentHelperService.getSessionObject()?.empCode;
+    values.referedBy = `${_environmentHelperService.getSessionObject()?.firstName} ${_environmentHelperService.getSessionObject()?.lastName}`;
     values.zone = ZONE_LIST[0].value;
     values.role = USER_JOB_TITLE.MASTER_ADMIN;
 

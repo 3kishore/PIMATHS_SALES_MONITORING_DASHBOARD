@@ -15,6 +15,8 @@ const RegionalHeadForm = () => {
   const _environmentHelperService = new EnvironmentHelperService();
 
   const onSubmit = async (values) => {
+    values.referalId = _environmentHelperService.getSessionObject()?.empCode;
+    values.referedBy = `${_environmentHelperService.getSessionObject()?.firstName} ${_environmentHelperService.getSessionObject()?.lastName}`;
     values.zone = ZONE_LIST[0].value;
     values.role = USER_JOB_TITLE.REGIONAL_HEAD;
     values.payRoll = PAYROLL_LIST[0].value;

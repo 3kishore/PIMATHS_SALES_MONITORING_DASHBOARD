@@ -43,7 +43,7 @@ export class ApiServiceHelper {
 
   getRequestList() {
     // return axiosHttp.post('/users');
-    return axiosHttp.get('/admin/approve-and-member');
+    return axiosHttp.get('/admin/get-request-list');
   }
 
   getMyPayoutReport(payload) {

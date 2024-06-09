@@ -104,11 +104,6 @@ export const ADMIN_SIDE_NAV = [
     iconName: 'groups'
   },
   {
-    menu: 'Traning Viedo',
-    path: '/home/traning-viedo',
-    iconName: 'model_training'
-  },
-  {
     menu: 'Add Member',
     path: '/home/add-member',
     iconName: 'group_add'
@@ -123,11 +118,6 @@ export const ADMIN_SIDE_NAV = [
     path: '/home/approve-or-reject-request',
     iconName: 'license'
   },
-  {
-    menu: 'Help & Support',
-    path: '/home/help-&-support',
-    iconName: 'quiz'
-  },
 ]
 
 export const MASTER_ADMIN_SIDE_NAV = [
@@ -137,9 +127,9 @@ export const MASTER_ADMIN_SIDE_NAV = [
     iconName: 'contact_page'
   },
   {
-    menu: 'My Payout Report',
-    path: '/home/my-payout-report',
-    iconName: 'markdown_copy'
+    menu: 'My Team Performence',
+    path: '/home/my-team-performence',
+    iconName: 'groups'
   },
   {
     menu: 'Add Member',

@@ -67,11 +67,16 @@ const AddMemberForm = () => {
       } else {
         values.role = USER_JOB_TITLE.CHANNEL_HEAD;
       }
+      values.referalId = _environmentHelperService.getSessionObject()?.empCode;
+      values.referedBy = `${_environmentHelperService.getSessionObject()?.firstName} ${_environmentHelperService.getSessionObject()?.lastName}`;
       const payload = {
-        zone: 'tamil-nadu',
-        region: 'chennai',
-        area: 'vandaloor',
-        department: 'direct-sales-team',
+        referalId: values.referalId,
+        referedBy: values.referedBy,
+        role: values.role,
+        zone: _environmentHelperService.getSessionObject()?.empCode,
+        region: _environmentHelperService.getSessionObject()?.region,
+        area: values.area,
+        department: values.department,
         firstName: values.firstName,
         lastName: values.lastName,
         dob: values.dob,
@@ -87,7 +92,7 @@ const AddMemberForm = () => {
           pincode: values.currentAddressPinCode,
           postOffice: values.currentAddressPostOffice
         },
-        bothAddressAreSame: values.currentAddressPinCode ? 'Yes' : ' No',
+        bothAddressAreSame: isBothAddressSame ? 'Yes' : ' No',
         permenentAddress: {
           address: values.permenentAddress,
           district: values.district,
