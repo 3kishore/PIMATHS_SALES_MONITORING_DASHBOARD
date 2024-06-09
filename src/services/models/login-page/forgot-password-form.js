@@ -67,4 +67,4 @@ const ggg = () => {
   );
 };
 
-export default HelpAndSupportComponent;
+export default ggg;
