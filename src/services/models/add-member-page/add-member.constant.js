@@ -417,11 +417,11 @@ export const ZONE_LIST = [
 
 export const PAYROLL_LIST = [
   {
-    label: 'Direct Pimath Payroll',
+    label: 'Math tutee payroll',
     value: 'direct'
   },
   {
-    label: 'Partner Payroll',
+    label: 'Third party payroll',
     value: 'third-party'
   }
 ]
@@ -618,59 +618,56 @@ export const EDUCATION_STATUS = [
 // }
 
 
-// const form = {
-//   id: 'df',
-//   state: 'TN',
-//   emailId: '',
-//   firstName: '',
-//   lastName: '',
-//   mobileNo: '',
-//   department: '',
-//   role: '',
-//   payRoll: '',
-//   mappingId: '',
-//   region: '',
-//   zone: '',
-//   area: '',
-//   dob: '',
-//   gender: '',
-//   qualification: '', //list SSLC/HSC/UG/PG/OTHER
-//   occupation: '',
-//   permenentAddress: {
-//     address: '',
-//     district: '',
-//     state: ''
-//   },
-//   bothAddressAreSame: '',
-//   currentAddress: {
-//     address: '',
-//     district: '',
-//     state: '',
-//     pincode: '',
-//     postOffice: ''
-//   },
-//   aadharDetail: {
-//     address: '',
-//     district: '',
-//     state: '',
-//     pincode: '',
-//     postOffice: ''
-//   },
-//   panDetail: {
-//     number: '',
-//     name: '',
-//     proof: ''
-//   },
-//   bankDetail: {
-//     bankName: '',
-//     branchName: '',
-//     ifscCode: '',
-//     accountType: '',
-//     accountNo: '',
-//     nameAsPerBook: '',
-//     proof: ''
-//   },
-//   uploadDocumentCopy: '',
-//   photo: '',
-//   isApprove: true
-// }
+  // const form = {
+  //   emailId: 'mathtuteeapplication@gmail.com',
+  //   firstName: 'porul',
+  //   lastName: 'selvan',
+  //   mobileNo: '9087654321',
+  //   department: '-',
+  //   role: 'admin',
+  //   payRoll: '',
+  //   mappingId: '',
+  //   region: '',
+  //   zone: '',
+  //   area: '',
+  //   dob: '',
+  //   gender: '',
+  //   qualification: '', //list SSLC/HSC/UG/PG/OTHER
+  //   occupation: '',
+  //   permenentAddress: {
+  //     address: '',
+  //     district: '',
+  //     state: ''
+  //   },
+  //   bothAddressAreSame: '',
+  //   currentAddress: {
+  //     address: '',
+  //     district: '',
+  //     state: '',
+  //     pincode: '',
+  //     postOffice: ''
+  //   },
+  //   aadharDetail: {
+  //     address: '',
+  //     district: '',
+  //     state: '',
+  //     pincode: '',
+  //     postOffice: ''
+  //   },
+  //   panDetail: {
+  //     number: '',
+  //     name: '',
+  //     proof: ''
+  //   },
+  //   bankDetail: {
+  //     bankName: '',
+  //     branchName: '',
+  //     ifscCode: '',
+  //     accountType: '',
+  //     accountNo: '',
+  //     nameAsPerBook: '',
+  //     proof: ''
+  //   },
+  //   uploadDocumentCopy: '',
+  //   photo: ''
+  // }

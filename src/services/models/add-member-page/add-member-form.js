@@ -5,7 +5,7 @@ import { REGEX, USER_JOB_TITLE } from '../../utilities/APP.constant';
 import { useForm } from "react-hook-form";
 import NewSelectComponent from "../../../components/atom/new-select-component";
 import NewTestInputComponent from "../../../components/atom/new-test-input";
-import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE, LOCATION_LIST, ZONAL_HEAD } from './add-member.constant';
+import { ADD_MEMBER, LOCATION_LIST, PAYROLL_LIST, ZONAL_HEAD } from './add-member.constant';
 
 const AddMemberForm = () => {
   const { register, handleSubmit, invalid, formState: { errors }, reset } = useForm();
@@ -15,201 +15,208 @@ const AddMemberForm = () => {
   const _environmentHelperService = new EnvironmentHelperService();
   const role = _environmentHelperService.getRole();
 
-  const [isBothAddressSame, setBothAddressSame] = useState(false);
-  const [photoCopy, setPhotoCopy] = useState('');
-  const [aadharCopy, setAadharCopy] = useState('');
-  const [panCopy, setPanCopy] = useState('');
-  const [bankProofCopy, setBankProofCopy] = useState('');
-  const [documentUpload, setDocumentUpload] = useState('');
+  // const [isBothAddressSame, setBothAddressSame] = useState(false);
+  // const [photoCopy, setPhotoCopy] = useState('');
+  // const [aadharCopy, setAadharCopy] = useState('');
+  // const [panCopy, setPanCopy] = useState('');
+  // const [bankProofCopy, setBankProofCopy] = useState('');
+  // const [documentUpload, setDocumentUpload] = useState('');
 
-  const [otherValidator, setOtherValidators] = useState({
-    photoError: true,
-    aadharCopyError: true,
-    panCopyError: true,
-    bankProofError: true,
-    applicationDocumentCopy: true,
-  })
+  // const [otherValidator, setOtherValidators] = useState({
+  //   photoError: true,
+  //   aadharCopyError: true,
+  //   panCopyError: true,
+  //   bankProofError: true,
+  //   applicationDocumentCopy: true,
+  // })
 
-  function onBothAddressSame(event) {
-    setBothAddressSame(event.target.checked);
-  }
+  // function onBothAddressSame(event) {
+  //   setBothAddressSame(event.target.checked);
+  // }
 
   const areaList = LOCATION_LIST.find(x => x.value === _environmentHelperService.getSessionObject().region)?.subRegion || [];
 
   const onSubmit = async (values) => {
-    if(photoCopy) {
-      const newObj = Object.assign(otherValidator, {photoError: false})
-      setOtherValidators(newObj);
+    if(role === USER_JOB_TITLE.PDM) {
+      values.role = USER_JOB_TITLE.DIRECT_PARTNER;
+      values.area = _environmentHelperService.getSessionObject().area
+    } else if(role === USER_JOB_TITLE.CHANNEL_HEAD) {
+      values.role = USER_JOB_TITLE.CHANNEL_PARTNER;
+      values.area = _environmentHelperService.getSessionObject().area
+    } else {
+      values.role = USER_JOB_TITLE.CHANNEL_HEAD;
     }
-    if(aadharCopy) {
-      const newObj = Object.assign(otherValidator, {aadharCopyError: false})
-      setOtherValidators(newObj);
+    values.referalId = _environmentHelperService.getSessionObject()?.empCode;
+    values.referedBy = `${_environmentHelperService.getSessionObject()?.firstName} ${_environmentHelperService.getSessionObject()?.lastName}`;
+    const payload = {
+      referalId: values.referalId,
+      referedBy: values.referedBy,
+      role: values.role,
+      zone: _environmentHelperService.getSessionObject()?.empCode,
+      region: _environmentHelperService.getSessionObject()?.region,
+      area: values.area,
+      department: values.department,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      dob: values.dob,
+      gender: values.gender,
+      mobileNo: values.mobileNo,
+      emailId: values.emailId,
+      qualification: values.qualification,
+      occupation: values.occupation,
+      currentAddress: {
+        address: values.currentAddress,
+        district: values.currentAddressDistrict,
+        state: values.currentAddressState,
+        pincode: values.currentAddressPinCode,
+        postOffice: values.currentAddressPostOffice
+      },
+      // bothAddressAreSame: isBothAddressSame ? 'Yes' : ' No',
+      bothAddressAreSame: 'No',
+      permenentAddress: {
+        address: values.permenentAddress,
+        district: values.district,
+        state: values.state,
+        pincode: values.postOffice,
+        postOffice: values.pinCode
+      },
+      aadharDetail: {
+        aadharNo: values.aadharNumber,
+        name: values.aadharNumber,
+        // proof: aadharCopy
+        proof: ''
+      },
+      panDetail: {
+        number: values.panNumber,
+        name: values.panName,
+        // proof: panCopy,
+        proof: ''
+      },
+      bankDetail: {
+        bankName: values.bankName,
+        branchName: values.branchName,
+        ifscCode: values.ifscCode,
+        accountType: values.accountType,
+        accountNo: values.accountNo,
+        nameAsPerBook: values.nameAsPerBank,
+        // proof: bankProofCopy
+        proof: ''
+      },
+      // uploadDocumentCopy: documentUpload,
+      uploadDocumentCopy: '',
+      // photo: photoCopy
+      photoCopy: ''
     }
-    if(panCopy) {
-      const newObj = Object.assign(otherValidator, {panCopyError: false})
-      setOtherValidators(newObj);
-    }
-    if(bankProofCopy) {
-      const newObj = Object.assign(otherValidator, {bankProofError: false})
-      setOtherValidators(newObj);
-    }
-    if(documentUpload) {
-      const newObj = Object.assign(otherValidator, {applicationDocumentCopy: false})
-      setOtherValidators(newObj);
-    }
-    const validationSatisFied = Object.keys(otherValidator).find(key => otherValidator[key]);
-    if(!validationSatisFied) {
-      if(role === USER_JOB_TITLE.PDM) {
-        values.role = USER_JOB_TITLE.DIRECT_PARTNER;
-        values.area = _environmentHelperService.getSessionObject().area
-      } else if(role === USER_JOB_TITLE.CHANNEL_HEAD) {
-        values.role = USER_JOB_TITLE.CHANNEL_PARTNER;
-        values.area = _environmentHelperService.getSessionObject().area
+    console.log(payload)
+    _apiHelper.addUser(payload).then(resp => {
+      // resp = {data: {status: true }}
+      if(resp.data.status) {
+        setSuccessfullyRequested(true);
+        setFailedToRequest(false);
+        reset();
       } else {
-        values.role = USER_JOB_TITLE.CHANNEL_HEAD;
-      }
-      values.referalId = _environmentHelperService.getSessionObject()?.empCode;
-      values.referedBy = `${_environmentHelperService.getSessionObject()?.firstName} ${_environmentHelperService.getSessionObject()?.lastName}`;
-      const payload = {
-        referalId: values.referalId,
-        referedBy: values.referedBy,
-        role: values.role,
-        zone: _environmentHelperService.getSessionObject()?.empCode,
-        region: _environmentHelperService.getSessionObject()?.region,
-        area: values.area,
-        department: values.department,
-        firstName: values.firstName,
-        lastName: values.lastName,
-        dob: values.dob,
-        gender: values.gender,
-        mobileNo: values.mobileNo,
-        emailId: values.emailId,
-        qualification: values.qualification,
-        occupation: values.occupation,
-        currentAddress: {
-          address: values.currentAddress,
-          district: values.currentAddressDistrict,
-          state: values.currentAddressState,
-          pincode: values.currentAddressPinCode,
-          postOffice: values.currentAddressPostOffice
-        },
-        bothAddressAreSame: isBothAddressSame ? 'Yes' : ' No',
-        permenentAddress: {
-          address: values.permenentAddress,
-          district: values.district,
-          state: values.state,
-          pincode: values.postOffice,
-          postOffice: values.pinCode
-        },
-        aadharDetail: {
-          aadharNo: values.aadharNumber,
-          name: values.aadharNumber,
-          preoof: aadharCopy
-        },
-        panDetail: {
-          number: values.panNumber,
-          name: values.panName,
-          preoof: panCopy
-        },
-        bankDetail: {
-          bankName: values.bankName,
-          branchName: values.branchName,
-          ifscCode: values.ifscCode,
-          accountType: values.accountType,
-          accountNo: values.accountNo,
-          nameAsPerBook: values.nameAsPerBank,
-          proof: bankProofCopy
-        },
-        uploadDocumentCopy: documentUpload,
-        photo: photoCopy
-      }
-      console.log(payload)
-      _apiHelper.addUser(payload).then(resp => {
-        // resp = {data: {status: true }}
-        if(resp.data.status) {
-          setSuccessfullyRequested(true);
-          setFailedToRequest(false);
-          reset();
-        } else {
-          setSuccessfullyRequested(false);
-          setFailedToRequest(true);
-        }
-      }).catch(err => {
         setSuccessfullyRequested(false);
         setFailedToRequest(true);
-      });
-    }
+      }
+    }).catch(err => {
+      setSuccessfullyRequested(false);
+      setFailedToRequest(true);
+    });
+    // if(photoCopy) {
+    //   const newObj = Object.assign(otherValidator, {photoError: false})
+    //   setOtherValidators(newObj);
+    // }
+    // if(aadharCopy) {
+    //   const newObj = Object.assign(otherValidator, {aadharCopyError: false})
+    //   setOtherValidators(newObj);
+    // }
+    // if(panCopy) {
+    //   const newObj = Object.assign(otherValidator, {panCopyError: false})
+    //   setOtherValidators(newObj);
+    // }
+    // if(bankProofCopy) {
+    //   const newObj = Object.assign(otherValidator, {bankProofError: false})
+    //   setOtherValidators(newObj);
+    // }
+    // if(documentUpload) {
+    //   const newObj = Object.assign(otherValidator, {applicationDocumentCopy: false})
+    //   setOtherValidators(newObj);
+    // }
+    // const validationSatisFied = Object.keys(otherValidator).find(key => otherValidator[key]);
+    // if(!validationSatisFied) {
+      
+    // }
   }
 
-  const convertPhotoToBase64 = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];
-        setPhotoCopy(base64String);
-        const newObj = Object.assign(otherValidator, {photoError: false})
-        setOtherValidators(newObj);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const convertPhotoToBase64 = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64String = reader.result.split(',')[1];
+  //       setPhotoCopy(base64String);
+  //       const newObj = Object.assign(otherValidator, {photoError: false})
+  //       setOtherValidators(newObj);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const convertAadharCopyToBase64 = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];
-        setAadharCopy(base64String);
-        const newObj = Object.assign(otherValidator, {aadharCopyError: false})
-        setOtherValidators(newObj);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const convertAadharCopyToBase64 = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64String = reader.result.split(',')[1];
+  //       setAadharCopy(base64String);
+  //       const newObj = Object.assign(otherValidator, {aadharCopyError: false})
+  //       setOtherValidators(newObj);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const convertPanCopyToBase64 = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];
-        setPanCopy(base64String);
-        const newObj = Object.assign(otherValidator, {panCopyError: false})
-        setOtherValidators(newObj);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const convertPanCopyToBase64 = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64String = reader.result.split(',')[1];
+  //       setPanCopy(base64String);
+  //       const newObj = Object.assign(otherValidator, {panCopyError: false})
+  //       setOtherValidators(newObj);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const convertBankProofToBase64 = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];
-        setBankProofCopy(base64String);
-        const newObj = Object.assign(otherValidator, {bankProofError: false})
-        setOtherValidators(newObj);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const convertBankProofToBase64 = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64String = reader.result.split(',')[1];
+  //       setBankProofCopy(base64String);
+  //       const newObj = Object.assign(otherValidator, {bankProofError: false})
+  //       setOtherValidators(newObj);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const convertApplicationToBase64 = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];
-        setDocumentUpload(base64String);
-        const newObj = Object.assign(otherValidator, {applicationDocumentCopy: false})
-        setOtherValidators(newObj);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const convertApplicationToBase64 = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64String = reader.result.split(',')[1];
+  //       setDocumentUpload(base64String);
+  //       const newObj = Object.assign(otherValidator, {applicationDocumentCopy: false})
+  //       setOtherValidators(newObj);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
   return (
     <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
       <h2 className="text-2xl font-medium">{ADD_MEMBER.ADD_MEMBER}</h2>
@@ -266,16 +273,33 @@ const AddMemberForm = () => {
           />
           {errors[ZONAL_HEAD.FORM_FIELDS.MOBILE_NO] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MOBILE_NO].message}</span>}
         </div>
-        {role === USER_JOB_TITLE.REGIONAL_HEAD && (<div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
           <NewSelectComponent
             placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
-            
             options={areaList}
             {...register(ZONAL_HEAD.FORM_FIELDS.AREA)}
           />
-        </div>)}
+        </div>
         <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.PAYROLL}</label>
+          <NewSelectComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.PAYROLL}
+            options={PAYROLL_LIST}
+            {...register(ZONAL_HEAD.FORM_FIELDS.PAYROLL)}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MAPPING_ID}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MAPPING_ID}
+            {...register(ZONAL_HEAD.FORM_FIELDS.MAPPING_ID, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.MAPPING_ID_REQUIRED,
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID].message}</span>}
+        </div>
+        {/* <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MAPPING_ID}</label>
           <NewTestInputComponent
             placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MAPPING_ID}
@@ -619,8 +643,8 @@ const AddMemberForm = () => {
             })}
           />
           {errors[ADD_MEMBER_FORM_CONTROL_NAME.NAME_AS_PER_BANK] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.NAME_AS_PER_BANK].message}</span>}
-        </div>
-        <div className="flex flex-col gap-2">
+        </div> */}
+        {/* <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">Applicant Photo or selfie:</label>
           <input type="file" onChange={convertPhotoToBase64} />
         </div>
@@ -648,7 +672,7 @@ const AddMemberForm = () => {
             {!invalid && otherValidator.bankProofError && <div>Upload your bank proof</div>}
             {!invalid && otherValidator.applicationDocumentCopy && <div>Upload application ducument.</div>}
           </div>
-        }
+        } */}
         <button className="secondary w-fit" type="submit">Add</button>
 
         {failedToRequest && (

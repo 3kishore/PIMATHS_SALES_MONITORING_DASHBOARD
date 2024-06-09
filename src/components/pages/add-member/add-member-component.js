@@ -42,7 +42,7 @@ function AddMemberComponent() {
 
   return (
     <Provider store={addMember}>
-      <div>
+      <div className="flex-grow">
         {renderForm()}
       </div>
     </Provider>
