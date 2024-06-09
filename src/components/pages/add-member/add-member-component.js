@@ -1,6 +1,7 @@
 import { Provider } from "react-redux";
 import { EnvironmentHelperService } from "../../../services/helper-service/environment-helper.service";
 import addMember from "../../../services/models/add-member-page/add-member";
+import AddMemberForm from "../../../services/models/add-member-page/add-member-form";
 import { DEPARTMENT_LIST } from "../../../services/models/add-member-page/add-member.constant";
 import PdmPromoterSalesHeadForm from "../../../services/models/add-member-page/pdm-promotor-sales-head-form";
 import RegionalHeadForm from "../../../services/models/add-member-page/regional-head-form";
@@ -27,16 +28,13 @@ function AddMemberComponent() {
     } else if(role === USER_JOB_TITLE.REGIONAL_HEAD && department === dp) {
       return <PdmPromoterSalesHeadForm />;
     } else if(role === USER_JOB_TITLE.REGIONAL_HEAD && department === cp) {
-      // return <AddMemberForm />;
-      return <PdmPromoterSalesHeadForm />;
+      return <AddMemberForm />;
     } else if (role === USER_JOB_TITLE.SALES_HEAD) {
       return <PdmPromoterSalesHeadForm />;
     } else if (role === USER_JOB_TITLE.PDM) {
-      // return  <AddMemberForm />;
-      return <PdmPromoterSalesHeadForm />;
+      return  <AddMemberForm />;
     } else if (role === USER_JOB_TITLE.CHANNEL_HEAD ) {
-      // return <AddMemberForm />;
-      return <PdmPromoterSalesHeadForm />;
+      return <AddMemberForm />;
     } else {
       return null; // Optionally render nothing or some default component
     }

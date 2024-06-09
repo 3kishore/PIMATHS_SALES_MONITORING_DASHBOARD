@@ -190,6 +190,7 @@ export const ADD_MEMBER_FORM_ERROR_MESSAGE = {
   SELECT_VALUE: 'Select you valiue.',
   THIS_FIELD_IS_REQUIRED: 'This field is required.',
   THIS_FIELD_REQUIRES_ATLEAST_3_CHAR: 'This field requires at least three charectors.',
+  THIS_FIELD_REQUIRES_ATLEAST_20_CHAR: 'This field requires at least 20 charectors.',
   INVALID_MOBILE_NUMBER: 'Mobile number you have entered is invalid.',
   INVALID_AGE: 'The age you have entered is invalid.',
   INVALID_EMAIL_ID: 'The email id you have entered is invalid.',

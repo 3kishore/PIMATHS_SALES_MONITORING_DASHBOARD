@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import InputComponent from '../../../components/atom/input-component';
-import SelectComponent from '../../../components/atom/select-component';
 import { ApiServiceHelper } from '../../api/api.service';
 import { EnvironmentHelperService } from '../../helper-service/environment-helper.service';
-import { USER_JOB_TITLE } from '../../utilities/APP.constant';
-import validators from '../../utilities/validators';
-import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE, EDUCATION_STATUS, LOCATION_LIST, ZONAL_HEAD } from './add-member.constant';
-// import validators from '../../utilities/validators';
+import { REGEX, USER_JOB_TITLE } from '../../utilities/APP.constant';
+import { useForm } from "react-hook-form";
+import NewSelectComponent from "../../../components/atom/new-select-component";
+import NewTestInputComponent from "../../../components/atom/new-test-input";
+import { ADD_MEMBER, ADD_MEMBER_FORM_CONTROL_NAME, ADD_MEMBER_FORM_ERROR_MESSAGE, LOCATION_LIST, ZONAL_HEAD } from './add-member.constant';
 
-const AddMemberForm = props => {
-  const _environmentHelperService = new EnvironmentHelperService();
-  const _apiHelper = new ApiServiceHelper();
+const AddMemberForm = () => {
+  const { register, handleSubmit, invalid, formState: { errors }, reset } = useForm();
   const [failedToRequest, setFailedToRequest] = useState(false);
+  const [successfullyRequested, setSuccessfullyRequested] = useState(false);
+  const _apiHelper = new ApiServiceHelper();
+  const _environmentHelperService = new EnvironmentHelperService();
   const role = _environmentHelperService.getRole();
 
+  const [isBothAddressSame, setBothAddressSame] = useState(false);
   const [photoCopy, setPhotoCopy] = useState('');
   const [aadharCopy, setAadharCopy] = useState('');
   const [panCopy, setPanCopy] = useState('');
@@ -29,9 +30,12 @@ const AddMemberForm = props => {
     applicationDocumentCopy: true,
   })
 
-  const [isBothAddressSame, setBothAddressSame] = useState(false);
+  function onBothAddressSame(event) {
+    setBothAddressSame(event.target.checked);
+  }
 
-  const onSubmit = (values) => {
+
+  const onSubmit = async (values) => {
     if(photoCopy) {
       const newObj = Object.assign(otherValidator, {photoError: false})
       setOtherValidators(newObj);
@@ -113,51 +117,22 @@ const AddMemberForm = props => {
         uploadDocumentCopy: documentUpload,
         photo: photoCopy
       }
-      if(_environmentHelperService.isAdmin()) {
-        payload.isApproved = true;
-        _apiHelper.approveUser(payload).then(resp => {}).catch(err => {setFailedToRequest(true)});
-      } else {
-        _apiHelper.addUser(payload).then(resp => {}).catch(err => {setFailedToRequest(true)});
-      }
+      console.log(payload)
+      _apiHelper.addUser(payload).then(resp => {
+        resp = {data: {status: true }}
+        if(resp.data.status) {
+          setSuccessfullyRequested(true);
+          setFailedToRequest(false);
+          reset();
+        } else {
+          setSuccessfullyRequested(false);
+          setFailedToRequest(true);
+        }
+      }).catch(err => {
+        setSuccessfullyRequested(false);
+        setFailedToRequest(true);
+      });
     }
-  }
-
-  function onBothAddressSame(event) {
-    setBothAddressSame(event.target.checked);
-  }
-
-  const formValidators = {
-    referedBy: validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.SELECT_VALUE),
-    referelCode: validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED),
-    jobRole: validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.SELECT_VALUE),
-    name: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    area: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    dob: validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED),
-    age: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.regex(/^\d{2}$/, ADD_MEMBER_FORM_ERROR_MESSAGE.INVALID_MOBILE_NUMBER)],
-    mobileNumber: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.regex(/^\d{10}$/, ADD_MEMBER_FORM_ERROR_MESSAGE.INVALID_MOBILE_NUMBER)],
-    emailId: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, ADD_MEMBER_FORM_ERROR_MESSAGE.INVALID_EMAIL_ID)],
-    qualification: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    occupation: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    permenentAddress: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    district: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    state: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    postOffice: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    pinCode: validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED),
-    currentAddress: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    currentAddressDistrict: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    currentAddressState: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    currentAddressPostOffice: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    currentAddressPinCode: validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED),
-    panName: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    aadharName: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    bankName: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    branchName: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    accountType: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    nameAsPerBank: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.minLength(3, ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR)],
-    panNumber: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.regex(/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/, ADD_MEMBER_FORM_ERROR_MESSAGE.INVALID_PAN)],
-    aadharNumber: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.regex(/^\d{12}$/, ADD_MEMBER_FORM_ERROR_MESSAGE.INVALID_AADHAR)],
-    accountNumber: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.regex(/^([0-9]{11})|([0-9]{2}-[0-9]{3}-[0-9]{6})$/, ADD_MEMBER_FORM_ERROR_MESSAGE.INAVALID_BANK_ACC_NO)],
-    ifscCode: [validators.required(ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED), validators.regex(/^[A-Za-z]{4}[a-zA-Z0-9]{7}$/, ADD_MEMBER_FORM_ERROR_MESSAGE.INVALID_IFSC_CODE)]
   }
 
   const convertPhotoToBase64 = (event) => {
@@ -216,7 +191,7 @@ const AddMemberForm = props => {
     }
   };
 
-  const convertApplicantSignToBase64 = (event) => {
+  const convertApplicationToBase64 = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -229,346 +204,469 @@ const AddMemberForm = props => {
       reader.readAsDataURL(file);
     }
   };
-
-//  const { handleSubmit, pristine, submitting } = props;
-const { handleSubmit, pristine, submitting, invalid } = props;
- return (
-  <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
-    <h2 className="text-2xl font-medium">{ADD_MEMBER.ADD_MEMBER}</h2>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.FIRST_NAME}</label>
-      <Field
-        name={ZONAL_HEAD.FORM_FIELDS.FIRST_NAME}
-        component={InputComponent}
-        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.FIRST_NAME}
-        validate={formValidators.firstName}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.LAST_NAME}</label>
-      <Field
-        name={ZONAL_HEAD.FORM_FIELDS.LAST_NAME}
-        component={InputComponent}
-        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.LAST_NAME}
-        validate={formValidators.lastName}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.MOBILE_NUMBER}</label>
-      <Field
-        name={ZONAL_HEAD.FORM_FIELDS.MOBILE_NO}
-        component={InputComponent}
-        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MOBILE_NO}
-        validate={formValidators.mobileNumber}
-      />
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.EMAIL_ID}</label>
-      <Field
-        name={ZONAL_HEAD.FORM_FIELDS.EMAIL_ID}
-        component={InputComponent}
-        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.EMAIL_ID}
-        validate={formValidators.emailId}
-      />
-    </div>
-    {role === USER_JOB_TITLE.REGIONAL_HEAD && <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
-      <Field 
-        name={ZONAL_HEAD.FORM_FIELDS.AREA}
-        component={SelectComponent}
-        placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
-        options={LOCATION_LIST[0].subRegion}
-        disabled={true}
-      />
-    </div>}
-    <div>Personal Details</div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.DOB}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.DOB}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.dob}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.GENDER}</label>
-      <div>
-        <label>
-          <Field
-            name={ADD_MEMBER_FORM_CONTROL_NAME.GENDER}
-            component="input"
-            type="radio"
-            value="male"
-          />{' '}
-          Male
-        </label>
-        <label>
-          <Field
-            name={ADD_MEMBER_FORM_CONTROL_NAME.GENDER}
-            component="input"
-            type="radio"
-            value="female"
-          />{' '}
-          Female
-        </label>
-      </div>
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.QUALIFICATION}</label>
-      <Field 
-        name={ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION}
-        component={SelectComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        options={EDUCATION_STATUS}
-        disabled={true}
-      />
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.OCCUPATION}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.occupation}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.PERMENENT_ADDRESS}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.PERMENENT_ADDRESS}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.permenentAddress}
-      />
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.DISTRICT}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.DISTRICT}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.district}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.STATE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.STATE}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.state}
-      />
-    </div>
-
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.POST_OFFICE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.POST_OFFICE}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.postOffice}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.PIN_CODE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.PIN_CODE}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.pinCode}
-      />
-    </div>
-    <label className="text-black text-base font-medium">{ADD_MEMBER.BOTH_ADDRESS}</label>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.TICK_CHECK_BOX_IF_BOTH_ADDRESS_SAME}{isBothAddressSame}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.BOTH_ADDRESS_SAME}
-        component="input"
-        type="checkbox"
-        onChange={onBothAddressSame}
-      />
-    </div>
-    {
-      !isBothAddressSame && 
-      <div className='flex flex-col gap-2'>
+  return (
+    <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
+      <h2 className="text-2xl font-medium">{ADD_MEMBER.ADD_MEMBER}</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
-          <label className="text-black text-base font-medium">{ADD_MEMBER.CURRENT_ADDRESS}</label>
-          <Field
-            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENT_ADDRESS}
-            component={InputComponent}
-            placeholder={ADD_MEMBER.ENTER_HERE}
-            // validate={!isBothAddressSame ? formValidators.currentAddress : undefined}
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.FIRST_NAME}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.FIRST_NAME}
+            {...register(ZONAL_HEAD.FORM_FIELDS.FIRST_NAME, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.FIRST_NAME_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ZONAL_HEAD.FORM_ERROR_MSG.FIRST_NAME_3_CHART_MUST
+              }
+            })}
           />
+          {errors[ZONAL_HEAD.FORM_FIELDS.FIRST_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.FIRST_NAME].message}</span>}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.LAST_NAME}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.LAST_NAME}
+            {...register(ZONAL_HEAD.FORM_FIELDS.LAST_NAME, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.LAST_NAME_REQUIRED,
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.LAST_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.LAST_NAME].message}</span>}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.EMAIL_ID}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.EMAIL_ID}
+            {...register(ZONAL_HEAD.FORM_FIELDS.EMAIL_ID, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.EMAIL_ID,
+              pattern: {
+                value: REGEX.EMAIL_ID,
+                message: ZONAL_HEAD.FORM_ERROR_MSG.INAVLID_EMAIL_ID
+              }
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.EMAIL_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.EMAIL_ID].message}</span>}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MOBILE_NO}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MOBILE_NO}
+            {...register(ZONAL_HEAD.FORM_FIELDS.MOBILE_NO, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.MOBILE_NO,
+              pattern: {
+                value: REGEX.MOBILE_NO,
+                message: ZONAL_HEAD.FORM_ERROR_MSG.INAVLID_MOBILE_NO
+              }
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.MOBILE_NO] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MOBILE_NO].message}</span>}
+        </div>
+
+        {role === USER_JOB_TITLE.REGIONAL_HEAD && (<div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
+          <NewSelectComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
+            options={LOCATION_LIST}
+            {...register(ZONAL_HEAD.FORM_FIELDS.AREA)}
+          />
+        </div>)}
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MAPPING_ID}</label>
+          <NewTestInputComponent
+            placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MAPPING_ID}
+            {...register(ZONAL_HEAD.FORM_FIELDS.MAPPING_ID, {
+              required: ZONAL_HEAD.FORM_ERROR_MSG.MAPPING_ID_REQUIRED,
+            })}
+          />
+          {errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID].message}</span>}
+        </div>
+
+        <div>Personal Details</div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.DOB}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.DOB, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.DOB] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.DOB].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.QUALIFICATION}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION].message}</span>}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.OCCUPATION}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.OCCUPATION}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.PERMENENT_ADDRESS}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.PERMENENT_ADDRESS}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.PERMENENT_ADDRESS, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 20,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_20_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.PERMENENT_ADDRESS] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.PERMENENT_ADDRESS].message}</span>}
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.DISTRICT}</label>
-          <Field
-            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_DISTRICT}
-            component={InputComponent}
-            placeholder={ADD_MEMBER.ENTER_HERE}
-            // validate={!isBothAddressSame ? formValidators.currentAddressDistrict : undefined}
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.DISTRICT}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.DISTRICT, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
           />
-        </div><div className="flex flex-col gap-2 mt-3">
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.DISTRICT] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.DISTRICT].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.STATE}</label>
-          <Field
-            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_STATE}
-            component={InputComponent}
-            placeholder={ADD_MEMBER.ENTER_HERE}
-            // validate={!isBothAddressSame ? formValidators.currentAddressState : undefined}
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.STATE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.STATE, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
           />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.STATE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.STATE].message}</span>}
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.POST_OFFICE}</label>
-          <Field
-            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_POSTOFFICE}
-            component={InputComponent}
-            placeholder={ADD_MEMBER.ENTER_HERE}
-            // validate={!isBothAddressSame ? formValidators.currentAddressPostOffice : undefined}
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.POST_OFFICE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.POST_OFFICE, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
           />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.POST_OFFICE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.POST_OFFICE].message}</span>}
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-black text-base font-medium">{ADD_MEMBER.CURRENT_ADDRESS_PIN_CODE}</label>
-          <Field
-            name={ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_PINCODE}
-            component={InputComponent}
-            placeholder={ADD_MEMBER.ENTER_HERE}
-            // validate={!isBothAddressSame ? formValidators.currentAddressPinCode : undefined}
+          <label className="text-black text-base font-medium">{ADD_MEMBER.PIN_CODE}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.PIN_CODE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.PIN_CODE, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
           />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.PIN_CODE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.PIN_CODE].message}</span>}
         </div>
-      </div>
-    }
-    <label className="text-black text-base font-medium">{ADD_MEMBER.AADHAR_AND_PAN_INFO}</label>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.NAME_AS_PER_AADHAR}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NAME}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.aadharName}
-      />
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.AADHAR_NUMBER}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NUMBER}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.aadharNumber}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.NAME_AS_PER_PAN}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.PAN_NAME}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.panName}
-      />
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.PAN_NUMBER}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.PAN_NUMBER}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.panNumber}
-      />
-    </div>
-    <label className="text-black text-base font-medium">{ADD_MEMBER.BANK_PASSBOOK_INFO}</label>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.BANK_NAME}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.BANK_NAME}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.bankName}
-      />
-    </div><div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.BRANCH_NAME}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.BRANCH_NAME}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.branchName}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.IFSC_CODE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.IFSC_CODE}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.ifscCode}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.ACCOUNT_TYPE}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.accountType}
-      />
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.ACCOUNT_NUMBER}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_NUMBER}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.accountNumber}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.NAME_AS_PER_BANK}</label>
-      <Field
-        name={ADD_MEMBER_FORM_CONTROL_NAME.NAME_AS_PER_BANK}
-        component={InputComponent}
-        placeholder={ADD_MEMBER.ENTER_HERE}
-        validate={formValidators.nameAsPerBank}
-      />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">Applicant Photo or selfie:</label>
-      <input type="file" onChange={convertPhotoToBase64} />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.AADHAR_COPY}</label>
-      <input type="file" onChange={convertAadharCopyToBase64} />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">{ADD_MEMBER.PAN_CARD_COPY}</label>
-      <input type="file" onChange={convertPanCopyToBase64} />
-    </div>
-    <div className="flex flex-col gap-2">
-      <label className="text-black text-base font-medium">Upload you bank passbook or cheqleaf:</label>
-      <input type="file" onChange={convertBankProofToBase64} />
-    </div>
-    <div className="flex flex-col gap-2 mt-3">
-      <label className="text-black text-base font-medium">Upload application copy as pdf.</label>
-      <input type="file" onChange={convertApplicantSignToBase64} />
-    </div>
-    {(!invalid && (otherValidator.photoError || otherValidator.aadharCopyError || otherValidator.panCopyError || otherValidator.bankProofError || otherValidator.applicationDocumentCopy))
-      && <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">
-        {!invalid && otherValidator.photoError && <div>Upload your photo</div>}
-        {!invalid && otherValidator.aadharCopyError && <div>Upload your aadhar copy</div>}
-        {!invalid && otherValidator.panCopyError && <div>Upload your pan copy</div>}
-        {!invalid && otherValidator.bankProofError && <div>Upload your bank proof</div>}
-        {!invalid && otherValidator.applicationDocumentCopy && <div>Upload referal person sign</div>}
-      </div>
-    }
-    <div className="flex flex-wrap gap-2 mt-3 items-center">
-      <button className="secondary w-fit" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}>{ADD_MEMBER.ADD_MEMBER}</button>
-      {
-        failedToRequest &&
-          <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">Failed to upload.</div>
-      }
-    </div>
-  </div> 
- );
-};
+        <label className="text-black text-base font-medium">{ADD_MEMBER.BOTH_ADDRESS}</label>
+        <div className="flex flex-col gap-2 mt-3">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.TICK_CHECK_BOX_IF_BOTH_ADDRESS_SAME}</label>
+          <input type="checkbox" onChange={onBothAddressSame}/>
+        </div>
+        {
+          !isBothAddressSame &&
+          <div>
+            <div className="flex flex-col gap-2">
+              <label className="text-black text-base font-medium">{ADD_MEMBER.CURRENT_ADDRESS}</label>
+              <NewTestInputComponent
+                placeholder={ADD_MEMBER.CURRENT_ADDRESS}
+                {...register(ADD_MEMBER_FORM_CONTROL_NAME.CURRENT_ADDRESS, {
+                  // required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+                  // minLength: {
+                  //   value: 20,
+                  //   message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_20_CHAR
+                  // }
+                })}
+              />
+              {errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENT_ADDRESS] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENT_ADDRESS].message}</span>}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-black text-base font-medium">{ADD_MEMBER.DISTRICT}</label>
+              <NewTestInputComponent
+                placeholder={ADD_MEMBER.DISTRICT}
+                {...register(ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_DISTRICT, {
+                  // required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+                  // minLength: {
+                  //   value: 3,
+                  //   message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+                  // }
+                })}
+              />
+              {errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_DISTRICT] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_DISTRICT].message}</span>}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-black text-base font-medium">{ADD_MEMBER.STATE}</label>
+              <NewTestInputComponent
+                placeholder={ADD_MEMBER.STATE}
+                {...register(ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_STATE, {
+                  // required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+                  // minLength: {
+                  //   value: 3,
+                  //   message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+                  // }
+                })}
+              />
+              {errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_STATE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_STATE].message}</span>}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-black text-base font-medium">{ADD_MEMBER.POST_OFFICE}</label>
+              <NewTestInputComponent
+                placeholder={ADD_MEMBER.POST_OFFICE}
+                {...register(ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_POSTOFFICE, {
+                  // required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+                  // minLength: {
+                  //   value: 3,
+                  //   message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+                  // }
+                })}
+              />
+              {errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_POSTOFFICE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_POSTOFFICE].message}</span>}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-black text-base font-medium">{ADD_MEMBER.PIN_CODE}</label>
+              <NewTestInputComponent
+                placeholder={ADD_MEMBER.PIN_CODE}
+                {...register(ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_PINCODE, {
+                  // required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+                  // minLength: {
+                  //   value: 3,
+                  //   message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+                  // }
+                })}
+              />
+              {errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_PINCODE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.CURRENTADDRESS_PINCODE].message}</span>}
+            </div>
+          </div>
+        }
+        <label className="text-black text-base font-medium">{ADD_MEMBER.AADHAR_AND_PAN_INFO}</label>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.NAME_AS_PER_AADHAR}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NAME, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NAME].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.AADHAR_NUMBER}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NUMBER, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              pattern: {
+                value: REGEX.AADHAR,
+                message: 'Inavlid Aadhar no.'
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NUMBER] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.AADHAR_NUMBER].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.NAME_AS_PER_PAN}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.PAN_NAME, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.PAN_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.PAN_NAME].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.PAN_NUMBER}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.PAN_NUMBER, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              pattern: {
+                value: REGEX.PAN_NO,
+                message: 'Inavlid PAN no.'
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.PAN_NUMBER] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.PAN_NUMBER].message}</span>}
+        </div>
 
-export default reduxForm({
- form: 'addMember',
-})(AddMemberForm);
+        <label className="text-black text-base font-medium">{ADD_MEMBER.BANK_PASSBOOK_INFO}</label>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.BANK_NAME}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.BANK_NAME, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.BANK_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.BANK_NAME].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.BRANCH_NAME}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.BRANCH_NAME, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.BRANCH_NAME] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.BRANCH_NAME].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.IFSC_CODE}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.IFSC_CODE, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              pattern: {
+                value: REGEX.IFSC_CODE,
+                message: 'Inavlid IFSC code.'
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.IFSC_CODE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.IFSC_CODE].message}</span>}
+        </div>
+
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.ACCOUNT_TYPE}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.ACCOUNT_NUMBER}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_NUMBER, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              pattern: {
+                value: REGEX.ACCOUNT_NO,
+                message: 'Inavlid Account no.'
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_NUMBER] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_NUMBER].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.NAME_AS_PER_BANK}</label>
+          <NewTestInputComponent
+            placeholder={ADD_MEMBER.ENTER_HERE}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.NAME_AS_PER_BANK, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.NAME_AS_PER_BANK] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.NAME_AS_PER_BANK].message}</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">Applicant Photo or selfie:</label>
+          <input type="file" onChange={convertPhotoToBase64} />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.AADHAR_COPY}</label>
+          <input type="file" onChange={convertAadharCopyToBase64} />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.PAN_CARD_COPY}</label>
+          <input type="file" onChange={convertPanCopyToBase64} />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">Upload you bank passbook or cheqleaf:</label>
+          <input type="file" onChange={convertBankProofToBase64} />
+        </div>
+        <div className="flex flex-col gap-2 mt-3">
+          <label className="text-black text-base font-medium">Upload application copy as pdf.</label>
+          <input type="file" onChange={convertApplicationToBase64} />
+        </div>
+        {(!invalid && (otherValidator.photoError || otherValidator.aadharCopyError || otherValidator.panCopyError || otherValidator.bankProofError || otherValidator.applicationDocumentCopy))
+          && <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">
+            {!invalid && otherValidator.photoError && <div>Upload your photo</div>}
+            {!invalid && otherValidator.aadharCopyError && <div>Upload your aadhar copy</div>}
+            {!invalid && otherValidator.panCopyError && <div>Upload your pan copy</div>}
+            {!invalid && otherValidator.bankProofError && <div>Upload your bank proof</div>}
+            {!invalid && otherValidator.applicationDocumentCopy && <div>Upload application ducument.</div>}
+          </div>
+        }
+        <button className="secondary w-fit" type="submit">Add</button>
+
+        {failedToRequest && (
+          <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">
+            Failed to upload.
+          </div>
+        )}
+        {successfullyRequested && (
+          <div className="text-base font-medium text-green-dark mt-4 rounded-[4px] bg-green-light p-2">
+            Successfully Requested.
+          </div>
+        )}
+      </form>
+    </div>
+  );
+}
+
+export default AddMemberForm;
