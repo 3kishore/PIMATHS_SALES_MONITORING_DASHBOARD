@@ -16,23 +16,13 @@ function PayoutModelComponent() {
   }, [])
 
   return (
-    <div className="flex flex-col gap-[24px]">
+    <div className="flex flex-col gap-[24px] form-height">
       {
         payoutModel && <div className="m-4">
           <h1 className="text-2xl font-bold">Payout Model For You.</h1>
           {
             !personSalaryInPercent.includes(payoutModel.type) ? 
-              <div className="flex flex-wrap gap-3">
-                <div className="text-base mt-3">
-                  <span className="text-xl font-medium">Salary: </span> {payoutModel.salary}
-                </div>
-                <div className="text-base mt-3">
-                  <span className="text-xl font-medium">Dedaction: </span> {payoutModel.dedaction}
-                </div>
-                <div className="text-base mt-3">
-                  <span className="text-xl font-medium">Total: </span> {payoutModel.total}
-                </div>
-              </div> :
+              null :
               <div>
                 <div className="text-base mt-3">
                   <span className="text-xl font-medium">Incentive Percentage on Course Price (Without Tax): </span> {payoutModel.invcentivePercent}

@@ -104,7 +104,7 @@ const RegionalHeadForm = () => {
           <NewSelectComponent
             placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.REGION}
             options={LOCATION_LIST}
-            disabled={true}
+            disabled={false}
             {...register(ZONAL_HEAD.FORM_FIELDS.REGION)}
           />
         </div>
