@@ -105,9 +105,8 @@ function ApproveOrRejectLicenseComponent() {
     setList(newList);
   }
 
-  function approveUser(val, isApproved = true) {
-    val.isApproved = isApproved;
-    _apiHelper.approveUser(val).then(resp => {
+  function approveUser(id, isApproved) {
+    _apiHelper.approveUser({id: id, isApproved: isApproved}).then(resp => {
       if(resp?.data?.status) {
         getRequestList();
       }
@@ -132,8 +131,8 @@ function ApproveOrRejectLicenseComponent() {
                     <span className="text-xl font-bold">{APPROVE_OR_REJECT_LICENSE.APPLIED_FOR}:</span> {val.role}
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <button className="primary success" onClick={() => approveUser(val, true)}>{APPROVE_OR_REJECT_LICENSE.APPROVE}</button>
-                    <button className="primary danger" onClick={() => approveUser(val, false)}>{APPROVE_OR_REJECT_LICENSE.REJECT}</button>
+                    <button className="primary success" onClick={() => approveUser(val._id, true)}>{APPROVE_OR_REJECT_LICENSE.APPROVE}</button>
+                    <button className="primary danger" onClick={() => approveUser(val._id, false)}>{APPROVE_OR_REJECT_LICENSE.REJECT}</button>
                     {
                       !val.isOpened ? 
                         <button className="secondary" onClick={() => changeState(index, val.isOpened)}>{APPROVE_OR_REJECT_LICENSE.VIEW_DETAIL}</button> :

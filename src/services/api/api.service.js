@@ -38,7 +38,7 @@ export class ApiServiceHelper {
 
   approveUser(payload) {
     // return axiosHttp.post('/users', payload);
-    return axiosHttp.post('/admin/approve-and-member', payload);
+    return axiosHttp.post('/employee/approve-and-add-member', payload);
   }
 
   getRequestList() {
