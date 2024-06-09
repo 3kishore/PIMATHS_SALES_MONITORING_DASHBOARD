@@ -50,4 +50,10 @@ export class ApiServiceHelper {
     // return axiosHttp.post('/users');
     return axiosHttp.post('/get-my-payout-report', payload);
   }
+
+
+  helpAndSupport(payload) {
+    return axiosHttp.post('/users', payload);
+    // return axiosHttp.post('/admin/request-to-add-member', payload);
+  }
 }

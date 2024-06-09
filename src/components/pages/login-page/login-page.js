@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import  LoginForm from "../../../services/models/login-page/login-form";
+// import ForgotPasswordForm from "../../../services/models/login-page/forgot-password-form";
 import loginStore from "../../../services/models/login-page/login-store";
 import { Provider } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import ForgotPasswordForm from "../../../services/models/login-page/forgot-password-form";
 import { LOGIN_PAGE } from "../../../services/models/login-page/login-page.constant";
 
 function LoginPage() {
@@ -23,7 +23,7 @@ function LoginPage() {
   
   useEffect(() => {
     if (loggedIn) {
-      navigate(`/home/my-sales-report`);
+      navigate(`/home/my-profile`);
     }
     else {
       queryParams.forEach((_, key) => {
@@ -45,8 +45,8 @@ function LoginPage() {
             <LoginForm />
             <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.FORGOT_PASSWORD}</div>
           </div> : <div>
-            <ForgotPasswordForm />
-            <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.GO_TO_LOGIN}</div>
+            {/* <ForgotPasswordForm /> */}
+            {/* <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.GO_TO_LOGIN}</div> */}
           </div>
         }
         {/* {

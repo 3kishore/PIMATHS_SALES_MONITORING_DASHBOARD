@@ -3,8 +3,10 @@ import { BrowserRouter, Navigate, NavLink, Route, Routes  } from 'react-router-d
 import './App.css';
 import AddMemberComponent from './components/pages/add-member/add-member-component';
 import ApproveOrRejectLicenseComponent from './components/pages/approve-or-reject-license/approve-or-reject-license.component';
+import HelpAndSupportComponent from './components/pages/help-and-support-component/help-and-support-component';
 import HomePageComponent from './components/pages/home-page-component/home-page-component';
 import LoginPage from './components/pages/login-page/login-page';
+import MyProfileComponent from './components/pages/my-profile/my-profile-page-component';
 import MySalesReportComponent from './components/pages/my-sales-report-component/my-sales-report-component';
 import MySalesManDetail from './components/pages/my-team-performence-component/my-sales-man-detail';
 import MyTeamPerformenceComponent from './components/pages/my-team-performence-component/my-team-performence-component';
@@ -125,6 +127,7 @@ function App() {
           <Routes>
             <Route exact path="/login" element={<LoginPage />} />
             <Route path="/home" element={<HomePageComponent />}>
+              <Route path="/home/my-profile" element={<MyProfileComponent />} />
               <Route path="/home/my-sales-report" element={<MySalesReportComponent />} />
               {/* <Route path="/home/check-my-managers-performence" element={<CheckMyManagerPerformence />} /> */}
               <Route path="/home/add-member" element={<AddMemberComponent />} />
@@ -140,6 +143,7 @@ function App() {
               <Route path="/home/upload-training-viedo" element={<UploadTrainingViedoComponent />} />
               <Route path="/home/approve-or-reject-request" element={<ApproveOrRejectLicenseComponent />} />
               <Route path="/home/upload-employee-tds" element={<UploadEmployeeTdsComponent />} />
+              <Route path="/home/help-&-support" element={<HelpAndSupportComponent />} />
             </Route>
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>

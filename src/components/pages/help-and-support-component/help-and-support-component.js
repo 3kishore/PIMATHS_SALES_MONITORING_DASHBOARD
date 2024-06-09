@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ApiServiceHelper } from "../../../services/api/api.service";
+import { HELP_AND_SUPPORT } from "../../../services/utilities/APP.constant";
+import NewTestInputComponent from "../../atom/new-test-input";
 
-const ggg = () => {
+const HelpAndSupportComponent = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [failedToRequest, setFailedToRequest] = useState(false);
   const [successfullyRequested, setSuccessfullyRequested] = useState(false);
@@ -10,7 +13,7 @@ const ggg = () => {
   const onSubmit = async (values) => {
     
     _apiHelper.helpAndSupport(values).then(resp => {
-      // resp = {data: {status: true }}
+    //   resp = {data: {status: true }}
       if(resp.data.status) {
         setSuccessfullyRequested(true);
         setFailedToRequest(false);

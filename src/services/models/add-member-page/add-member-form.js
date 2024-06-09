@@ -119,7 +119,7 @@ const AddMemberForm = () => {
       }
       console.log(payload)
       _apiHelper.addUser(payload).then(resp => {
-        resp = {data: {status: true }}
+        // resp = {data: {status: true }}
         if(resp.data.status) {
           setSuccessfullyRequested(true);
           setFailedToRequest(false);

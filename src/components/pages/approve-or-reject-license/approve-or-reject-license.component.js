@@ -13,11 +13,11 @@ function ApproveOrRejectLicenseComponent() {
 
   function getRequestList() {
     _apiHelper.getRequestList().then(resp => {
-      resp = {
-        data: {
-          status: true
-        }
-      }
+      // resp = {
+      //   data: {
+      //     status: true
+      //   }
+      // }
       if(resp?.data?.status) {
         resp.data.content = [
           {

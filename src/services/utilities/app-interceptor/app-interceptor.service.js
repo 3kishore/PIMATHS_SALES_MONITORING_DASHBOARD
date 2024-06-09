@@ -3,9 +3,9 @@ import { EnvironmentHelperService } from "../../helper-service/environment-helpe
 
 const _environmentHelperService = new EnvironmentHelperService();
 const axiosHttp = axios.create({
-  baseURL: `https://jsonplaceholder.typicode.com`,
+  // baseURL: `https://jsonplaceholder.typicode.com`,
   // baseURL: 'http://localhost:8080',
-  // baseURL: 'https://test-api-deployment.vercel.app'
+  baseURL: 'https://test-api-deployment.vercel.app'
 });
 
 axiosHttp.interceptors.request.use(

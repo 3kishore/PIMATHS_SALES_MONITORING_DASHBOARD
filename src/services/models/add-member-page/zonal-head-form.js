@@ -19,7 +19,7 @@ const ZonalHeadForm = () => {
 
     console.log(values)
     _apiHelper.addUser(values).then(resp => {
-      resp = {data: {status: true }}
+      // resp = {data: {status: true }}
       if(resp.data.status) {
         setSuccessfullyRequested(true);
         setFailedToRequest(false);
