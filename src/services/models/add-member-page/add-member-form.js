@@ -109,7 +109,6 @@ const AddMemberForm = () => {
       // photo: photoCopy
       photoCopy: ''
     }
-    console.log(payload)
     _apiHelper.addUser(payload).then(resp => {
       // resp = {data: {status: true }}
       if(resp.data.status) {

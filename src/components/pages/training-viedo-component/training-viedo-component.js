@@ -3,6 +3,7 @@ import YouTube from "react-youtube";
 import { ApiServiceHelper } from "../../../services/api/api.service";
 import { APP } from "../../../services/utilities/APP.constant";
 import ErrorPageComponent from "../error-page/error-page.component";
+import trainingSession1 from '../../../assets/video/video.mov'; 
 
 function TrainingViedoComponent() {
 
@@ -47,7 +48,7 @@ function TrainingViedoComponent() {
   return (
     <div className="w-full m-5">
       <h2 className="text-2xl font-medium mb-3">{APP.TRAINING_VIEDO_TITLE}</h2>
-      {
+      {/* {
         !isLoading ?
           !isErrorOccured ?
             <div className="flex flex-col gap-3">
@@ -59,7 +60,15 @@ function TrainingViedoComponent() {
               }
             </div> : <ErrorPageComponent />
           : <div className="h-80 bg-neutral-7 flex justify-center items-center">Loading...</div>
-      }
+      } */}
+      <video controls width="800" height="600">
+        <source src={trainingSession1} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {/* <video controls="controls" width="800" height="600" name="Video Name">
+        <source src="../../../assets/viedo/video.mov" />
+      </video> */}
       
     </div>
   ) 
