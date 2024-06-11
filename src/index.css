@@ -221,6 +221,10 @@ div.primary {
   opacity: 1;
 }
 
+.content-width {
+  width: calc(100vw - 300px);;
+}
+
 @media (max-width: 640px) {
   .side-nav {
     visibility: hidden;
@@ -229,5 +233,9 @@ div.primary {
   .menu-toggler-icon {
     visibility: visible;
     width: 24px;
+  }
+
+  .content-width {
+    width: 100vw;
   }
 }

@@ -11,12 +11,22 @@ const ZonalAdminForm = () => {
   const [failedToRequest, setFailedToRequest] = useState(false);
   const [successfullyRequested, setSuccessfullyRequested] = useState(false);
   const _apiHelper = new ApiServiceHelper();
-  const _environmentHelperService = new EnvironmentHelperService();
+  const _envService = new EnvironmentHelperService();
   const onSubmit = async (values) => {
-    values.referalId = _environmentHelperService.getSessionObject()?.empCode;
-    values.referedBy = `${_environmentHelperService.getSessionObject()?.firstName} ${_environmentHelperService.getSessionObject()?.lastName}`;
+    values.referalId = _envService.getSessionObject()?.empCode;
+    values.referedBy = `${_envService.getSessionObject()?.firstName} ${_envService.getSessionObject()?.lastName}`;
     values.zone = ZONE_LIST[0].value;
     values.role = USER_JOB_TITLE.MASTER_ADMIN;
+    values.seniorDetails = {
+      name:  `${_envService.getSessionObject().firstName} ${_envService.getSessionObject().lastName}`,
+      empCode:  _envService.getSessionObject().empCode,
+      region: _envService.getSessionObject().region,
+      department: _envService.getSessionObject().department,
+      zone: _envService.getSessionObject().zone,
+      area: _envService.getSessionObject().area,
+      emailId: _envService.getSessionObject().emailId,
+      mobileNo: _envService.getSessionObject().mobileNo,
+    }
 
     console.log(values)
     _apiHelper.addMasterAdmin(values).then(resp => {

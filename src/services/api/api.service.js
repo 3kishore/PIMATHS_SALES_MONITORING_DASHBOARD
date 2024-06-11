@@ -52,12 +52,12 @@ export class ApiServiceHelper {
 
   getMyPayoutReport(payload) {
     // return axiosHttp.post('/users');
-    return axiosHttp.post('/get-my-payout-report', payload);
+    return axiosHttp.post('/tds/get-my-payout-report', payload);
   }
 
 
   helpAndSupport(payload) {
-    return axiosHttp.post('/users', payload);
-    // return axiosHttp.post('/admin/request-to-add-member', payload);
+    // return axiosHttp.post('/users', payload);
+    return axiosHttp.post('/help-and-support/raise-support-ticket', payload);
   }
 }

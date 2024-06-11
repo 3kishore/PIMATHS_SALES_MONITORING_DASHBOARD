@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ApiServiceHelper } from "../../../services/api/api.service";
-import { HELP_AND_SUPPORT } from "../../../services/utilities/APP.constant";
+import { EnvironmentHelperService } from "../../../services/helper-service/environment-helper.service";
+import { HELP_AND_SUPPORT, ISSUE_CATEGORY_LIST } from "../../../services/utilities/APP.constant";
+import NewSelectComponent from "../../atom/new-select-component";
 import NewTestInputComponent from "../../atom/new-test-input";
 
 const HelpAndSupportComponent = () => {
@@ -9,9 +11,11 @@ const HelpAndSupportComponent = () => {
   const [failedToRequest, setFailedToRequest] = useState(false);
   const [successfullyRequested, setSuccessfullyRequested] = useState(false);
   const _apiHelper = new ApiServiceHelper();
+  const _envService = new EnvironmentHelperService();
 
   const onSubmit = async (values) => {
-    
+    values.empCode = _envService.getSessionObject().empCode;
+    values.emailId = _envService.getSessionObject().emailId;
     _apiHelper.helpAndSupport(values).then(resp => {
     //   resp = {data: {status: true }}
       if(resp.data.status) {
@@ -33,14 +37,15 @@ const HelpAndSupportComponent = () => {
       <h2 className="text-2xl font-medium">Help & Support</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
-          <label className="text-black text-base font-medium">{HELP_AND_SUPPORT.FORM_LABEL.TITLE}</label>
-          <NewTestInputComponent
-            placeholder={HELP_AND_SUPPORT.FORM_PLACEHOLDER.TITLE}
-            {...register(HELP_AND_SUPPORT.FORM_FIELDS.TITLE, {
-              required: HELP_AND_SUPPORT.FORM_ERR_MSG.TITLE
+          <label className="text-black text-base font-medium">{HELP_AND_SUPPORT.FORM_LABEL.ISSUE_TYPE}</label>
+          <NewSelectComponent
+            placeholder={HELP_AND_SUPPORT.FORM_PLACEHOLDER.ISSUE_TYPE}
+            options={ISSUE_CATEGORY_LIST}
+            {...register(HELP_AND_SUPPORT.FORM_FIELDS.ISSUE_TYPE, {
+              required: HELP_AND_SUPPORT.FORM_ERR_MSG.ISSUE_TYPE
             })}
           />
-          {errors[HELP_AND_SUPPORT.FORM_FIELDS.TITLE] && <span className="mt-2 text-xs text-red-dark">{errors[HELP_AND_SUPPORT.FORM_FIELDS.TITLE].message}</span>}
+          {errors[HELP_AND_SUPPORT.FORM_FIELDS.ISSUE_TYPE] && <span className="mt-2 text-xs text-red-dark">{errors[HELP_AND_SUPPORT.FORM_FIELDS.ISSUE_TYPE].message}</span>}
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{HELP_AND_SUPPORT.FORM_LABEL.CONTENT}</label>

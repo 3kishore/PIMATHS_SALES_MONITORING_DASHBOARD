@@ -18,6 +18,8 @@ function MyTdsComponent() {
       } else {
         setIsLoading(false);
       }
+    }).catch(err => {
+      setIsLoading(false);
     })
   };
 
@@ -27,7 +29,7 @@ function MyTdsComponent() {
   }, []);
 
   return (
-    <div className="w-full m-6">
+    <div className="content-width m-6">
       {!isLoading ? (
         <div>
           <h2 className="text-2xl font-medium mb-2">{APP.DOWNLOAD_MY_TDS}</h2>

@@ -91,7 +91,7 @@ function App() {
         <div className='flex layout-height'>
           {
             userLoggedIn ?
-            <div className='side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black'  id="side-nav">
+            <div className='side-nav pt-6 ml-4 flex flex-col gap-6 w-[300px] border-r border-r-black'  id="side-nav">
               {menuList.map((x, i) => <div>
                 <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3 flex gap-1 items-center' to={x.path}>
                   <div className='flex items-center'>
@@ -108,7 +108,7 @@ function App() {
 
           {
             userLoggedIn ?
-            <div onClick={toggleSideMenu} className='toggle-side-nav pt-6 ml-4 flex flex-col gap-6 w-72 border-r border-r-black' style={sideMenuStyle} id="side-nav">
+            <div onClick={toggleSideMenu} className='toggle-side-nav pt-6 ml-4 flex flex-col gap-6 w-[250px] border-r border-r-black' style={sideMenuStyle} id="side-nav">
               {menuList.map((x, i) => <div>
                 <NavLink className='hover:bg-neutral-9 hover:text-blue-4 rounded-xl p-3  flex gap-1 items-center' to={x.path}>
                   <div className='flex items-center'>

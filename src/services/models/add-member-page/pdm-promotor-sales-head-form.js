@@ -12,8 +12,8 @@ const PdmPromoterSalesHeadForm = () => {
   const [failedToRequest, setFailedToRequest] = useState(false);
   const [successfullyRequested, setSuccessfullyRequested] = useState(false);
   const _apiHelper = new ApiServiceHelper();
-  const _environmentHelperService = new EnvironmentHelperService();
-  const role = _environmentHelperService.getRole();
+  const _envService = new EnvironmentHelperService();
+  const role = _envService.getRole();
 
 
   const [isBothAddressSame, setBothAddressSame] = useState(false);
@@ -34,23 +34,23 @@ const PdmPromoterSalesHeadForm = () => {
     }
   };
 
-  const areaList = LOCATION_LIST.find(x => x.value === _environmentHelperService.getSessionObject().region)?.subRegion || [];
+  const areaList = LOCATION_LIST.find(x => x.value === _envService.getSessionObject().region)?.subRegion || [];
 
   const onSubmit = async (values) => {
-    const department = _environmentHelperService.getSessionObject().department;
+    const department = _envService.getSessionObject().department;
     if(role === USER_JOB_TITLE.REGIONAL_HEAD) {
       values.role = USER_JOB_TITLE.CHANNEL_HEAD;
     } else if(role === USER_JOB_TITLE.PDM) {
       values.role = USER_JOB_TITLE.DIRECT_PARTNER;
-      values.area = _environmentHelperService.getSessionObject().area
+      values.area = _envService.getSessionObject().area
     } else {
       values.role = USER_JOB_TITLE.CHANNEL_PARTNER;
-      values.area = _environmentHelperService.getSessionObject().area
+      values.area = _envService.getSessionObject().area
     }
-    values.referalId = _environmentHelperService.getSessionObject()?.empCode;
-    values.referedBy = `${_environmentHelperService.getSessionObject()?.firstName} ${_environmentHelperService.getSessionObject()?.lastName}`;
-    values.zone = ZONE_LIST[0].value;
-    values.region = _environmentHelperService.getSessionObject().region;
+    values.referalId = _envService.getSessionObject()?.empCode;
+    values.referedBy = `${_envService.getSessionObject()?.firstName} ${_envService.getSessionObject()?.lastName}`;
+    values.zone = _envService.getSessionObject().zone;
+    values.region = _envService.getSessionObject().region;
     values.payRoll = PAYROLL_LIST[0].value;
     values.department = department;
 
@@ -71,6 +71,17 @@ const PdmPromoterSalesHeadForm = () => {
       emailId: values.emailId,
       qualification: values.qualification,
       occupation: values.occupation,
+      seniorDetails: {
+        name:  `${_envService.getSessionObject().firstName} ${_envService.getSessionObject().lastName}`,
+        empCode:  _envService.getSessionObject().empCode,
+        region: _envService.getSessionObject().region,
+        role: _envService.getSessionObject().role,
+        department: _envService.getSessionObject().department,
+        zone: _envService.getSessionObject().zone,
+        area: _envService.getSessionObject().area,
+        emailId: _envService.getSessionObject().emailId,
+        mobileNo: _envService.getSessionObject().mobileNo,
+      },
       currentAddress: {
         address: values.currentAddress,
         district: values.currentAddressDistrict,

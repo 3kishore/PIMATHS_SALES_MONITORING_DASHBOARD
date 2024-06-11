@@ -114,7 +114,7 @@ function SalesReportChart() {
       if(resp?.data?.status) {
         let chartData = [
           ["Date", "Sales"],
-          ...resp?.data?.content?.map(val => [val.date, val.point])
+          ...resp?.data?.content?.map(val => [val._id, val.totalPoints])
         ]
         setChartDate(resp?.data?.content?.length ? chartData :  []);
         setLoadingStatus(false);
