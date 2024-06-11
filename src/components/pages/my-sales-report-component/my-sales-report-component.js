@@ -155,7 +155,7 @@ function SalesReportChart() {
 
 function MySalesReport({ salesList }) {
   return (
-    <div className="w-full grid-ui mt-4">
+    <div className="w-full grid-ui mt-4 h-[400px]">
       <div className="overflow-auto">
         <table className="w-full">
           <thead>
