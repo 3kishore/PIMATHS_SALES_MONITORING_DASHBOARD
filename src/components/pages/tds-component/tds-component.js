@@ -4,16 +4,17 @@ import { EnvironmentHelperService } from "../../../services/helper-service/envir
 import { APP, SHOW_LABEL_AS_INCENTIVE } from "../../../services/utilities/APP.constant";
 
 function MyTdsComponent() {
-  const _environmentHelperService = new EnvironmentHelperService();
+  const _envService = new EnvironmentHelperService();
   const _apiHelper = new ApiServiceHelper();
   const [myTdsList, setMyTdsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   function getMyTdsReport() {
     setIsLoading(true);
-    _apiHelper.getMyPayoutReport().then(resp => {
+    _apiHelper.getMyPayoutReport({empCode: _envService.getRole()}).then(resp => {
       if(resp.data.status) {
-        setMyTdsList(resp.data.content || []);
+        const myPayoutList = resp.data.content || [];
+        setMyTdsList(myPayoutList.filter(report => report.report === 'Month'));
         setIsLoading(false);
       } else {
         setIsLoading(false);
@@ -53,7 +54,7 @@ function MyTdsComponent() {
                           <div className="flex flex-row gap-[12px]">
                             <span className="text-xs text-neutral-2 font-medium">
                               {
-                                SHOW_LABEL_AS_INCENTIVE.includes(_environmentHelperService.getRole()) ? 'Monthly Fixed Commission' :
+                                SHOW_LABEL_AS_INCENTIVE.includes(_envService.getRole()) ? 'Monthly Fixed Commission' :
                                 'Monthly Fixed Incentive'
                               }
                             </span>
@@ -67,7 +68,7 @@ function MyTdsComponent() {
                           <div className="flex flex-row gap-[12px]">
                             <span className="text-xs text-neutral-2 font-medium">
                               {
-                                SHOW_LABEL_AS_INCENTIVE.includes(_environmentHelperService.getRole()) ? 'Monthly Special Commission' :
+                                SHOW_LABEL_AS_INCENTIVE.includes(_envService.getRole()) ? 'Monthly Special Commission' :
                                 'Monthly Special Incentive'
                               }
                             </span>
@@ -81,7 +82,7 @@ function MyTdsComponent() {
                           <div className="flex flex-row gap-[12px]">
                             <span className="text-xs text-neutral-2 font-medium">
                               {
-                                SHOW_LABEL_AS_INCENTIVE.includes(_environmentHelperService.getRole()) ? 'Total Commission' :
+                                SHOW_LABEL_AS_INCENTIVE.includes(_envService.getRole()) ? 'Total Commission' :
                                 'Total Incentive'
                               }
                             </span>

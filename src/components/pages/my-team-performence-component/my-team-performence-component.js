@@ -61,7 +61,7 @@ function MyTeamPerformenceComponent() {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="content-width">
       {
         !isLoading ? 
         (
@@ -202,7 +202,7 @@ function MyTeamReportTable({salesManList}) {
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                     <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.points}</span>
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.points + salesManDetail.teamPoints}</span>
                     </div>
                   </td>
                 </tr>
