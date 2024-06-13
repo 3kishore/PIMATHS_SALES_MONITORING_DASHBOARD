@@ -5,16 +5,18 @@ import loginStore from "../../../services/models/login-page/login-store";
 import { Provider } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_PAGE } from "../../../services/models/login-page/login-page.constant";
+import ForgotPasswordForm from "../../../services/models/login-page/forgot-password-form";
+import ResetPasswordForm from "../../../services/models/login-page/reset-password.form";
 
 function LoginPage() {
   let [showLogin, setShowLogin] = React.useState(true);
-  // let [showResetPassword, setShowResetPassword] = React.useState(false);
+  let [showResetPassword, setShowResetPassword] = React.useState(false);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   let param = '';
   const loginPageToggler = () => {
     setShowLogin(!showLogin);
-    // setShowResetPassword(false);
+    setShowResetPassword(false);
   }
 
   const navigate = useNavigate();
@@ -29,9 +31,12 @@ function LoginPage() {
       queryParams.forEach((_, key) => {
         // eslint-disable-next-line
         param = key;
-        setShowLogin(false);
-        // setShowResetPassword(true);
-        console.log(param);
+        if(param === "reset-password") {
+          setShowLogin(false);
+          setShowResetPassword(true);
+          console.log(param);
+        }
+        
       })
     }
   }, [loggedIn, navigate]);
@@ -39,32 +44,32 @@ function LoginPage() {
   return (
     <Provider store={loginStore}>
       <div className="flex flex-wrap gap-4">
-        {
-          showLogin ?
-          <div className="flex-grow">
-            <LoginForm />
-            <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.FORGOT_PASSWORD}</div>
-          </div> : <div>
-            {/* <ForgotPasswordForm /> */}
-            {/* <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.GO_TO_LOGIN}</div> */}
-          </div>
-        }
         {/* {
           showLogin ?
           <div className="flex-grow">
-            <LoginForm />
+            <ResetPasswordForm />
             <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.FORGOT_PASSWORD}</div>
+          </div> : <div>
+          </div>
+        } */}
+        {
+          showLogin ?
+          <div>
+            <div className="flex gap-3">
+              <LoginForm className="h-fit" />
+              <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.FORGOT_PASSWORD}</div>
+            </div>
           </div>
           :
-          showResetPassword ? <div>
+          showResetPassword ? <div className="flex gap-3">
             <ResetPasswordForm />
             <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.GO_TO_LOGIN}</div>
           </div> :
-          <div>
+          <div className="flex gap-3">
             <ForgotPasswordForm />
             <div className="text-sm text-primary cursor-pointer pl-6" onClick={loginPageToggler}>{LOGIN_PAGE.GO_TO_LOGIN}</div>
           </div>
-        } */}
+        }
       </div>
     </Provider>
   )
