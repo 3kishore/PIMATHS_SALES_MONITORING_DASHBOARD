@@ -36,9 +36,9 @@ const HelpAndSupportComponent = () => {
     <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
       <h2 className="text-2xl font-medium">Help & Support</h2>
       <div className="text-xs text-gray-0"><span className="text-black font-medium">Note: </span>
-      This Help & Support is for your Sales Report and Payout Report related enquiries only. If you face any trouble in sales, such as user account creation, course purchase-related issues, or other user-related issues, kindly contact the Support Team to resolve your user-related issues. For user support, please email us at support@pimaths.in.
-      <div></div>
-      <div>If you didn't receive any reply from the team after raising a support request, please email us at mathtuteeapplication@gmail.com.</div>
+      This Help & Support is for your Sales Report and Payout Report related enquiries only. If you face any trouble in sales, such as user account creation, course purchase-related issues, or other user-related issues, kindly contact the Support Team to resolve your user-related issues.
+      <div className="my-4">If you didn't receive any reply from the team after raising a support request, please email us at <span className="text-black font-medium">mathtuteeapplication@gmail.com</span>.</div>
+      <div> For user support, please email us at <span className="text-black font-medium">support@pimaths.in</span>.</div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
