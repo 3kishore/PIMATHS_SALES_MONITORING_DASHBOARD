@@ -228,13 +228,35 @@ function MyTeamReportTable({salesManList}) {
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                     <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
                       <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">
-                        {salesManDetail.area ? salesManDetail.area : salesManDetail.region ? salesManDetail.region : salesManDetail.zone }
+                        {salesManDetail.role}
                       </span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                     <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.mobileNo}</span>
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.department}</span>
+                    </div>
+                  </td>
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.zone ? salesManDetail.zone : 'N/A'}</span>
+                    </div>
+                  </td>
+
+
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.region ? salesManDetail.region : 'N/A'}</span>
+                    </div>
+                  </td>
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.area ? salesManDetail.area : 'N/A'}</span>
+                    </div>
+                  </td>
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesManDetail.mobileNo ? salesManDetail.mobileNo : 'N/A'}</span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
