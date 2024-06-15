@@ -41,6 +41,8 @@ const LoginForm = () => {
           <label className="text-black text-base font-medium">{LOGIN_PAGE.LABEL.PASSWORD}</label>
           <NewTestInputComponent
             placeholder={LOGIN_PAGE.PLACEHOLDER.ENTER_YOUR_PASSWORD}
+            type="password"
+            isBtnTypePass={true}
             {...register('password', {
               required: LOGIN_PAGE.FORM_ERROR_MESSAGE.PASSWORD_REQUIRED
             })}

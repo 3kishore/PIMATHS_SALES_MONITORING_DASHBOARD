@@ -170,6 +170,15 @@ function MySalesReport({ salesList }) {
                 </div>
               </th>
               <th className="first:sticky first:left-[0px] first:bg-white">
+                <div className="min-h-[40px] min-w-[50px] flex flex-row justify-between py-[12px] pl-[12px]">
+                  <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                    <div className="flex flex-row gap-[12px]">
+                      <span className="text-xs text-neutral-2 font-medium">Order No</span>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="first:sticky first:left-[0px] first:bg-white">
                 <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
                   <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
                     <div className="flex flex-row gap-[12px]">
@@ -182,7 +191,7 @@ function MySalesReport({ salesList }) {
                 <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
                   <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
                     <div className="flex flex-row gap-[12px]">
-                      <span className="text-xs text-neutral-2 font-medium">Course</span>
+                      <span className="text-xs text-neutral-2 font-medium">Course Name</span>
                     </div>
                   </div>
                 </div>
@@ -191,7 +200,7 @@ function MySalesReport({ salesList }) {
                 <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
                   <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
                     <div className="flex flex-row gap-[12px]">
-                      <span className="text-xs text-neutral-2 font-medium">Order Status</span>
+                      <span className="text-xs text-neutral-2 font-medium">Course Amount</span>
                     </div>
                   </div>
                 </div>
@@ -219,6 +228,11 @@ function MySalesReport({ salesList }) {
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                     <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.orderNo}</span>
+                    </div>
+                  </td>
+                  <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                    <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
                       <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.firstName}</span>
                     </div>
                   </td>
@@ -229,7 +243,7 @@ function MySalesReport({ salesList }) {
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                     <div className="h-[40px] min-w-[200px] flex flex-row px-[12px] py-[9px]">
-                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.orderStatus}</span>
+                      <span className="text-base-4 leading-[1.71] text-neutral-1 text-left">{salesData.netAmount}</span>
                     </div>
                   </td>
                   <td className="first:bg-neutral-9 first:sticky first:left-[0px]">

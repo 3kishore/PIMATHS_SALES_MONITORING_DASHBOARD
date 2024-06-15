@@ -7,14 +7,18 @@ function MyTdsComponent() {
   const _envService = new EnvironmentHelperService();
   const _apiHelper = new ApiServiceHelper();
   const [myTdsList, setMyTdsList] = useState([]);
+  const [quarterlyPayoutList, setQuarterlyPayoutList] = useState([]);
+  const [annualPayoutList, setAnnualPayoutList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   function getMyTdsReport() {
     setIsLoading(true);
-    _apiHelper.getMyPayoutReport({empCode: _envService.getRole()}).then(resp => {
+    _apiHelper.getMyPayoutReport({empCode: _envService.getEmpCode()}).then(resp => {
       if(resp.data.status) {
         const myPayoutList = resp.data.content || [];
         setMyTdsList(myPayoutList.filter(report => report.report === 'Month'));
+        setQuarterlyPayoutList(myPayoutList.filter(report => report.report === 'Quarter'));
+        setAnnualPayoutList(myPayoutList.filter(report => report.report === 'Annual'));
         setIsLoading(false);
       } else {
         setIsLoading(false);
@@ -33,7 +37,10 @@ function MyTdsComponent() {
     <div className="content-width m-6">
       {!isLoading ? (
         <div>
-          <h2 className="text-2xl font-medium mb-2">{APP.DOWNLOAD_MY_TDS}</h2>
+          <h2 className="text-2xl font-medium mb-2">My Payout Report</h2>
+
+
+          <h2 className="text-xl font-medium my-2">Monthly Payout Report</h2>
           <div className="w-full grid-ui">
             <div className="overflow-auto">
               <table className="w-full">
@@ -43,7 +50,7 @@ function MyTdsComponent() {
                       <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
                         <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
                           <div className="flex flex-row gap-[12px]">
-                            <span className="text-xs text-neutral-2 font-medium">Date of payout</span>
+                            <span className="text-xs text-neutral-2 font-medium">Month of payout</span>
                           </div>
                         </div>
                       </div>
@@ -108,6 +115,24 @@ function MyTdsComponent() {
                         </div>
                       </div>
                     </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Transaction ID</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Date of Transaction</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -115,7 +140,7 @@ function MyTdsComponent() {
                     <tr className="bg-neutral-9 subHeader" key={'sales-mans-report-' + index}>
                       <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                         <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
-                          <span className="text-base-4 leading-[1.71] text-left">{tds.dateOfPayout}</span>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.month + '-' + tds.year}</span>
                         </div>
                       </td>
                       <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
@@ -144,6 +169,247 @@ function MyTdsComponent() {
                       <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
                         <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
                           <span className="text-base-4 leading-[1.71] text-left">{tds.netPayout}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.transacationId}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.transactionDate.split('T')[0]}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+
+
+
+
+
+          <h2 className="text-xl font-medium mt-8 mb-2">Quarterly Payout Report</h2>
+          <div className="w-full grid-ui">
+            <div className="overflow-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b-[2px] border-neutral-8">
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Quarter of payout</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">
+                              {
+                                SHOW_LABEL_AS_INCENTIVE.includes(_envService.getRole()) ? 'Quarterly Commission' :
+                                'Quarterly Incentive'
+                              }
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">TDS Amount</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Net Payout</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Transaction ID</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Date of Transaction</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {quarterlyPayoutList.map((tds, index) => (
+                    <tr className="bg-neutral-9 subHeader" key={'sales-mans-report-' + index}>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.quarter} - {tds.finacialYear} </span>
+                          {/* {tds.quarter?.toLowerCase() === 'q4' ? `${parseInt(tds.year) - 1} - ${tds.year}` : `${tds.year} - ${parseInt(tds.year) + 1}`} */}
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        {/* <div className='h-[40px] min-w-[200px] flex cursor-pointer flex-row px-[12px] text-neutral-1'>
+                          <a className="flex items-center text-blue-4" href={tds.downloadUrl} download={tds.quarter}>Download</a>
+                        </div> */}
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.quarterlyCommission}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.tdsAmount}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.netPayout}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.transacationId}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.transactionDate.split('T')[0]}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+
+
+
+          <h2 className="text-xl font-medium mt-8 mb-2">Annual Payout Report</h2>
+          <div className="w-full grid-ui">
+            <div className="overflow-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b-[2px] border-neutral-8">
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Annual payout</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">
+                              {
+                                SHOW_LABEL_AS_INCENTIVE.includes(_envService.getRole()) ? 'Annual Commission' :
+                                'Annual Incentive'
+                              }
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">TDS Amount</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Net Payout</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Transaction ID</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="first:sticky first:left-[0px] first:bg-white">
+                      <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                        <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                          <div className="flex flex-row gap-[12px]">
+                            <span className="text-xs text-neutral-2 font-medium">Date of Transaction</span>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {annualPayoutList.map((tds, index) => (
+                    <tr className="bg-neutral-9 subHeader" key={'sales-mans-report-' + index}>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.finacialYear}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        {/* <div className='h-[40px] min-w-[200px] flex cursor-pointer flex-row px-[12px] text-neutral-1'>
+                          <a className="flex items-center text-blue-4" href={tds.downloadUrl} download={tds.quarter}>Download</a>
+                        </div> */}
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.annualSpecialCommission}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.tdsAmount}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.netPayout}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.transacationId}</span>
+                        </div>
+                      </td>
+                      <td className="first:bg-neutral-9 first:sticky first:left-[0px]">
+                        <div className='h-[40px] min-w-[200px] flex flex-row px-[12px] items-center text-neutral-1'>
+                          <span className="text-base-4 leading-[1.71] text-left">{tds.transactionDate.split('T')[0]}</span>
                         </div>
                       </td>
                     </tr>

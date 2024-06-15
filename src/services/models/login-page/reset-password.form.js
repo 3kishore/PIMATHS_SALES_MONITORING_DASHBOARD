@@ -13,8 +13,8 @@ const ResetPasswordForm = () => {
   const onSubmit = (values, dispatch, props) => {
     _authHelperService.changePassword (values).then(resp => {
       if(resp?.data?.status) {
-        localStorage.setItem('sessionObj', btoa(JSON.stringify(resp.data.content)));
-        window.location.reload();
+        // localStorage.setItem('sessionObj', btoa(JSON.stringify(resp.data.content)));
+        // window.location.reload();
         setInvalidCred(false)
       } else {
         setInvalidCred(true)
@@ -43,6 +43,8 @@ const ResetPasswordForm = () => {
           <label className="text-black text-base font-medium">{LOGIN_PAGE.LABEL.PASSWORD}</label>
           <NewTestInputComponent
             placeholder={LOGIN_PAGE.PLACEHOLDER.ENTER_YOUR_PASSWORD}
+            type="password"
+            isBtnTypePass={true}
             {...register('password', {
               required: LOGIN_PAGE.FORM_ERROR_MESSAGE.PASSWORD_REQUIRED
             })}

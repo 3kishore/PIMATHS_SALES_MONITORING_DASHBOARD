@@ -55,7 +55,7 @@ const ZonalHeadForm = () => {
 
   return (
     <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
-      <h2 className="text-2xl font-medium">{ZONAL_HEAD.FORM_TITLE.ADD_ZONAL_HEAD}</h2>
+      <h2 className="text-2xl font-medium">{ZONAL_HEAD.FORM_TITLE.ADD_ZONAL_ADMIN}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.FIRST_NAME}</label>
@@ -110,7 +110,7 @@ const ZonalHeadForm = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MAPPING_ID}</label>
+          <label className="text-black text-base font-medium">Payroll Employee Code</label>
           <NewTestInputComponent
             placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MAPPING_ID}
             {...register(ZONAL_HEAD.FORM_FIELDS.MAPPING_ID, {

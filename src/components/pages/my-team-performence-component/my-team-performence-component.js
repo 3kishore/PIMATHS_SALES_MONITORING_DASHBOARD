@@ -36,7 +36,7 @@ function MyTeamPerformenceComponent() {
       if(resp?.data?.status) {
         let chart = [
           ["person", "points"],
-          ...resp?.data?.content?.map((sales) => [sales.name, sales.points]) || []
+          ...resp?.data?.content?.map((sales) => [sales.name, sales.points + sales.teamPoints]) || []
         ]
         setChartData(chart);
         setReport(resp?.data?.content || []);
@@ -122,7 +122,7 @@ function MyTeamReportTable({salesManList}) {
                 <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
                   <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
                     <div className="flex flex-row gap-[12px]">
-                      <span className="text-xs text-neutral-2 font-medium">Emp code</span>
+                      <span className="text-xs text-neutral-2 font-medium">Sales Employee code</span>
                     </div>
                   </div>
                 </div>
@@ -140,6 +140,34 @@ function MyTeamReportTable({salesManList}) {
                 <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
                   <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
                     <div className="flex flex-row gap-[12px]">
+                      <span className="text-xs text-neutral-2 font-medium">Role</span>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="first:sticky first:left-[0px] first:bg-white"> 
+                <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                  <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                    <div className="flex flex-row gap-[12px]">
+                      <span className="text-xs text-neutral-2 font-medium">Department</span>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="first:sticky first:left-[0px] first:bg-white"> 
+                <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                  <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                    <div className="flex flex-row gap-[12px]">
+                      <span className="text-xs text-neutral-2 font-medium">Zone</span>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              
+              <th className="first:sticky first:left-[0px] first:bg-white">
+                <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                  <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                    <div className="flex flex-row gap-[12px]">
                       <span className="text-xs text-neutral-2 font-medium">Region</span>
                     </div>
                   </div>
@@ -149,7 +177,16 @@ function MyTeamReportTable({salesManList}) {
                 <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
                   <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
                     <div className="flex flex-row gap-[12px]">
-                      <span className="text-xs text-neutral-2 font-medium">Ph. No</span>
+                      <span className="text-xs text-neutral-2 font-medium">Area</span>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="first:sticky first:left-[0px] first:bg-white"> 
+                <div className="min-h-[40px] min-w-[200px] flex flex-row justify-between py-[12px] pl-[12px]">
+                  <div className="border-r-[1px] border-neutral-8 w-full flex flex-row justify-between h-[16px] pr-[12px]">
+                    <div className="flex flex-row gap-[12px]">
+                      <span className="text-xs text-neutral-2 font-medium">Mobile No</span>
                     </div>
                   </div>
                 </div>

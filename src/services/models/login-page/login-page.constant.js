@@ -7,7 +7,7 @@ export const LOGIN_PAGE = {
   PLACEHOLDER: {
     ENTER_YOUR_USER_NAME: 'Enter your user name.',
     ENTER_YOUR_EMAIL_ID: 'Enter your email id.',
-    ENTER_YOUR_EMP_CODE: 'Enter your employee code.',
+    ENTER_YOUR_EMP_CODE: 'Enter your sales employee code.',
     ENTER_YOUR_PASSWORD: 'Enter your password.',
     ENTER_YOUR_EMAIL_OR_PH: 'Enter your email or phone no.'
   },

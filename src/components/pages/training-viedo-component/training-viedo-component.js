@@ -16,13 +16,13 @@ function TrainingViedoComponent() {
 
   function getMyTrainingSessions() {
     _apiHelper.getMyTrainingSession().then(resp => {
-      resp = {
-        data: {
-          status: true,
-          message: 'Success',
-          content: ['PhxfspwMdww', '7YpB7suzrto']
-        }
-      }
+      // resp = {
+      //   data: {
+      //     status: true,
+      //     message: 'Success',
+      //     content: ['yYw5RQlUnN8', 'AMvZlLpbdY4']
+      //   }
+      // }
       if(resp?.data?.status) {
         setTrainingSessions(resp?.data?.content || []);
         setIsLoading(false);
@@ -56,7 +56,7 @@ function TrainingViedoComponent() {
               {
                 trainingSessions.length ? 
                 trainingSessions.map(viedo => (
-                  <YouTube videoId={viedo}/>
+                  <YouTube videoId={viedo.Video}/>
                 )) : <div className="text-xl font-bold">No Training Session Available.</div>
               }
             </div> : <ErrorPageComponent />

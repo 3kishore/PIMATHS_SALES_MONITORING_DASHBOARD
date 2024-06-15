@@ -34,7 +34,7 @@ function MyTeamPerformenceComponent() {
       if(resp?.data?.status) {
         let chart = [
           ["person", "points"],
-          ...resp?.data?.content?.map((sales) => [sales.name, sales.points]) || []
+          ...resp?.data?.content?.map((sales) => [sales.name, sales.points + sales.teamPoints]) || []
         ]
         setChartData(chart);
         setReport(resp?.data?.content || []);

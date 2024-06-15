@@ -28,6 +28,7 @@ const PdmPromoterSalesHeadForm = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result.split(',')[1];
+        console.log('atob', encodeURI(base64String))
         setDocumentUpload(base64String);
       };
       reader.readAsDataURL(file);
@@ -35,6 +36,59 @@ const PdmPromoterSalesHeadForm = () => {
   };
 
   const areaList = LOCATION_LIST.find(x => x.value === _envService.getSessionObject().region)?.subRegion || [];
+
+  const GenderList = [
+    {
+      label: 'Male',
+      value: 'male',
+    },
+    {
+      label: 'Female',
+      value: 'female',
+    },
+    {
+      label: 'Other',
+      value: 'other',
+    }
+  ]
+
+  const qualificationList = [
+    {
+      label: 'SSLC',
+      value: 'sslc',
+    },
+    {
+      label: 'HSC',
+      value: 'hsc',
+    },
+    {
+      label: 'UG',
+      value: 'ug',
+    },
+    {
+      label: 'PG',
+      value: 'pg',
+    },
+    {
+      label: 'Others',
+      value: 'others',
+    }
+  ]
+
+  const accountType = [
+    {
+      label: 'Current Account',
+      value: 'current-account',
+    },
+    {
+      label: 'Savings Account',
+      value: 'savings-account',
+    },
+    {
+      label: 'Others',
+      value: 'others',
+    }
+  ]
 
   const onSubmit = async (values) => {
     const department = _envService.getSessionObject().department;
@@ -216,14 +270,13 @@ const PdmPromoterSalesHeadForm = () => {
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.AREA}</label>
           <NewSelectComponent
             placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.AREA}
-            value={areaList[0].value || ''}
             options={areaList}
             disabled={false}
             {...register(ZONAL_HEAD.FORM_FIELDS.AREA)}
           />
         </div>)}
 
-        <div className="flex flex-col gap-2">
+        {/* <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ZONAL_HEAD.FORM_LABEL.MAPPING_ID}</label>
           <NewTestInputComponent
             placeholder={ZONAL_HEAD.FORM_PLACEHOLDER.MAPPING_ID}
@@ -231,9 +284,8 @@ const PdmPromoterSalesHeadForm = () => {
               // required: ZONAL_HEAD.FORM_ERROR_MSG.MAPPING_ID_REQUIRED,
             })}
           />
-          {/* {errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID].message}</span>} */}
-        </div>
-
+          {errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID] && <span className="mt-2 text-xs text-red-dark">{errors[ZONAL_HEAD.FORM_FIELDS.MAPPING_ID].message}</span>}
+        </div> */}
 
 
         <div>Personal Details</div>
@@ -251,7 +303,7 @@ const PdmPromoterSalesHeadForm = () => {
           />
           {errors[ADD_MEMBER_FORM_CONTROL_NAME.DOB] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.DOB].message}</span>}
         </div>
-        <div className="flex flex-col gap-2">
+        {/* <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.QUALIFICATION}</label>
           <NewTestInputComponent
             placeholder={ADD_MEMBER.ENTER_HERE}
@@ -264,6 +316,40 @@ const PdmPromoterSalesHeadForm = () => {
             })}
           />
           {errors[ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION].message}</span>}
+        </div> */}
+
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.QUALIFICATION}</label>
+          <NewSelectComponent
+            placeholder="Select your qualification"
+            options={qualificationList}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.QUALIFICATION].message}</span>}
+        </div>
+
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">Gender</label>
+          <NewSelectComponent
+            placeholder={ADD_MEMBER.OCCUPATION}
+            options={GenderList}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION].message}</span>}
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.OCCUPATION}</label>
@@ -529,7 +615,7 @@ const PdmPromoterSalesHeadForm = () => {
           />
           {errors[ADD_MEMBER_FORM_CONTROL_NAME.IFSC_CODE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.IFSC_CODE].message}</span>}
         </div>
-        <div className="flex flex-col gap-2">
+        {/* <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.ACCOUNT_TYPE}</label>
           <NewTestInputComponent
             placeholder={ADD_MEMBER.ENTER_HERE}
@@ -542,7 +628,25 @@ const PdmPromoterSalesHeadForm = () => {
             })}
           />
           {errors[ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE].message}</span>}
+        </div> */}
+
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black text-base font-medium">{ADD_MEMBER.ACCOUNT_TYPE}</label>
+          <NewSelectComponent
+            placeholder="Select your acc type"
+            options={accountType}
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE, {
+              required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
+              minLength: {
+                value: 3,
+                message: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_REQUIRES_ATLEAST_3_CHAR
+              }
+            })}
+          />
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.ACCOUNT_TYPE].message}</span>}
         </div>
+
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.ACCOUNT_NUMBER}</label>
           <NewTestInputComponent
@@ -571,11 +675,11 @@ const PdmPromoterSalesHeadForm = () => {
           />
           {errors[ADD_MEMBER_FORM_CONTROL_NAME.NAME_AS_PER_BANK] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.NAME_AS_PER_BANK].message}</span>}
         </div>
-        {/* <div className="flex flex-col gap-2 mt-3">
+        <div className="flex flex-col gap-2 mt-3">
           <label className="text-black text-base font-medium">Upload below documents copy as single pdf.</label>
           <div>Your photo or sellfie, application photo copy, aadhar, pan, bank proof (passbook or chequleaf)</div>
           <input type="file" accept="application/pdf" onChange={convertApplicationToBase64} />
-        </div> */}
+        </div>
         {
           !isDocUploaded && <div className="text-base font-medium text-red-dark mt-4 rounded-[4px] bg-red-light p-2">
             Upload your document copy.

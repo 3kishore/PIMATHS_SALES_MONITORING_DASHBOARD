@@ -35,6 +35,10 @@ const HelpAndSupportComponent = () => {
   return (
     <div className="flex flex-col flex-grow gap-3 p-6 max-w-[450px] form-height">
       <h2 className="text-2xl font-medium">Help & Support</h2>
+      <div className="text-xs text-gray-0"><span className="text-black font-medium">Note: </span>
+        This Help & Support for your sales report and Payout Report Related Enquiries only. Otherwise, If You Face Any trouble 
+        in sales like user Account creation, Course Purchase Related issues and other user related issue. kindly Contact Support Team to resolve your user related issues.
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{HELP_AND_SUPPORT.FORM_LABEL.ISSUE_TYPE}</label>

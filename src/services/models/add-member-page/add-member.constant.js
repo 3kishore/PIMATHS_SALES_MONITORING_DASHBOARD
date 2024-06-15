@@ -363,7 +363,7 @@ export const ZONAL_HEAD = {
     ROLE: 'Select role.',
     AREA: 'Select Area.',
     PAYROLL: 'Enter your payroll type.',
-    MAPPING_ID: 'Enter your employee code.'
+    MAPPING_ID: 'Enter your payroll employee code.'
   },
   FORM_FIELDS: {
     FIRST_NAME: 'firstName',
