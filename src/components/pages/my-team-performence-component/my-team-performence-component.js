@@ -79,7 +79,7 @@ function MyTeamPerformenceComponent() {
 
 function MyTeamReportChart({chartData}) {
   const options = {
-    title: "My team last 7 days performance",
+    title: "My team's performance on the previous day.",
   };
   return (
     <Chart
