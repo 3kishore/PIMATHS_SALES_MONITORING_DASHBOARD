@@ -339,9 +339,9 @@ const PdmPromoterSalesHeadForm = () => {
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">Gender</label>
           <NewSelectComponent
-            placeholder={ADD_MEMBER.OCCUPATION}
+            placeholder={ADD_MEMBER.GENDER}
             options={GenderList}
-            {...register(ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION, {
+            {...register(ADD_MEMBER_FORM_CONTROL_NAME.GENDER, {
               required: ADD_MEMBER_FORM_ERROR_MESSAGE.THIS_FIELD_IS_REQUIRED,
               minLength: {
                 value: 3,
@@ -349,7 +349,7 @@ const PdmPromoterSalesHeadForm = () => {
               }
             })}
           />
-          {errors[ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.OCCUPATION].message}</span>}
+          {errors[ADD_MEMBER_FORM_CONTROL_NAME.GENDER] && <span className="mt-2 text-xs text-red-dark">{errors[ADD_MEMBER_FORM_CONTROL_NAME.GENDER].message}</span>}
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-black text-base font-medium">{ADD_MEMBER.OCCUPATION}</label>
