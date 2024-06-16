@@ -22,6 +22,7 @@ const ZonalAdminForm = () => {
       empCode:  _envService.getSessionObject().empCode,
       region: _envService.getSessionObject().region,
       department: _envService.getSessionObject().department,
+      role: _envService.getSessionObject().role,
       zone: _envService.getSessionObject().zone,
       area: _envService.getSessionObject().area,
       emailId: _envService.getSessionObject().emailId,

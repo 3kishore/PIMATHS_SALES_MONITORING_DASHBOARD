@@ -25,6 +25,7 @@ const ZonalHeadForm = () => {
       name: `${_envService.getSessionObject().firstName} ${_envService.getSessionObject().lastName}`,
       empCode: _envService.getSessionObject().empCode,
       region: _envService.getSessionObject().region,
+      role: _envService.getSessionObject().role,
       department: _envService.getSessionObject().department,
       zone: _envService.getSessionObject().zone,
       area: _envService.getSessionObject().area,

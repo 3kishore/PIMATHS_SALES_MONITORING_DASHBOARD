@@ -53,14 +53,14 @@ function MyProfileComponent() {
             <div className="flex flex-col gap-2">
             <div className="text-xl"><span className="font-bold">Name: </span>{sessobj.seniorDetails?.name || ''}</div>
             <div className="text-xl"><span className="font-bold">Sales Employee Code: </span>{sessobj.seniorDetails?.empCode || ''}</div>
-            <div className="text-xl"><span className="font-bold">My Role: </span>{sessobj.seniorDetails?.role || ''}</div>
+            {sessobj?.seniorDetails && <div className="text-xl"><span className="font-bold">Role: </span>{sessobj.seniorDetails?.role || ''}</div>}
             <div className="text-xl"><span className="font-bold">Department: </span>{sessobj.seniorDetails?.department || ''}</div>
             <div className="text-xl"><span className="font-bold">Zone: </span>{sessobj.seniorDetails?.zone || ''}</div>
           </div>
         </div>
         <div>
           <div className="flex flex-col gap-3">
-            <h2 className="text-xl font-bold">My Contact Details</h2>
+            <h2 className="text-xl font-bold">Contact Details</h2>
             <div>
               <div className="text-xl"><span className="font-bold">Email Id: </span>{sessobj.seniorDetails?.emailId || ''}</div>
               <div className="text-xl"><span className="font-bold">Mobile No: </span>{sessobj.seniorDetails?.mobileNo || ''}</div>
